@@ -16,6 +16,7 @@ type NavigationComponent = {
 };
 
 type NavigationListItem = {
+	isLast: boolean;
 	nav: Navigation;
 };
 

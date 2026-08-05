@@ -1,9 +1,6 @@
 /* Styles */
 import './styles/container.scss';
 
-/* Packages */
-import { Link } from 'react-router-dom';
-
 /* Scripts */
 import { useRespond } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
@@ -47,15 +44,17 @@ export const Container = () => {
 
 				<Header />
 
-				{isDesktop ? (
-					<Navigation label={'Header Navigation'} />
-				) : (
-					<Slideout options={slideoutOptions}>
-						<Navigation label={'Mobile Navigation'} />
-					</Slideout>
-				)}
+				<div className={'blue-bar container-offset'}>
+					{isDesktop ? (
+						<Navigation label={'Header Navigation'} />
+					) : (
+						<Slideout options={slideoutOptions}>
+							<Navigation label={'Mobile Navigation'} />
+						</Slideout>
+					)}
+				</div>
 
-				<main id="main-content" className="main">
+				<main id="main-content" className="main container-width">
 					<div className="main-layout flex-wrap">
 						<Content />
 					</div>
@@ -72,9 +71,5 @@ export const Container = () => {
 };
 
 const ContainerError = () => {
-	return (
-		<p>
-			Something went wrong. <Link to={'/'}>Go back.</Link>
-		</p>
-	);
+	return <p>Something went wrong.</p>;
 };

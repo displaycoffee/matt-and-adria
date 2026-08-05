@@ -71,6 +71,7 @@
 			text-transform: theme.$font-transform
 		));
 		color: theme.$color-06;
+		line-height: 1.2;
 	}
 	h1, .h1 {
 		font-size: functions.em(80px, rem);
@@ -86,6 +87,11 @@
 	}
 	h5, h6, .h5, .h6 {
 		font-size: functions.em(40px, rem);
+	}
+	.h-text {
+		font-family: theme.$font-family-01;
+		font-weight: theme.$font-weight-01;
+		text-transform: none;
 	}
 
 //// CONTENT BLOCKS

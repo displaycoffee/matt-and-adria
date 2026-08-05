@@ -2,10 +2,10 @@
 import './styles/navigation.scss';
 
 /* Packages */
-import { Fragment, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Fragment } from 'react';
 
 /* Scripts */
+import { useRespond } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 import { NavigationComponentProps, NavigationListItemProps } from './scripts/navigation-types';
 import { navigationUtils } from './scripts/navigation-utils';
@@ -15,21 +15,16 @@ const navigationList = navigationUtils.get.list();
 
 export const Navigation = (props: NavigationComponentProps) => {
 	const { label } = props;
-	const { pathname } = useLocation();
-	const { utils } = useAppContext();
-
-	// Scroll to top when navigation link is clicked on
-	useEffect(() => {
-		utils.scrollTo();
-	}, [pathname, utils]);
 
 	return navigationList.length != 0 ? (
 		<nav className="navigation" aria-label={label}>
 			<ul className="navigation-list unstyled">
-				{navigationList.map((nav) => {
+				{navigationList.map((nav, index) => {
+					const isLast = index === navigationList.length - 1;
+
 					return (
 						<Fragment key={nav.id}>
-							<NavigationListItem nav={nav} />
+							<NavigationListItem nav={nav} isLast={isLast} />
 						</Fragment>
 					);
 				})}
@@ -39,26 +34,31 @@ export const Navigation = (props: NavigationComponentProps) => {
 };
 
 export const NavigationListItem = (props: NavigationListItemProps) => {
-	const { nav } = props;
-	const { utils } = useAppContext();
+	const { nav, isLast } = props;
+	const { theme, utils } = useAppContext();
+	const isDesktop = useRespond(theme.bps.bp02 as number);
 	const navProps = nav?.props ?? {};
 
 	return (
-		<li className="navigation-list-item">
-			{nav.isScroll && navProps?.id ? (
-				<button
-					className="pointer unstyled a"
-					type="button"
-					aria-label={`Scroll to '${nav.label}' button`}
-					onClick={(e) => utils.scrollTo(e, `#${navProps.id}`)}
-				>
-					{nav.label}
-				</button>
-			) : (
-				<a href={nav.url} target="_blank" rel="noreferrer">
-					{nav.label}
-				</a>
-			)}
-		</li>
+		<>
+			<li className="navigation-list-item navigation-list-item-link">
+				{nav.isScroll && navProps?.id ? (
+					<button
+						className="pointer unstyled a"
+						type="button"
+						aria-label={`Scroll to '${nav.label}' button`}
+						onClick={(e) => utils.scrollTo(e, `#${navProps.id}`)}
+					>
+						{nav.label}
+					</button>
+				) : (
+					<a href={nav.url} target="_blank" rel="noreferrer">
+						{nav.label}
+					</a>
+				)}
+			</li>
+
+			{!isDesktop ? null : isLast ? null : <li className="navigation-list-item navigation-list-item-bullet">&bull;</li>}
+		</>
 	);
 };

@@ -5,7 +5,7 @@ export const Footer = () => {
 	const date = new Date().getFullYear();
 
 	return (
-		<footer className="footer">
+		<footer className="footer container-offset">
 			<p>
 				&copy; {date}{' '}
 				<a href="//display.coffee" target="_blank" rel="noreferrer">

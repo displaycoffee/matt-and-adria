@@ -10,7 +10,8 @@
 //// CONTAINERS
 //// --------------------------------------------------------------------------
 
-	$container-base: 1600px;
+	$container-base: 1200px;
+	$wrapper-base: 1200px;
 
 //// SPACING
 //// --------------------------------------------------------------------------
@@ -35,10 +36,10 @@
 	$color-04: #4a3d33; // light text
 	$color-05: #1da1e5; // links
 	$color-06: #1da1e5; // header text
-	$color-07: #4a3d34; // footer background
-	$color-08: false;
+	$color-07: #1da1e5; // primary blue
+	$color-08: #0a6b9d; // secondary blue
 	$color-09: rgba(#000000, 0.75); // overlay
-	$color-10: false;
+	$color-10: #4a3d34; // footer background
 	$color-11: false;
 	$color-12: #f7f79e; // highlights and errors
 

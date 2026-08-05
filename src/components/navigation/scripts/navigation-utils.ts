@@ -16,7 +16,7 @@ export const navigationUtils = {
 				if (nav?.children && nav.children.length !== 0) {
 					nav.children.forEach((child) => {
 						if (child.showInNav) {
-							child.url = child.isRoute && child.url && nav.url && !child.url.includes(nav.url) ? `${nav.url}${child.url}` : child.url;
+							child.url = nav.url && child.isRoute && child.url && !child.url.includes(nav.url) ? `${nav.url}${child.url}` : child.url;
 							navChildren.push(child);
 						}
 					});
@@ -27,6 +27,25 @@ export const navigationUtils = {
 					navigationClone.push({
 						...nav,
 						children: navigationUtils.sort(navChildren),
+					});
+				}
+			});
+
+			// Return final navigation
+			return navigationClone.length !== 0 ? navigationUtils.sort(navigationClone) : [];
+		},
+		children: (listId: number) => {
+			// Create navigation clone
+			const navigationClone = [] as NavigationType[];
+
+			navigation.forEach((nav) => {
+				if (listId == nav.id && nav?.children && nav.children.length !== 0) {
+					// Create child properties
+					nav.children.forEach((child) => {
+						if (child.showInNav) {
+							child.url = nav.url && child.isRoute && child.url && !child.url.includes(nav.url) ? `${nav.url}${child.url}` : child.url;
+							navigationClone.push(child);
+						}
 					});
 				}
 			});

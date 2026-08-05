@@ -33,7 +33,7 @@ export const Slideout = (props: SlideoutProps) => {
 	// Create shared slideout button
 	const slideoutButton = (
 		<button className="slideout-button unstyled pointer" type="button" aria-label="Slideout button" onClick={(e) => toggle(e, slideoutId)}>
-			<Icon id={'equalizer'} size={'large'} />
+			<Icon id={'heart'} size={'large'} />
 			{options.label}
 		</button>
 	);
@@ -55,7 +55,7 @@ export const Slideout = (props: SlideoutProps) => {
 
 			<div className={config.classes.menu} style={styles} inert role="dialog" aria-modal="true" aria-labelledby={slideoutTitle}>
 				<header className="slideout-header flex-nowrap flex-align-items-center">
-					<h2 id={slideoutTitle} className="slideout-title">
+					<h2 id={slideoutTitle} className="slideout-title h-text">
 						{options.label}
 					</h2>
 

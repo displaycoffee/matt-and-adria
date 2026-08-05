@@ -14,7 +14,7 @@
 	// Configuration
 
 	$slideout-spacing: theme.$spacing-x4; // overall spacing value
-	$slideout-header: 40px; // height of header (determines scrollable area)
+	$slideout-header: 60px; // height of header (determines scrollable area)
 
 	// Style block
 
@@ -40,7 +40,8 @@
 	.slideout-button {
 		@include mixins.flex-layout((align-items: center));
 		@include mixins.gap(theme.$spacing-x2);
-		margin: 0;
+		margin: 0 auto;
+		color: theme.$color-01;
 	}
 	.slideout {
 		&.slideout-vertical {
@@ -62,13 +63,19 @@
 			z-index: 9999;
 			padding: $slideout-spacing;
 			.slideout-header {
-				margin: 0 0 $slideout-spacing 0;
+				padding: 0 $slideout-spacing;
+				margin: -#{$slideout-spacing} -#{$slideout-spacing} $slideout-spacing -#{$slideout-spacing};
 				height: $slideout-header;
 				@include mixins.flex-layout((align-items: center));
 				@include mixins.gap(theme.$spacing-x2);
+				background-color: theme.$color-07;
 				.slideout-title, .slideout-close {
 					margin: 0;
 					line-height: 1;
+					color: theme.$color-01;
+				}
+				.slideout-title {
+					font-size: functions.em(20px, rem);
 				}
 				.slideout-close {
 					margin-left: auto;

@@ -1,0 +1,8 @@
+.DS_Store
+.env
+.env.production
+.husky
+.vscode/
+coverage/
+node_modules/
+dist/

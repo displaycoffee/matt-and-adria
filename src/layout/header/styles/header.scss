@@ -1,0 +1,18 @@
+// Use utils and theme variables
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/theme/_theme';
+
+//// HEADER
+//// --------------------------------------------------------------------------
+
+	// Style block
+
+	.header {
+		& > * {
+			margin: 0 0 theme.$spacing-x4 0;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}

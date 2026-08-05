@@ -8,8 +8,9 @@ export const Header = () => {
 	return (
 		<header className="header">
 			<h1>
-				<Link to="/">Burmecia</Link>
+				<Link to="/">Matt and Adria</Link>
 			</h1>
+			<h2>Our Wedding Website</h2>
 		</header>
 	);
 };

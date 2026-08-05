@@ -1,8 +1,8 @@
 /* Type definitions */
-type Icons = {
+type Home = {
 	id: string;
-	size?: string;
+	label: string;
 };
 
 /* Export prop types */
-export type IconsProps = Icons;
+export type HomeProps = Home;

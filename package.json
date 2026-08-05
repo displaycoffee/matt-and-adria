@@ -1,13 +1,13 @@
 {
-	"name": "burmecia",
-	"version": "3.8.0",
-	"description": "Custom react template build.",
+	"name": "matt-and-adria",
+	"version": "1.1.0",
+	"description": "Wedding website for Matt and Adria.",
 	"main": "bundle.js",
 	"type": "module",
 	"keywords": [],
 	"author": "displaycoffee",
 	"license": "ISC",
-	"homepage": "https://burmecia.display.coffee",
+	"homepage": "https://mattandadria.com",
 	"scripts": {
 		"build": "vite build && node optimize-html.js && npx prettier --write dist/index.html --ignore-path /dev/null",
 		"dev": "vite --host",
@@ -43,10 +43,10 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/displaycoffee/burmecia.git"
+		"url": "git+https://github.com/displaycoffee/matt-and-adria.git"
 	},
 	"bugs": {
-		"url": "https://github.com/displaycoffee/burmecia/issues"
+		"url": "https://github.com/displaycoffee/matt-and-adria/issues"
 	},
 	"browserslist": [
 		"last 2 versions"

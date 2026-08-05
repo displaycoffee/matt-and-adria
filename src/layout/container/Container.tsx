@@ -2,7 +2,7 @@
 import './styles/container.scss';
 
 /* Packages */
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /* Scripts */
 import { useRespond } from '../../_config/scripts/hooks';
@@ -15,18 +15,11 @@ import { Navigation } from '../../components/navigation/Navigation';
 import { Slideout, SlideoutOverlay } from '../../components/slideout/Slideout';
 import { Header } from '../header/Header';
 import { Content } from '../content/Content';
-import { Sidebar } from '../sidebar/Sidebar';
 import { Footer } from '../footer/Footer';
-import { Portal } from '../../targets/portal/Portal';
-
-/* Pages that should exclude the sidebar */
-const excludeSidebar: string[] = ['/page-two'];
 
 export const Container = () => {
 	const { theme, utils } = useAppContext();
-	const location = useLocation();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
-	const sidebar = !excludeSidebar.includes(location.pathname);
 
 	// Set body class using custom hook
 	useBodyClass('home');
@@ -58,15 +51,13 @@ export const Container = () => {
 					<Navigation label={'Header Navigation'} />
 				) : (
 					<Slideout options={slideoutOptions}>
-						<Navigation disableTransition={true} label={'Mobile Navigation'} />
+						<Navigation label={'Mobile Navigation'} />
 					</Slideout>
 				)}
 
 				<main id="main-content" className="main">
 					<div className="main-layout flex-wrap">
 						<Content />
-
-						<Sidebar show={sidebar} />
 					</div>
 				</main>
 
@@ -75,13 +66,6 @@ export const Container = () => {
 				<button className="pointer unstyled a" type="button" aria-label="Scroll to top button" onClick={(e) => utils.scrollTo(e, '#index')}>
 					Scroll to top
 				</button>
-
-				<Portal element={'#portal'}>
-					<p>
-						This is an example of a portal from index.html. It could also be added inside other components to access details of that
-						component.
-					</p>
-				</Portal>
 			</ErrorBoundary>
 		</div>
 	);

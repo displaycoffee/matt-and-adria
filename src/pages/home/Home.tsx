@@ -1,52 +1,38 @@
 /* Styles */
 import './styles/home.scss';
 
-/* Components */
-import { Dropdown } from '../../components/dropdown/Dropdown';
+/* Packages */
+import { Fragment } from 'react';
+
+/* Scripts */
+import { navigationUtils } from '../../components/navigation/scripts/navigation-utils';
+
+/* Get navigation menu */
+const navigationList = navigationUtils.get.list();
 
 export const Home = () => {
 	return (
 		<div className="home margin-trim">
-			<h2>Home</h2>
+			{navigationList.length != 0
+				? navigationList.map((nav) => {
+						const navProps = nav?.props ?? {};
 
-			<p>this is an index page.</p>
+						return (
+							<Fragment key={nav.id}>
+								<nav.element {...navProps} />
+							</Fragment>
+						);
+					})
+				: null}
+			{/* <Section label={'Date and Time'}>hello 1</Section>
 
-			<Dropdown buttonLabel={'Label'}>
-				<ul>
-					<li>Item 1</li>
-					<li>Item 2</li>
-					<li>Item 3</li>
-					<li>Item 4</li>
-				</ul>
-			</Dropdown>
+			<Section label={'Location'}>hello 2</Section>
 
-			<ul>
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</ul>
+			<Section label={'Nearby Airports'}>hello 3</Section>
 
-			<ul className="unstyled">
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</ul>
+			<Section label={'Photos'}>hello 4</Section>
 
-			<ol>
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</ol>
-
-			<ol className="unstyled">
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</ol>
+			<Section label={'Credits'}>hello 5</Section> */}
 		</div>
 	);
 };

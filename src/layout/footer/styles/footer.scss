@@ -17,123 +17,102 @@
 	// Style block
 
 	.footer {
-		.footer-wrapper {
-			display: inline-block;
-			width: 100%;
-		}
-		&, .footer-container, .footer-container .footer-copyright {			
+		&, .footer-container {
 			position: relative;
 		}
-		.footer-background, .footer-background:before, .footer-container .flower {
-			position: absolute;
-		}
-		.footer-background, .footer-container .flower {
-			bottom: 0;
-		}
-		.footer-layout {
-			margin-top: $footer-margin;
-			padding: $footer-padding 0;
-		}
 		.footer-background {
+			@include mixins.flex-layout((flex-flow: column wrap));
 			top: 0;
-			background-color: theme.$color-10;
-			border-top: theme.$spacing-x1 solid theme.$color-11;
-			&, &:before {
-				@include mixins.position($left: 0, $right: 0);
+			bottom: 0;
+			margin: auto;
+			&, .footer-background-middle {
+				@include mixins.position($type: absolute, $left: 0, $right: 0, $z: 1);
 			}
-			&:before {
-				content: '';
-				display: block;
+			.footer-background-top, .footer-background-bottom {
+				min-height: 1px;
+				@include mixins.flex(0 1 auto);
+			}
+			.footer-background-top {
+				height: 25%;
+			}
+			.footer-background-middle {
+				top: 40%;
 				border-bottom: 2.5px dashed theme.$color-03;
-				top: 10%;
+			}
+			.footer-background-bottom {
+				height: 75%;
+				background: theme.$color-10 url('/assets/images/theme/pattern.jpg');
+				border-top: theme.$spacing-x1 solid theme.$color-11;
 			}
 		}
 		.footer-container {
-			.footer-copyright {
-				z-index: 2;
-				text-align: center;
-				max-width: 75%;
-				margin: 0 auto;
-				&, button.a {
-					text-shadow: 0 2px 0 theme.$color-11;
-				}
-				&, a:active, a:hover, .a:active, .a:hover {
-					color: theme.$color-01;
-				}
-				.footer-bullet {
-					display: block;
-					font-size: 0;
-					padding: 0 theme.$spacing-x2;
-				}
-			}
-			.flower { 
-				top: -#{$footer-margin};
+			padding: 0 theme.$spacing-x4;
+			z-index: 2;
+			.footer-flower {
+				width: 25%;
 				img {
 					@include mixins.sizing(100%, 100%);
 					@include mixins.object-fit(center, contain);
 				}
 			}
-			.flower-left {
-				left: theme.$spacing-x4;
-			}
-			.flower-right {
-				right: theme.$spacing-x4;
-			}
-		}
-	}
-	@include mixins.respond-min(theme.$bp-01) {
-		.footer {
-			.footer-layout {
-				margin-top: $footer-margin + $footer-bp-01-adjust;
-				padding: ($footer-padding + $footer-bp-01-adjust) 0;
-			}
-			.footer-background:before {
-				top: 15%;
-			}
-			.footer-container .flower {
-				top: -#{$footer-margin + $footer-bp-01-adjust};
+			.footer-content {
+				@include mixins.flex;
+				.footer-copyright {
+					padding: 25% 0 0 0;
+					font-size: functions.em(12px, rem);
+					text-align: center;
+					&, button.a {
+						text-shadow: 0 2px 0 theme.$color-11;
+					}
+					&, a:active, a:hover, .a:active, .a:hover {
+						color: theme.$color-01;
+					}
+					.footer-bullet {
+						display: block;
+						font-size: 0;
+						padding: 0 theme.$spacing-x2;
+					}
+				}
 			}
 		}
 	}
 	@include mixins.respond-min(theme.$bp-02) {
 		.footer {
-			.footer-layout {
-				margin-top: $footer-margin + $footer-bp-02-adjust;
-				padding: ($footer-padding + $footer-bp-02-adjust) 0;
+			.footer-background {
+				.footer-background-top {
+					height: 34%;
+				}
+				.footer-background-middle {
+					top: 46%;
+				}
+				.footer-background-bottom {
+					height: 66%;
+				}
 			}
-			.footer-background:before {
-				top: 20%;
+			.footer-container {
+				.footer-content {
+					.footer-copyright {
+						padding-top: 20%;
+						font-size: functions.em(theme.$font-size-global, rem);
+					}
+				}
 			}
-			.footer-container .flower {
-				top: -#{$footer-margin + $footer-bp-02-adjust};
+		}
+	}
+	@include mixins.respond-min(theme.$bp-03) {
+		.footer {
+			.footer-container {
+				.footer-content .footer-copyright .footer-bullet {
+					display: inline;
+					font-size: inherit;
+				}
 			}
 		}
 	}
 	@include mixins.respond-min(theme.$bp-04) {
 		.footer {
-			.footer-layout {
-				margin-top: $footer-margin + $footer-bp-04-adjust;
-				padding: ($footer-padding + $footer-bp-04-adjust) 0;
-			}
-			.footer-background:before {
-				top: 25%;
-			}
 			.footer-container {
-				.footer-copyright {
-					.footer-bullet {
-						display: inline;
-						font-size: functions.em(theme.$font-size-global, rem);
-					}
-				}
-				.flower {
-					top: -#{$footer-margin + $footer-bp-04-adjust};
-				}
-				.flower-left {
-					left: 0;
-				}
-				.flower-right {
-					right: 0;
-				}
+				padding: 0;
 			}
 		}
 	}

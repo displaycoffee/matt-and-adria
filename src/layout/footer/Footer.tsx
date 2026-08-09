@@ -13,32 +13,40 @@ export const Footer = () => {
 
 	return (
 		<footer className="footer container-offset">
-			<div className="footer-wrapper">
-				<div className="footer-background footer-layout"></div>
+			<div className="footer-background">
+				<div className="footer-background-top"></div>
 
-				<div className="footer-container footer-layout container-width">
-					<div className="flower flower-left">
-						<Image alt={'Flower Left'} hasLazy={false} hasWrapper={false} image={'/assets/images/theme/flower-left.png'} />
+				<div className="footer-background-middle"></div>
+
+				<div className="footer-background-bottom"></div>
+			</div>
+
+			<div className="footer-container container-width">
+				<div className="row row-auto row-nowrap row-align-items-center row-spacing-20">
+					<div className="column footer-flower footer-flower-left">
+						<Image alt={'Flower Left'} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-left.png'} />
 					</div>
 
-					<div className="footer-copyright">
-						&copy; {date}{' '}
-						<button
-							className="pointer unstyled a"
-							type="button"
-							aria-label="Scroll to top button"
-							onClick={(e) => utils.scrollTo(e, '#index')}
-						>
-							MattAndAdria.com
-						</button>
-						<span className="footer-bullet">&bull;</span>Design by{' '}
-						<a href="//display.coffee" target="_blank" rel="noreferrer">
-							displaycoffee
-						</a>
+					<div className="column footer-content">
+						<div className="footer-copyright">
+							&copy; {date}{' '}
+							<button
+								className="pointer unstyled a"
+								type="button"
+								aria-label="Scroll to top button"
+								onClick={(e) => utils.scrollTo(e, '#index')}
+							>
+								MattAndAdria.com
+							</button>
+							<span className="footer-bullet">&bull;</span>Design by{' '}
+							<a href="//display.coffee" target="_blank" rel="noreferrer">
+								displaycoffee
+							</a>
+						</div>
 					</div>
 
-					<div className="flower flower-right">
-						<Image alt={'Flower Right'} hasLazy={false} hasWrapper={false} image={'/assets/images/theme/flower-right.png'} />
+					<div className="column footer-flower footer-flower-right">
+						<Image alt={'Flower Right'} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-right.png'} />
 					</div>
 				</div>
 			</div>

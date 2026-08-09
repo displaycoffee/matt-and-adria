@@ -1,9 +1,3 @@
-// /* Styles */
-// import './styles/dropdown.scss';
-
-// /* Packages */
-// import { useEffect, useRef, useState } from 'react';
-
 /* Scripts */
 import { HomeProps } from '../scripts/home-types';
 
@@ -15,7 +9,26 @@ export const Credits = (props: HomeProps) => {
 
 	return (
 		<Section id={id} label={label}>
-			Credits
+			<p>
+				<strong>Special thanks to:</strong>
+			</p>
+
+			<ul>
+				<li>Gary at the "Lodge at Elk Valley".</li>
+				<li>Josh Brambila and Carl Vaeth for cooking delicious BBQ.</li>
+				<li>
+					<a href="//adventureinstead.com" target="_blank" rel="noreferrer">
+						Adventure Instead
+					</a>{' '}
+					(Maddie Mae) for photography.
+				</li>
+				<li>
+					<a href="//www.toptal.com/designers/subtlepatterns/dot-grid-pattern" target="_blank" rel="noreferrer">
+						Subtle Patterns
+					</a>{' '}
+					for the footer background.
+				</li>
+			</ul>
 		</Section>
 	);
 };

@@ -3,6 +3,7 @@ type Section = {
 	children: ReactNode;
 	id: string;
 	label: string;
+	showHeader?: boolean;
 };
 
 /* Export prop types */

@@ -70,10 +70,10 @@
 		& > li {
 			position: relative;
 			margin: 0 0 theme.$spacing-x1 0;
-			padding: 0 0 0 theme.$spacing-x4;
+			padding: 0 0 0 theme.$spacing-x6;
 			&:before {
 				display: block;
-				@include mixins.position($type: absolute, $left: 0);
+				@include mixins.position($type: absolute, $left: theme.$spacing-x2);
 			}
 			&:last-child, ul, ol {
 				margin-bottom: 0;
@@ -103,7 +103,7 @@
 	// Colors
 
 	$base-helpers-color-01: theme.$color-03; // scrollbar background
-	$base-helpers-color-02: theme.$color-10; // scrollbar foreground
+	$base-helpers-color-02: theme.$color-07; // scrollbar foreground
 
 	// Configuration
 

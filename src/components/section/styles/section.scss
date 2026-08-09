@@ -1,0 +1,22 @@
+// Use utils and theme variables
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/theme/_theme';
+
+//// SECTION
+//// --------------------------------------------------------------------------
+
+	.section {
+		margin: 0 0 theme.$spacing-x8 0;
+		padding: 0 0 theme.$spacing-x8 0;
+		border-bottom: 1px dashed theme.$color-06;
+		&:last-child {
+			margin-bottom: 0;
+		}
+		.section-button {
+			.icon-wrapper {
+				@include mixins.position($type: relative, $top: 2px);
+				margin: 0 theme.$spacing-x1 0 0;
+			}
+		}
+	}

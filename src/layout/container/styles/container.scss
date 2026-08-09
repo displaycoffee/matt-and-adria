@@ -57,11 +57,6 @@
 		margin-left: -#{theme.$spacing-x4};
 		margin-right: -#{theme.$spacing-x4};
 	}
-	.blue-bar {
-		background-color: theme.$color-07;
-		padding: theme.$spacing-x2 theme.$spacing-x4;
-		border-bottom: 10px solid theme.$color-08;
-	}
 	.main {
 		min-height: 50vh;
 		.main-layout {

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 //// BREAKPOINTS
 //// --------------------------------------------------------------------------
 //// Note: set without unit
@@ -35,12 +37,12 @@
 	$color-03: #fdfdfd; // main background
 	$color-04: #4a3d33; // light text
 	$color-05: #1da1e5; // links
-	$color-06: #1da1e5; // header text
-	$color-07: #1da1e5; // primary blue
-	$color-08: #0a6b9d; // secondary blue
-	$color-09: rgba(#000000, 0.75); // overlay
-	$color-10: #4a3d34; // footer background
-	$color-11: false;
+	$color-06: #1da1e5; // primary blue
+	$color-07: #0a6b9d; // secondary blue
+	$color-08: darken(#fdfdfd, 10%); // light gray
+	$color-09: rgba(#fdfdfd, 0.50); // overlay
+	$color-10: #4a3d34; // primary brown
+	$color-11: #231e1a; // secondary brown
 	$color-12: #f7f79e; // highlights and errors
 
 //// FONTS

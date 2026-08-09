@@ -15,7 +15,7 @@ import { Content } from '../content/Content';
 import { Footer } from '../footer/Footer';
 
 export const Container = () => {
-	const { theme, utils } = useAppContext();
+	const { theme } = useAppContext();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
 
 	// Set body class using custom hook
@@ -61,10 +61,6 @@ export const Container = () => {
 				</main>
 
 				<Footer />
-
-				<button className="pointer unstyled a" type="button" aria-label="Scroll to top button" onClick={(e) => utils.scrollTo(e, '#index')}>
-					Scroll to top
-				</button>
 			</ErrorBoundary>
 		</div>
 	);

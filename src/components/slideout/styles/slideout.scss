@@ -62,13 +62,19 @@
 			background-color: $slideout-color-02;
 			z-index: 9999;
 			padding: $slideout-spacing;
+			.slideout-border {
+				@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: 0, $z: 1);
+				border-right: 1px solid theme.$color-08;
+			}
 			.slideout-header {
+				@include mixins.position($type: relative, $z: 2);
 				padding: 0 $slideout-spacing;
 				margin: -#{$slideout-spacing} -#{$slideout-spacing} $slideout-spacing -#{$slideout-spacing};
 				height: $slideout-header;
 				@include mixins.flex-layout((align-items: center));
 				@include mixins.gap(theme.$spacing-x2);
-				background-color: theme.$color-07;
+				background-color: theme.$color-06;
+				border-bottom: theme.$spacing-x1 solid theme.$color-07;
 				.slideout-title, .slideout-close {
 					margin: 0;
 					line-height: 1;

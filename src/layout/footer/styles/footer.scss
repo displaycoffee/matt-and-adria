@@ -6,10 +6,134 @@
 //// FOOTER
 //// --------------------------------------------------------------------------
 
+	// Configuration 
+
+	$footer-margin: 40px;
+	$footer-padding: 20px;
+	$footer-bp-01-adjust: 20px;
+	$footer-bp-02-adjust: 40px;
+	$footer-bp-04-adjust: 60px;
+
 	// Style block
 
 	.footer {
-		p {
-			margin: 0;
+		.footer-wrapper {
+			display: inline-block;
+			width: 100%;
+		}
+		&, .footer-container, .footer-container .footer-copyright {			
+			position: relative;
+		}
+		.footer-background, .footer-background:before, .footer-container .flower {
+			position: absolute;
+		}
+		.footer-background, .footer-container .flower {
+			bottom: 0;
+		}
+		.footer-layout {
+			margin-top: $footer-margin;
+			padding: $footer-padding 0;
+		}
+		.footer-background {
+			top: 0;
+			background-color: theme.$color-10;
+			border-top: theme.$spacing-x1 solid theme.$color-11;
+			&, &:before {
+				@include mixins.position($left: 0, $right: 0);
+			}
+			&:before {
+				content: '';
+				display: block;
+				border-bottom: 2.5px dashed theme.$color-03;
+				top: 10%;
+			}
+		}
+		.footer-container {
+			.footer-copyright {
+				z-index: 2;
+				text-align: center;
+				max-width: 75%;
+				margin: 0 auto;
+				&, button.a {
+					text-shadow: 0 2px 0 theme.$color-11;
+				}
+				&, a:active, a:hover, .a:active, .a:hover {
+					color: theme.$color-01;
+				}
+				.footer-bullet {
+					display: block;
+					font-size: 0;
+					padding: 0 theme.$spacing-x2;
+				}
+			}
+			.flower { 
+				top: -#{$footer-margin};
+				img {
+					@include mixins.sizing(100%, 100%);
+					@include mixins.object-fit(center, contain);
+				}
+			}
+			.flower-left {
+				left: theme.$spacing-x4;
+			}
+			.flower-right {
+				right: theme.$spacing-x4;
+			}
+		}
+	}
+	@include mixins.respond-min(theme.$bp-01) {
+		.footer {
+			.footer-layout {
+				margin-top: $footer-margin + $footer-bp-01-adjust;
+				padding: ($footer-padding + $footer-bp-01-adjust) 0;
+			}
+			.footer-background:before {
+				top: 15%;
+			}
+			.footer-container .flower {
+				top: -#{$footer-margin + $footer-bp-01-adjust};
+			}
+		}
+	}
+	@include mixins.respond-min(theme.$bp-02) {
+		.footer {
+			.footer-layout {
+				margin-top: $footer-margin + $footer-bp-02-adjust;
+				padding: ($footer-padding + $footer-bp-02-adjust) 0;
+			}
+			.footer-background:before {
+				top: 20%;
+			}
+			.footer-container .flower {
+				top: -#{$footer-margin + $footer-bp-02-adjust};
+			}
+		}
+	}
+	@include mixins.respond-min(theme.$bp-04) {
+		.footer {
+			.footer-layout {
+				margin-top: $footer-margin + $footer-bp-04-adjust;
+				padding: ($footer-padding + $footer-bp-04-adjust) 0;
+			}
+			.footer-background:before {
+				top: 25%;
+			}
+			.footer-container {
+				.footer-copyright {
+					.footer-bullet {
+						display: inline;
+						font-size: functions.em(theme.$font-size-global, rem);
+					}
+				}
+				.flower {
+					top: -#{$footer-margin + $footer-bp-04-adjust};
+				}
+				.flower-left {
+					left: 0;
+				}
+				.flower-right {
+					right: 0;
+				}
+			}
 		}
 	}

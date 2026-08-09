@@ -69,15 +69,18 @@ export const Slideout = (props: SlideoutProps) => {
 					</button>
 				</header>
 
+				<div className="slideout-border"></div>
+
 				<div className="slideout-scrollbar scrollbar">
 					<div
 						className="slideout-content"
 						onClick={(e) => {
-							const eventNode = e.target as Node;
+							const eventElement = e.target as HTMLElement;
 
-							// Close slideout menu if inner link is clicked on
-							if (eventNode?.nodeName) {
-								if (eventNode.nodeName.toLowerCase() === 'a') {
+							// Close slideout menu if inner nav button is clicked on
+							if (eventElement) {
+								const elementName = eventElement?.nodeName?.toLowerCase() ?? '';
+								if (elementName === 'a' || (elementName === 'button' && eventElement.classList.contains('a'))) {
 									setTimeout(() => {
 										toggle(e, false);
 									});

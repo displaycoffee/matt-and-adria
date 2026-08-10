@@ -3,13 +3,15 @@ import './styles/footer.scss';
 
 /* Scripts */
 import { useAppContext } from '../../context/scripts/context-hooks';
+import { useRespond } from '../../_config/scripts/hooks';
 
 /* Components */
 import { Image } from '../../components/image/Image';
 
 export const Footer = () => {
-	const { utils } = useAppContext();
+	const { theme, utils } = useAppContext();
 	const date = new Date().getFullYear();
+	const isDesktop = useRespond(theme.bps.bp02 as number);
 
 	return (
 		<footer className="footer container-offset">
@@ -22,7 +24,7 @@ export const Footer = () => {
 			</div>
 
 			<div className="footer-container container-width">
-				<div className="row row-auto row-nowrap row-align-items-center row-spacing-20">
+				<div className={`row row-auto row-nowrap row-align-items-center row-spacing-${isDesktop ? '20' : '10'}`}>
 					<div className="column footer-flower footer-flower-left">
 						<Image alt={'Flower Left'} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-left.png'} />
 					</div>

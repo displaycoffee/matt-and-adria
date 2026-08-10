@@ -1,9 +1,3 @@
-// /* Styles */
-// import './styles/dropdown.scss';
-
-// /* Packages */
-// import { useEffect, useRef, useState } from 'react';
-
 /* Scripts */
 import { HomeProps } from '../scripts/home-types';
 
@@ -15,7 +9,17 @@ export const DateAndTime = (props: HomeProps) => {
 
 	return (
 		<Section id={id} label={label}>
-			DateAndTime
+			<ul>
+				<li>
+					<strong>Date:</strong> September 7, 2013
+				</li>
+				<li>
+					<strong>Time:</strong> 5:30pm MDT
+				</li>
+				<li>
+					<strong>Location:</strong> Both the wedding and reception will be held at the "Lodge at Elk Valley" (see below)
+				</li>
+			</ul>
 		</Section>
 	);
 };

@@ -69,11 +69,11 @@
 		margin: 0 0 $base-elements-spacing 0;
 		& > li {
 			position: relative;
-			margin: 0 0 theme.$spacing-x1 0;
-			padding: 0 0 0 theme.$spacing-x6;
+			margin: 0 0 calc(theme.$spacing-x1 / 2) 0;
+			padding: 0 0 0 theme.$spacing-x4;
 			&:before {
 				display: block;
-				@include mixins.position($type: absolute, $left: theme.$spacing-x2);
+				@include mixins.position($type: absolute, $left: 0);
 			}
 			&:last-child, ul, ol {
 				margin-bottom: 0;

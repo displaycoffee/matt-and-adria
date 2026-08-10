@@ -14,4 +14,36 @@
 				text-align: right;
 			}
 		}
+		#section-location {
+			.section-content {
+				.row-section {
+					.column-photo, .column-content {
+						width: 100%;
+					}
+				}
+				.row-address {
+					.icon-wrapper {
+						@include mixins.position($type: relative, $top: 2px);
+						margin: 0 theme.$spacing-x1 0 0;
+					}
+				}	
+			}
+		}
+	}
+	@include mixins.respond-min(theme.$bp-02) {
+		.page-home {
+			#section-location {
+				.section-content {
+					.row-section {
+						.column-photo {
+							width: 320px;
+						}
+						.column-content {
+							@include mixins.flex;
+							width: auto;
+						}
+					}	
+				}
+			}
+		}
 	}

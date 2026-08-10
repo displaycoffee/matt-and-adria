@@ -10,9 +10,9 @@ export const Welcome = (props: HomeProps) => {
 	return (
 		<Section id={id} label={label} contentOnly={contentOnly}>
 			<p>
-				Thanks for visiting our wedding website! We're glad you can make it for this awesome event in our lives. We will attempt to keep this
-				website updated with information. If you have any other questions, please contact Matt or Adria. Otherwise, we look forward to seeing
-				you on September 7, 2013!
+				Thanks for visiting our wedding website! If you attended on <strong>September 7, 2013</strong>, we're glad you made it for this
+				awesome event in our lives. Though the wedding is over, the memories (and this website) remain. If you weren't able to attend, rest
+				assured you were there in spirit, partying hard.
 			</p>
 
 			<h3 className="signature">matt and adria</h3>

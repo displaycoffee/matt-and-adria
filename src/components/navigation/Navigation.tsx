@@ -12,16 +12,15 @@ import { navigationUtils } from './scripts/navigation-utils';
 
 /* Get navigation menu */
 const navigationList = navigationUtils.get.list();
-const filteredList = navigationList.length != 0 ? navigationList.filter((nav) => nav.label != 'Welcome') : [];
 
 export const Navigation = (props: NavigationComponentProps) => {
 	const { label } = props;
 
-	return filteredList.length != 0 ? (
+	return navigationList.length != 0 ? (
 		<nav className="navigation" aria-label={label}>
 			<ul className="navigation-list unstyled">
-				{filteredList.map((nav, index) => {
-					const isLast = index === filteredList.length - 1;
+				{navigationList.map((nav, index) => {
+					const isLast = index === navigationList.length - 1;
 
 					return (
 						<Fragment key={nav.id}>

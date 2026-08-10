@@ -12,6 +12,8 @@
 		border-bottom: 1px dashed theme.$color-06;
 		&:last-child {
 			margin-bottom: 0;
+			padding-bottom: 0;
+			border-bottom-width: 0;
 		}
 		.section-button {
 			.icon-wrapper {

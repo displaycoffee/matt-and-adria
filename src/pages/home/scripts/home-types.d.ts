@@ -1,8 +1,8 @@
 /* Type definitions */
 type Home = {
+	contentOnly?: boolean;
 	id: string;
 	label: string;
-	showHeader?: boolean;
 };
 
 /* Export prop types */

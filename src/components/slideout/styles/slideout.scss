@@ -9,11 +9,12 @@
 	// Colors
 
 	$slideout-color-01: theme.$color-09; // overlay
-	$slideout-color-02: theme.$color-03; // menu background
+	$slideout-color-02: theme.$color-03; // content background
 
 	// Configuration
 
 	$slideout-spacing: theme.$spacing-x4; // overall spacing value
+	$slideout-transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; // transition properties for slideout
 	$slideout-header: 60px; // height of header (determines scrollable area)
 
 	// Style block
@@ -26,13 +27,12 @@
 			visibility: visible;
 		}
 	}
-	.slideout-overlay, .slideout .slideout-menu {
-		@include mixins.position($type: fixed);
+	.slideout-overlay, .slideout .slideout-content {
+		@include mixins.position($type: fixed, $top: 0, $bottom: 0, $left: 0, $right: 0);
 	}
 	.slideout-overlay {
 		@include mixins.transition(opacity 0.5s ease-in-out);
 		background-color: $slideout-color-01;
-		@include mixins.position($top: 0, $bottom: 0, $left: 0, $right: 0);
 		z-index: -1;
 		opacity: 0;
 		visibility: hidden;
@@ -45,7 +45,7 @@
 	}
 	.slideout {
 		&.slideout-vertical {
-			.slideout-menu {
+			.slideout-content {
 				height: 80%;
 				height: calc(100% - calc($slideout-spacing * 2));
 				@include mixins.position($left: 0, $right: 0);
@@ -53,18 +53,34 @@
 			}
 		}
 		&.slideout-horizontal {
-			.slideout-menu {
+			.slideout-content {
 				@include mixins.position($top: 0, $bottom: 0);
 			}
 		}
-		.slideout-menu {
+		&.slideout-left, &.slideout-right {
+			.slideout-content .slideout-border {
+				border-width: 0;
+			}
+		}
+		&.slideout-left {
+			.slideout-content .slideout-border {
+				border-right-width: 1px;
+			}
+		}
+		&.slideout-right {
+			.slideout-content .slideout-border {
+				border-left-width: 1px;
+			}
+		}
+		.slideout-content {
 			max-width: 100%;
 			background-color: $slideout-color-02;
 			z-index: 9999;
 			padding: $slideout-spacing;
+			@include mixins.transition($slideout-transition);
 			.slideout-border {
-				@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: 0, $z: 1);
-				border-right: 1px solid theme.$color-08;
+				@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: 0, $left: 0, $z: 1);
+				border: 1px solid theme.$color-08;
 			}
 			.slideout-header {
 				@include mixins.position($type: relative, $z: 2);
@@ -88,6 +104,7 @@
 				}
 			}
 			.slideout-scrollbar {
+				@include mixins.position($type: relative, $z: 2);
 				overflow-y: auto;
 				overflow-x: hidden;
 				height: 100%;

@@ -13,8 +13,8 @@
 	
 	// Configuration
 	
-	$gallery-transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 	$gallery-spacing: theme.$spacing-x4; // overall spacing value
+	$gallery-transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; // transition properties for gallery
 	$gallery-header: 60px; // height of header (determines scrollable area)
 
 	// Style block

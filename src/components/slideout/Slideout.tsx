@@ -17,22 +17,18 @@ export const Slideout = (props: SlideoutProps) => {
 	const { children, options } = props;
 	const { config, get, toggle } = slideout;
 	const fallbackId = useFormattedId();
-	const slideoutId = `slideout-${options?.id ?? fallbackId}`;
-	const slideoutTitle = `${slideoutId}-title`;
+	const id = `slideout-${options?.id ?? fallbackId}`;
+	const title = `${id}-title`;
 
 	// Get default attributes for slideout
 	const width = options?.width ?? config.values.width;
 	const direction = options?.direction ?? config.values.direction;
-	const orientation = get.orientation(direction);
-	const styles = {
-		width: width,
-		transition: `${direction} 0.5s ease-in-out`,
-		[direction]: orientation === 'vertical' ? config.values.vertical : `-${width}`,
-	};
+	const orientation = slideout.get.orientation(direction);
+	const styles = get.styles(direction, width);
 
 	// Create shared slideout button
 	const slideoutButton = (
-		<button className="slideout-button unstyled pointer" type="button" aria-label="Slideout button" onClick={(e) => toggle(e, slideoutId)}>
+		<button className="slideout-button unstyled pointer" type="button" onClick={(e) => toggle(e, id)}>
 			<Icon id={'heart'} size={'large'} />
 			{options.label}
 		</button>
@@ -45,17 +41,16 @@ export const Slideout = (props: SlideoutProps) => {
 		slideoutButton
 	) : (
 		<div
-			id={slideoutId}
-			className={`${config.classes.slideout} slideout-${orientation}`}
+			id={id}
+			className={`${config.classes.slideout} slideout-${orientation} slideout-${direction}`}
 			data-width={width}
 			data-direction={direction}
-			data-orientation={orientation}
 		>
 			{!button.outside && button.show ? slideoutButton : null}
 
-			<div className={config.classes.menu} style={styles} inert role="dialog" aria-modal="true" aria-labelledby={slideoutTitle}>
+			<div className={config.classes.content} style={styles} inert role="dialog" aria-modal="true" aria-labelledby={title}>
 				<header className="slideout-header flex-nowrap flex-align-items-center">
-					<h2 id={slideoutTitle} className="slideout-title h-text">
+					<h2 id={title} className="slideout-title h-text">
 						{options.label}
 					</h2>
 
@@ -73,11 +68,11 @@ export const Slideout = (props: SlideoutProps) => {
 
 				<div className="slideout-scrollbar scrollbar">
 					<div
-						className="slideout-content"
+						className="slideout-body"
 						onClick={(e) => {
 							const eventElement = e.target as HTMLElement;
 
-							// Close slideout menu if inner nav button is clicked on
+							// Close slideout content if inner nav button is clicked on
 							if (eventElement) {
 								const elementName = eventElement?.nodeName?.toLowerCase() ?? '';
 								if (elementName === 'a' || (elementName === 'button' && eventElement.classList.contains('a'))) {
@@ -123,7 +118,7 @@ export const SlideoutOverlay = (props: SlideoutOverlayProps) => {
 		};
 	}, [utils, toggle]);
 
-	// If we are on desktop and a slideout is active, fully close it (menu state, focus trap, focus restore, overlay)
+	// If we are on desktop and a slideout is active, fully close it (content state, focus trap, focus restore, overlay)
 	useEffect(() => {
 		if (!options.isDesktop) return;
 
@@ -134,13 +129,11 @@ export const SlideoutOverlay = (props: SlideoutOverlayProps) => {
 			set.slideout(element, 'remove');
 		});
 
-		if (activeElements.length !== 0) {
-			set.body('remove');
-		}
+		set.body('remove');
 	}, [config, options.isDesktop, set]);
 
 	// Close active slideout(s) when escape is pressed
-	// Note: set.slideout already restores focus to whatever opened the menu
+	// Note: set.slideout already restores focus to whatever opened the content
 	useEffect(() => {
 		const activeSelector = `.${config.classes.slideout}.${config.classes.active}`;
 

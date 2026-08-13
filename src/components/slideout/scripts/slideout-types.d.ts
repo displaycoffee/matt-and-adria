@@ -12,8 +12,7 @@ type SlideoutOptions = {
 		id?: string;
 		isDesktop: boolean;
 		label: string;
-		orientation?: string;
-		width?: number;
+		width?: string;
 	};
 };
 

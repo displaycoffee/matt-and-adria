@@ -1,10 +1,10 @@
 /* Type definitions */
+type Gallery = GalleryImage[];
+
 type GalleryImage = {
 	alt: string;
 	image: string;
 };
-
-type Gallery = GalleryImage[];
 
 type GalleryOptions = {
 	images?: GalleryImage[];
@@ -25,8 +25,8 @@ type GalleryOverlay = {
 };
 
 /* Export prop types */
+export type GalleryProps = GalleryOptions;
+
 export type GalleryImageProps = GalleryImage;
 
 export type GalleryOverlayProps = GalleryOverlay;
-
-export type GalleryProps = GalleryOptions;

@@ -1,3 +1,6 @@
+/* Packages */
+import { CSSProperties } from 'react';
+
 // Selector for elements that can receive focus, used to trap Tab within an open slideout
 const focusableSelector =
 	'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -15,11 +18,11 @@ const isVisible = (el: HTMLElement) => {
 	return style.visibility !== 'hidden' && style.display !== 'none';
 };
 
-// Keep Tab / Shift + Tab cycling within the slideout menu while it's open
-const trapFocus = (menu: HTMLElement, e: KeyboardEvent) => {
+// Keep Tab / Shift + Tab cycling within the slideout content while it's open
+const trapFocus = (content: HTMLElement, e: KeyboardEvent) => {
 	if (e.key !== 'Tab') return;
 
-	const focusable = Array.from(menu.querySelectorAll<HTMLElement>(focusableSelector)).filter(isVisible);
+	const focusable = Array.from(content.querySelectorAll<HTMLElement>(focusableSelector)).filter(isVisible);
 	if (focusable.length === 0) return;
 
 	const first = focusable[0];
@@ -42,19 +45,38 @@ export const slideout = {
 			active: 'slideout-active',
 			overlay: 'slideout-overlay',
 			slideout: 'slideout',
-			menu: 'slideout-menu',
+			content: 'slideout-content',
 		},
 		values: {
 			// Default values if props are not defined
 			width: '350px',
 			direction: 'left',
-			vertical: '110%',
 		},
 	},
 	get: {
 		orientation: (direction: string) => {
 			// Get orientation of slideout
 			return direction === 'top' || direction === 'bottom' ? 'vertical' : 'horizontal';
+		},
+		styles: (direction: string, width: string, isActive?: boolean) => {
+			// Set styles for gallery
+			const orientation = slideout.get.orientation(direction);
+			const transform = orientation === 'vertical' ? 'translateY' : 'translateX';
+			const value = `${direction == 'top' || direction == 'left' ? '-' : ''}150%`;
+
+			// Create styles
+			const styles: CSSProperties = {
+				transform: `${transform}(${isActive ? 0 : value})`,
+				width: width,
+			};
+
+			// If horizontal slideout, adjust direction value
+			if (orientation == 'horizontal') {
+				const directionProperty = direction == 'left' ? 'right' : 'left';
+				styles[directionProperty] = 'auto';
+			}
+
+			return styles;
 		},
 	},
 	set: {
@@ -72,41 +94,40 @@ export const slideout = {
 		},
 		slideout: (element: HTMLElement, state: string) => {
 			// Helper function to toggle slideout properties
-			const config = slideout.config;
-			const { classes, values } = config;
-			const menu = element.querySelector(`.${classes.menu}`) as HTMLElement;
+			const { config, get } = slideout;
+			const { classes } = config;
+			const content = element.querySelector(`.${classes.content}`) as HTMLElement;
 
-			if (menu && element?.dataset) {
+			if (content && element?.dataset?.width && element?.dataset?.direction) {
 				// Get data attributes
 				const width = element.dataset.width;
-				const direction = element.dataset.direction as string;
-				const orientation = element.dataset.orientation;
+				const direction = element.dataset.direction;
 
 				// Update elements depending on state
 				if (state === 'add') {
 					element.classList.add(classes.active);
-					menu.style.setProperty(direction, '0');
-					menu.inert = false;
+					Object.assign(content.style, get.styles(direction, width, true));
+					content.inert = false;
 
-					// Remember what had focus so it can be restored on close, then move focus into the menu
+					// Remember what had focus so it can be restored on close, then move focus into the content
 					const opener = document.activeElement as HTMLElement | null;
 					if (opener) openerElements.set(element, opener);
-					menu.querySelector<HTMLElement>('.slideout-close')?.focus();
+					content.querySelector<HTMLElement>('.slideout-close')?.focus();
 
-					// Trap Tab/Shift+Tab within the menu while it's open
-					const handleTrap = (e: KeyboardEvent) => trapFocus(menu, e);
-					trapHandlers.set(menu, handleTrap);
-					menu.addEventListener('keydown', handleTrap);
+					// Trap Tab/Shift+Tab within the content while it's open
+					const handleTrap = (e: KeyboardEvent) => trapFocus(content, e);
+					trapHandlers.set(content, handleTrap);
+					content.addEventListener('keydown', handleTrap);
 				} else {
 					element.classList.remove(classes.active);
-					menu.style.setProperty(direction, orientation === 'vertical' ? values.vertical : `-${width}`);
-					menu.inert = true;
+					Object.assign(content.style, get.styles(direction, width));
+					content.inert = true;
 
-					// Remove the Tab trap and restore focus to whatever opened the menu
-					const handleTrap = trapHandlers.get(menu);
+					// Remove the Tab trap and restore focus to whatever opened the content
+					const handleTrap = trapHandlers.get(content);
 					if (handleTrap) {
-						menu.removeEventListener('keydown', handleTrap);
-						trapHandlers.delete(menu);
+						content.removeEventListener('keydown', handleTrap);
+						trapHandlers.delete(content);
 					}
 					openerElements.get(element)?.focus();
 					openerElements.delete(element);
@@ -120,13 +141,13 @@ export const slideout = {
 		const classes = config.classes;
 		const activeSelector = `.${classes.slideout}.${classes.active}`;
 
-		// Reset active slideout menus
+		// Reset active slideout
 		document.querySelectorAll(activeSelector).forEach((active) => {
 			const element = active as HTMLElement;
 			set.slideout(element, 'remove');
 		});
 
-		// Perform actions for current slideout menu
+		// Perform actions for current slideout
 		if (id) {
 			const element = document.querySelector(`#${id}`) as HTMLElement;
 			const elementState = !element.classList.contains(classes.active) ? 'add' : 'remove';

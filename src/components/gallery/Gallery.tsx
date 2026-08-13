@@ -37,6 +37,11 @@ export const Gallery = (props: GalleryProps) => {
 		<>
 			<div className={config.classes.gallery}>
 				{images.map((image, imageIndex) => {
+					// Determine if gallery element is tall, wide, or square
+					const img = new Image();
+					img.src = image.image;
+					console.log(img);
+
 					return (
 						<button
 							className="gallery-thumbnail pointer unstyled"

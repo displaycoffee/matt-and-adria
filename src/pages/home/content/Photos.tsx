@@ -1,9 +1,3 @@
-// /* Styles */
-// import './styles/dropdown.scss';
-
-// /* Packages */
-// import { useEffect, useRef, useState } from 'react';
-
 /* Scripts */
 import { HomeProps } from '../scripts/home-types';
 
@@ -15,7 +9,10 @@ export const Photos = (props: HomeProps) => {
 
 	return (
 		<Section id={id} label={label}>
-			Photos
+			<p>
+				<strong>Note:</strong> To protect the privacy of others, not all wedding photos are listed here. Rest assured, we have plenty of
+				pictures of drunk and happy folk.
+			</p>
 		</Section>
 	);
 };

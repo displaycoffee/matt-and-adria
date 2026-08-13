@@ -8,7 +8,6 @@ type SlideoutOptions = {
 	children?: ReactNode;
 	options: {
 		button: SlideoutButton;
-		closeOnClick: boolean;
 		direction?: string;
 		id?: string;
 		isDesktop: boolean;

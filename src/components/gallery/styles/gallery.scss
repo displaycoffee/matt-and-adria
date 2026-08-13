@@ -1,0 +1,111 @@
+// Use utils and theme variables
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/theme/_theme';
+
+//// GALLERY
+//// --------------------------------------------------------------------------
+
+	// Colors
+
+	$gallery-color-01: theme.$color-09; // overlay
+	$gallery-color-02: theme.$color-03; // menu background
+	
+	// Configuration
+	
+	$gallery-transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+	$gallery-spacing: theme.$spacing-x4; // overall spacing value
+	$gallery-header: 60px; // height of header (determines scrollable area)
+
+	// Style block
+
+	.gallery-active-body {
+		overflow: hidden;
+		.gallery-overlay {
+			z-index: 9998;
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+	.gallery-overlay, .gallery .gallery-modal {
+		@include mixins.position($type: fixed);
+	}
+	.gallery-overlay {
+		@include mixins.transition($gallery-transition);
+		background-color: $gallery-color-01;
+		@include mixins.position($top: 0, $bottom: 0, $left: 0, $right: 0);
+		z-index: -1;
+		opacity: 0;
+		visibility: hidden;
+	}
+	.gallery-button {
+		@include mixins.flex-layout((align-items: center));
+		@include mixins.gap(theme.$spacing-x2);
+		margin: 0 auto;
+		color: theme.$color-01;
+	}
+	.gallery {
+		&.gallery-vertical {
+			.gallery-modal {
+				height: 80%;
+				height: calc(100% - calc($gallery-spacing * 2));
+				@include mixins.position($left: 0, $right: 0);
+				margin: $gallery-spacing auto;
+			}
+		}
+		&.gallery-horizontal {
+			.gallery-modal {
+				@include mixins.position($top: 0, $bottom: 0);
+			}
+		}
+		.gallery-modal {
+			max-width: 100%;
+			background-color: $gallery-color-02;
+			z-index: 9999;
+			padding: $gallery-spacing;
+			.gallery-border {
+				@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: 0, $z: 1);
+				border-right: 1px solid theme.$color-08;
+			}
+			.gallery-header {
+				@include mixins.position($type: relative, $z: 2);
+				padding: 0 $gallery-spacing;
+				margin: -#{$gallery-spacing} -#{$gallery-spacing} $gallery-spacing -#{$gallery-spacing};
+				height: $gallery-header;
+				@include mixins.flex-layout((align-items: center));
+				@include mixins.gap(theme.$spacing-x2);
+				background-color: theme.$color-06;
+				border-bottom: theme.$spacing-x1 solid theme.$color-07;
+				.gallery-title, .gallery-close {
+					margin: 0;
+					line-height: 1;
+					color: theme.$color-01;
+				}
+				.gallery-title {
+					font-size: functions.em(20px, rem);
+				}
+				.gallery-close {
+					margin-left: auto;
+				}
+			}
+			.gallery-scrollbar {
+				overflow-y: auto;
+				overflow-x: hidden;
+				height: 100%;
+				max-height: 90%;
+				max-height: calc(100% - ($gallery-header + $gallery-spacing));
+				.navigation {
+					.navigation-list {
+						display: block;
+						.navigation-list-item {
+							font-size: functions.em(16px, rem);
+							margin: 0  0 theme.$spacing-x2 0;
+							&:last-child {
+								margin-bottom: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+	}

@@ -2,13 +2,13 @@
 import './styles/gallery.scss';
 
 /* Packages */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 /* Scripts */
 import { useFormattedId } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { GalleryOverlayProps, GalleryProps } from './scripts/gallery-types';
+import { GalleryOverlayProps, GalleryProps, GalleryThumbnailProps } from './scripts/gallery-types';
 import { gallery } from './scripts/gallery';
 
 /* Components */
@@ -37,23 +37,7 @@ export const Gallery = (props: GalleryProps) => {
 		<>
 			<div className={config.classes.gallery}>
 				{images.map((image, imageIndex) => {
-					// Determine if gallery element is tall, wide, or square
-					const img = new Image();
-					img.src = image.image;
-					console.log(img);
-
-					return (
-						<button
-							className="gallery-thumbnail pointer unstyled"
-							style={{ width: '50px', height: '50px' }}
-							type="button"
-							aria-label={`View ${image.alt}`}
-							onClick={(e) => handleToggle(e, imageIndex)}
-							key={image.image}
-						>
-							<Image alt={image.alt} hasLazy={true} image={image.image} />
-						</button>
-					);
+					return <GalleryThumbnail key={image.image} image={image} onClick={(e) => handleToggle(e, imageIndex)} />;
 				})}
 			</div>
 
@@ -67,8 +51,12 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 	const image = images[index];
 	const { utils } = useAppContext();
 	const { config, toggle } = gallery;
+
+	// Overlay functionality
 	const [overlay] = useState(() => {
 		const element = document.createElement('div');
+
+		// Set attributes
 		utils.setAttributes(element, {
 			id: id,
 			class: 'gallery-overlay pointer',
@@ -76,12 +64,17 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 			'aria-modal': 'true',
 			'aria-labelledby': title,
 			'data-direction': direction,
-			style: styles,
 		});
 		element.setAttribute('inert', '');
+
+		// Set styles
+		Object.assign(element.style, styles);
+
+		// Add onclick
 		element.onclick = (e) => {
 			if (e.target === element) toggle(e, false);
 		};
+
 		return element;
 	});
 
@@ -150,4 +143,40 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 	);
 
 	return createPortal(overlayComponent, overlay);
+};
+
+const GalleryThumbnail = (props: GalleryThumbnailProps) => {
+	const { image, onClick } = props;
+	const buttonRef = useRef<HTMLButtonElement>(null);
+	const [orientation, setOrientation] = useState<'tall' | 'wide' | 'square' | null>(null);
+
+	// Determine if thumbnail image is tall, wide, or square once it's loaded
+	useEffect(() => {
+		const img = buttonRef.current?.querySelector('img');
+		if (!img) return;
+
+		const handleLoad = () => {
+			const ratio = img.naturalWidth / img.naturalHeight;
+			setOrientation(ratio > 1.2 ? 'wide' : ratio < 0.8 ? 'tall' : 'square');
+		};
+
+		if (img.complete) {
+			handleLoad();
+		} else {
+			img.addEventListener('load', handleLoad);
+			return () => img.removeEventListener('load', handleLoad);
+		}
+	}, []);
+
+	return (
+		<button
+			ref={buttonRef}
+			className={`gallery-thumbnail${orientation ? ` gallery-thumbnail-${orientation}` : ''} pointer unstyled`}
+			type="button"
+			aria-label={`View ${image.alt}`}
+			onClick={onClick}
+		>
+			<Image alt={image.alt} hasLazy={true} image={image.image} wrapperClasses={['polaroid']} />
+		</button>
+	);
 };

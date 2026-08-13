@@ -1,3 +1,6 @@
+/* Packages */
+import { CSSProperties } from 'react';
+
 // Selector for elements that can receive focus, used to trap Tab within an open gallery
 const focusableSelector =
 	'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -49,12 +52,22 @@ export const gallery = {
 		},
 	},
 	get: {
+		orientation: (direction: string) => {
+			// Get orientation of gallery overlay
+			return direction === 'top' || direction === 'bottom' ? 'vertical' : 'horizontal';
+		},
 		styles: (direction: string, isActive?: boolean) => {
 			// Set styles for gallery
-			const orientation = direction === 'top' || direction === 'bottom' ? 'vertical' : 'horizontal';
+			const orientation = gallery.get.orientation(direction);
 			const transform = orientation === 'vertical' ? 'translateY' : 'translateX';
-			const value = `${direction == 'top' || direction == 'left' ? '-' : ''}100%`;
-			return `transform: ${transform}(${isActive ? 0 : value});`;
+			const value = `${direction == 'top' || direction == 'left' ? '-' : ''}150%`;
+
+			// Create styles
+			const styles: CSSProperties = {
+				transform: `${transform}(${isActive ? 0 : value})`,
+			};
+
+			return styles;
 		},
 	},
 	set: {
@@ -82,7 +95,7 @@ export const gallery = {
 				// Update elements depending on state
 				if (state === 'add') {
 					overlay.classList.add(classes.active);
-					overlay.setAttribute('style', get.styles(direction, true));
+					Object.assign(overlay.style, get.styles(direction, true));
 					overlay.inert = false;
 
 					// Remember what had focus so it can be restored on close, then move focus into the overlay
@@ -96,7 +109,7 @@ export const gallery = {
 					overlay.addEventListener('keydown', handleTrap);
 				} else {
 					overlay.classList.remove(classes.active);
-					overlay.setAttribute('style', get.styles(direction));
+					Object.assign(overlay.style, get.styles(direction));
 					overlay.inert = true;
 
 					// Remove the Tab trap and restore focus to whatever opened the overlay

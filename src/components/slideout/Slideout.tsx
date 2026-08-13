@@ -104,11 +104,17 @@ export const SlideoutOverlay = (props: SlideoutOverlayProps) => {
 		if (!slideoutTarget) return;
 
 		const overlay = document.createElement('div');
+
+		// Set attributes
 		utils.setAttributes(overlay, {
 			class: 'slideout-overlay pointer',
 			role: 'presentation',
 		});
+
+		// Add onclick
 		overlay.onclick = (e) => toggle(e, false);
+
+		// Set children and ref
 		slideoutTarget.appendChild(overlay);
 		elementRef.current = overlay;
 

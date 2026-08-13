@@ -1,3 +1,6 @@
+/* Packages */
+import { CSSProperties } from 'react';
+
 /* Type definitions */
 type Gallery = GalleryImage[];
 
@@ -20,8 +23,13 @@ type GalleryOverlay = {
 	images: GalleryImage[];
 	index: number;
 	setIndex: Dispatch<SetStateAction<number>>;
-	styles: string;
+	styles: CSSProperties;
 	title: string;
+};
+
+type GalleryThumbnail = {
+	image: GalleryImage;
+	onClick: (e: EventsType) => void;
 };
 
 /* Export prop types */
@@ -30,3 +38,5 @@ export type GalleryProps = GalleryOptions;
 export type GalleryImageProps = GalleryImage;
 
 export type GalleryOverlayProps = GalleryOverlay;
+
+export type GalleryThumbnailProps = GalleryThumbnail;

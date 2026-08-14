@@ -14,7 +14,10 @@
 	// Configuration
 
 	$slideout-spacing: theme.$spacing-x4; // overall spacing value
-	$slideout-transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; // transition properties for slideout
+	$slideout-easing-in: cubic-bezier(0.65, 0, 0.80, 0); // slow start, fast finish - used when closing so the fade gets a head start before the slide takes off
+	$slideout-easing-out: cubic-bezier(0.25, 1, 0.35, 1); // fast start, slow finish - used when opening
+	$slideout-transition-closed: opacity 0.6s ease-in-out, transform 0.6s $slideout-easing-in; // transition properties for closing
+	$slideout-transition-open: opacity 0.6s ease-in-out, transform 0.6s $slideout-easing-out; // transition properties for opening
 	$slideout-header: 60px; // height of header (determines scrollable area)
 
 	// Style block
@@ -31,7 +34,7 @@
 		@include mixins.position($type: fixed, $top: 0, $bottom: 0, $left: 0, $right: 0);
 	}
 	.slideout-overlay {
-		@include mixins.transition(opacity 0.5s ease-in-out);
+		@include mixins.transition(opacity 0.6s ease-in-out);
 		background-color: $slideout-color-01;
 		z-index: -1;
 		opacity: 0;
@@ -44,6 +47,11 @@
 		color: theme.$color-01;
 	}
 	.slideout {
+		&.slideout-active {
+			.slideout-content {
+				@include mixins.transition($slideout-transition-open);
+			}
+		}
 		&.slideout-vertical {
 			.slideout-content {
 				height: 80%;
@@ -77,7 +85,7 @@
 			background-color: $slideout-color-02;
 			z-index: 9999;
 			padding: $slideout-spacing;
-			@include mixins.transition($slideout-transition);
+			@include mixins.transition($slideout-transition-closed);
 			.slideout-border {
 				@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: 0, $left: 0, $z: 1);
 				border: 1px solid theme.$color-08;

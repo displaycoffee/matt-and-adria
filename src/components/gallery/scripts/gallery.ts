@@ -1,41 +1,8 @@
 /* Packages */
 import { CSSProperties } from 'react';
 
-// Selector for elements that can receive focus, used to trap Tab within an open gallery
-const focusableSelector =
-	'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-// Track the element that opened each gallery, so focus can be restored to it on close
-const openerElements = new WeakMap<HTMLElement, HTMLElement>();
-
-// Track each galleries Tab-trap handler, so it can be removed again on close
-const trapHandlers = new WeakMap<HTMLElement, (e: KeyboardEvent) => void>();
-
-// Exclude elements matched by focusableSelector that are hidden (e.g. a collapsed dropdown's content)
-// and therefore not actually reachable via Tab, even though they match the selector
-const isVisible = (el: HTMLElement) => {
-	const style = getComputedStyle(el);
-	return style.visibility !== 'hidden' && style.display !== 'none';
-};
-
-// Keep Tab / Shift + Tab cycling within the gallery while it's open
-const trapFocus = (overlay: HTMLElement, e: KeyboardEvent) => {
-	if (e.key !== 'Tab') return;
-
-	const focusable = Array.from(overlay.querySelectorAll<HTMLElement>(focusableSelector)).filter(isVisible);
-	if (focusable.length === 0) return;
-
-	const first = focusable[0];
-	const last = focusable[focusable.length - 1];
-
-	if (e.shiftKey && document.activeElement === first) {
-		e.preventDefault();
-		last.focus();
-	} else if (!e.shiftKey && document.activeElement === last) {
-		e.preventDefault();
-		first.focus();
-	}
-};
+/* Scripts */
+import { utils } from '../../../_config/scripts/utils';
 
 export const gallery = {
 	config: {
@@ -48,7 +15,7 @@ export const gallery = {
 		},
 		values: {
 			// Default values if props are not defined
-			direction: 'left',
+			direction: 'top',
 		},
 	},
 	get: {
@@ -68,6 +35,10 @@ export const gallery = {
 			};
 
 			return styles;
+		},
+		thumbnail: (image: string) => {
+			// Get thumbnail path for a gallery image (see generate-thumbnails.js)
+			return image.replace(/(\.[a-zA-Z0-9]+)$/, '-thumb$1');
 		},
 	},
 	set: {
@@ -94,38 +65,24 @@ export const gallery = {
 
 				// Update elements depending on state
 				if (state === 'add') {
+					// Add classes and styles and remove inert attribute
 					overlay.classList.add(classes.active);
 					Object.assign(overlay.style, get.styles(direction, true));
 					overlay.inert = false;
-
-					// Remember what had focus so it can be restored on close, then move focus into the overlay
-					const opener = document.activeElement as HTMLElement | null;
-					if (opener) openerElements.set(overlay, opener);
-					overlay.querySelector<HTMLElement>('.gallery-close')?.focus();
-
-					// Trap Tab/Shift+Tab within the overlay while it's open
-					const handleTrap = (e: KeyboardEvent) => trapFocus(overlay, e);
-					trapHandlers.set(overlay, handleTrap);
-					overlay.addEventListener('keydown', handleTrap);
+					utils.focusTrap.activate(overlay, '.gallery-close');
 				} else {
+					// Remove classes and styles and addd inert attribute
 					overlay.classList.remove(classes.active);
 					Object.assign(overlay.style, get.styles(direction));
 					overlay.inert = true;
-
-					// Remove the Tab trap and restore focus to whatever opened the overlay
-					const handleTrap = trapHandlers.get(overlay);
-					if (handleTrap) {
-						overlay.removeEventListener('keydown', handleTrap);
-						trapHandlers.delete(overlay);
-					}
-					openerElements.get(overlay)?.focus();
-					openerElements.delete(overlay);
+					utils.focusTrap.deactivate(overlay);
 				}
 			}
 		},
 	},
 	toggle: (e: EventsType, id: string | boolean) => {
-		e.preventDefault();
+		// Note: e.g. a touchend fired mid-scroll can be non-cancelable, so guard against that
+		if (e.cancelable) e.preventDefault();
 		const { config, set } = gallery;
 		const classes = config.classes;
 		const activeSelector = `.${classes.overlay}.${classes.active}`;
@@ -138,17 +95,17 @@ export const gallery = {
 
 		// Perform actions for current gallery
 		if (id) {
-			const element = document.querySelector(`#${id}`) as HTMLElement;
-			const elementState = !element.classList.contains(classes.active) ? 'add' : 'remove';
-			set.gallery(element, elementState);
+			const element = document.querySelector<HTMLElement>(`#${id}`);
+			if (element) {
+				const elementState = !element.classList.contains(classes.active) ? 'add' : 'remove';
+				set.gallery(element, elementState);
+			}
 		}
 
 		// Reset body classes
-		// Note: using a slight timeout to ensure gallery actions have processed
-		setTimeout(() => {
-			const galleryActiveElements = document.querySelectorAll(activeSelector);
-			const bodyState = galleryActiveElements.length !== 0 ? 'add' : 'remove';
-			set.body(bodyState);
-		}, 100);
+		// Note: classList changes above are synchronous, so the active count is already up to date here
+		const galleryActiveElements = document.querySelectorAll(activeSelector);
+		const bodyState = galleryActiveElements.length !== 0 ? 'add' : 'remove';
+		set.body(bodyState);
 	},
 };

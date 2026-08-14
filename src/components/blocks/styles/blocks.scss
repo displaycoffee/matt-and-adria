@@ -6,10 +6,21 @@
 //// SECTION
 //// --------------------------------------------------------------------------
 
+	// Configuration
+	
+	$section-transition: opacity 0.6s ease-out, transform 0.6s ease-out; // transition properties for section
+
 	.section {
 		margin: 0 0 theme.$spacing-x8 0;
 		padding: 0 0 theme.$spacing-x8 0;
 		border-bottom: 1px dashed theme.$color-06;
+		opacity: 0;
+		@include mixins.transform(translateY(30px));
+		@include mixins.transition($section-transition);
+		&.section-visible {
+			opacity: 1;
+			@include mixins.transform(translateY(0));
+		}
 		&:last-child {
 			margin-bottom: 0;
 			padding-bottom: 0;
@@ -20,5 +31,10 @@
 				@include mixins.position($type: relative, $top: 2px);
 				margin: 0 theme.$spacing-x1 0 0;
 			}
+		}
+		@media (prefers-reduced-motion: reduce) {
+			opacity: 1;
+			@include mixins.transform(none);
+			transition: none;
 		}
 	}

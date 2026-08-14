@@ -2,7 +2,7 @@
 import { HomeProps } from '../scripts/home-types';
 
 /* Components */
-import { Section } from '../../../components/section/Section';
+import { Section } from '../../../components/blocks/Blocks';
 
 export const DateAndTime = (props: HomeProps) => {
 	const { id, label } = props;

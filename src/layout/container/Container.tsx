@@ -26,7 +26,6 @@ export const Container = () => {
 		id: 'menu',
 		isDesktop: isDesktop,
 		label: 'Menu',
-		closeOnClick: true,
 		button: {
 			outside: false,
 			show: true,

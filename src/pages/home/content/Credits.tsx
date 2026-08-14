@@ -2,7 +2,7 @@
 import { HomeProps } from '../scripts/home-types';
 
 /* Components */
-import { Section } from '../../../components/section/Section';
+import { LinkExternal, Section } from '../../../components/blocks/Blocks';
 
 export const Credits = (props: HomeProps) => {
 	const { id, label } = props;
@@ -17,16 +17,11 @@ export const Credits = (props: HomeProps) => {
 				<li>Gary at the "Lodge at Elk Valley".</li>
 				<li>Josh Brambila and Carl Vaeth for cooking delicious BBQ.</li>
 				<li>
-					<a href="//adventureinstead.com" target="_blank" rel="noreferrer">
-						Adventure Instead
-					</a>{' '}
-					(Maddie Mae) for photography.
+					<LinkExternal href="//adventureinstead.com">Adventure Instead</LinkExternal> (Maddie Mae) for photography.
 				</li>
 				<li>
-					<a href="//www.toptal.com/designers/subtlepatterns/dot-grid-pattern" target="_blank" rel="noreferrer">
-						Subtle Patterns
-					</a>{' '}
-					for the footer background.
+					<LinkExternal href="//www.toptal.com/designers/subtlepatterns/dot-grid-pattern">Subtle Patterns</LinkExternal> for the footer
+					background.
 				</li>
 			</ul>
 		</Section>

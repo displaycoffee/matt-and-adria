@@ -10,6 +10,9 @@ import { useAppContext } from '../../context/scripts/context-hooks';
 import { NavigationComponentProps, NavigationListItemProps } from './scripts/navigation-types';
 import { navigationUtils } from './scripts/navigation-utils';
 
+/* Components */
+import { LinkExternal, LinkScroll } from '../blocks/Blocks';
+
 /* Get navigation menu */
 const navigationList = navigationUtils.get.list();
 
@@ -35,7 +38,7 @@ export const Navigation = (props: NavigationComponentProps) => {
 
 export const NavigationListItem = (props: NavigationListItemProps) => {
 	const { nav, isLast } = props;
-	const { theme, utils } = useAppContext();
+	const { theme } = useAppContext();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
 	const navProps = nav?.props ?? {};
 
@@ -43,18 +46,11 @@ export const NavigationListItem = (props: NavigationListItemProps) => {
 		<>
 			<li className="navigation-list-item navigation-list-item-link">
 				{nav.isScroll && navProps?.id ? (
-					<button
-						className="pointer unstyled a"
-						type="button"
-						aria-label={`Scroll to '${nav.label}' button`}
-						onClick={(e) => utils.scrollTo(e, `#${navProps.id}`)}
-					>
+					<LinkScroll target={`#${navProps.id}`} aria-label={`Scroll to '${nav.label}' button`}>
 						{nav.label}
-					</button>
+					</LinkScroll>
 				) : (
-					<a href={nav.url} target="_blank" rel="noreferrer">
-						{nav.label}
-					</a>
+					<LinkExternal href={nav.url ?? ''}>{nav.label}</LinkExternal>
 				)}
 			</li>
 

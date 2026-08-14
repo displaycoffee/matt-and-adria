@@ -9,11 +9,13 @@
 	"license": "ISC",
 	"homepage": "https://mattandadria.com",
 	"scripts": {
-		"build": "vite build && node optimize-html.js && npx prettier --write dist/index.html --ignore-path /dev/null",
-		"dev": "vite --host",
+		"build": "node generate-thumbnails.js && vite build && node optimize-html.js && npx prettier --write dist/index.html --ignore-path /dev/null",
+		"dev": "node generate-thumbnails.js && vite --host",
 		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
 		"lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"thumbnails": "node generate-thumbnails.js",
+		"thumbnails:clean": "node generate-thumbnails.js --clean"
 	},
 	"devDependencies": {
 		"@types/react": "^19.2.14",
@@ -31,6 +33,7 @@
 		"eslint-plugin-react-hooks": "^7.0.1",
 		"prettier": "^3.8.1",
 		"sass": "1.78.0",
+		"sharp": "^0.34.5",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.58.0",
 		"vite": "^7.3.1",

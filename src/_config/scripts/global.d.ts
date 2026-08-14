@@ -35,10 +35,15 @@ type Theme = {
 };
 
 type Utils = {
+	focusTrap: {
+		activate: (container: HTMLElement, focusSelector?: string) => void;
+		deactivate: (container: HTMLElement) => void;
+	};
 	getLast: (value: string | string[], delimeter?: string) => string | number;
 	getPage: () => string;
 	handleize: (value: string) => string;
 	isSticky: (element: HTMLElement | null, stickyClass: string) => void;
+	reveal: (element: HTMLElement | null, revealClass: string) => void;
 	scrollTo: (e?: Events, selector?: string, offset?: number) => void;
 	setAttributes: (element: HTMLElement, attributes: ObjectString) => void;
 };

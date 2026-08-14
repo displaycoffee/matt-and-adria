@@ -2,7 +2,7 @@
 import { HomeProps } from '../scripts/home-types';
 
 /* Components */
-import { Section } from '../../../components/section/Section';
+import { Section } from '../../../components/blocks/Blocks';
 
 export const Welcome = (props: HomeProps) => {
 	const { contentOnly, id, label } = props;
@@ -15,7 +15,7 @@ export const Welcome = (props: HomeProps) => {
 				assured you were there in spirit, partying hard.
 			</p>
 
-			<h3 className="signature">matt and adria</h3>
+			<p className="signature h3">matt and adria</p>
 		</Section>
 	);
 };

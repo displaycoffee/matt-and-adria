@@ -3,7 +3,7 @@ import { HomeProps } from '../scripts/home-types';
 import { photos } from '../scripts/photos';
 
 /* Components */
-import { Section } from '../../../components/section/Section';
+import { Section } from '../../../components/blocks/Blocks';
 import { Gallery } from '../../../components/gallery/Gallery';
 
 export const Photos = (props: HomeProps) => {
@@ -16,7 +16,7 @@ export const Photos = (props: HomeProps) => {
 				pictures of drunk and happy folk.
 			</p>
 
-			{photos && photos.length !== 0 ? <Gallery images={photos} options={{ direction: 'top' }} /> : null}
+			{photos && photos.length !== 0 ? <Gallery images={photos} /> : null}
 		</Section>
 	);
 };

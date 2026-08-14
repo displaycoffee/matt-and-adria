@@ -8,7 +8,14 @@ import { createPortal } from 'react-dom';
 /* Scripts */
 import { useFormattedId } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { GalleryOverlayProps, GalleryProps, GalleryThumbnailProps } from './scripts/gallery-types';
+import {
+	GalleryOverlayProps,
+	GalleryProps,
+	GalleryThumbnailProps,
+	GalleryOrientationType,
+	GalleryTouchType,
+	GalleryTouchRefType,
+} from './scripts/gallery-types';
 import { gallery } from './scripts/gallery';
 
 /* Components */
@@ -83,6 +90,7 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 		const galleryTarget = document.querySelector('body');
 		if (!galleryTarget) return;
 
+		// Append to body
 		galleryTarget.appendChild(overlay);
 
 		return () => {
@@ -95,14 +103,15 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 	useEffect(() => {
 		const activeSelector = `.${config.classes.overlay}.${config.classes.active}`;
 
+		// Function for keydown events
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key !== 'Escape') return;
 			if (document.querySelectorAll(activeSelector).length === 0) return;
 			toggle(e, false);
 		};
 
+		// Add and remove event listeners
 		document.addEventListener('keydown', handleKeyDown);
-
 		return () => document.removeEventListener('keydown', handleKeyDown);
 	}, [config, toggle]);
 
@@ -115,6 +124,33 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 		}
 	};
 
+	// Track touch start position to detect a left / right swipe on the image
+	const touchStart = useRef<GalleryTouchRefType>(null);
+	const swipeThreshold = 50; // minimum horizontal distance (px) to count as a swipe
+
+	// Touch start function for swipe on mobile
+	const handleTouchStart = (e: GalleryTouchType) => {
+		const touch = e.touches[0];
+		touchStart.current = { x: touch.clientX, y: touch.clientY };
+	};
+
+	// Touch end function for swipe on mobile
+	const handleTouchEnd = (e: GalleryTouchType) => {
+		if (!touchStart.current) return;
+
+		// Set delta coordinates
+		const touch = e.changedTouches[0];
+		const deltaX = touch.clientX - touchStart.current.x;
+		const deltaY = touch.clientY - touchStart.current.y;
+		touchStart.current = null;
+
+		// Ignore short drags and swipes that are more vertical than horizontal (e.g. scrolling)
+		if (Math.abs(deltaX) < swipeThreshold || Math.abs(deltaX) < Math.abs(deltaY)) return;
+
+		// Get previous or next image depending on delta
+		getImage(deltaX < 0 ? 'next' : 'previous');
+	};
+
 	// Overlay component
 	const overlayComponent = (
 		<>
@@ -122,22 +158,32 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 				{image.alt}
 			</h2>
 
-			<button className="gallery-close pointer unstyled" type="button" aria-label="Close" onClick={(e) => toggle(e, false)}>
+			<button className="gallery-close pointer unstyled" type="button" aria-label="Close gallery image" onClick={(e) => toggle(e, false)}>
 				<Icon id={'close-thin'} />
 			</button>
 
-			<nav aria-label="Gallery Navigation">
-				<button type="button" onClick={() => getImage('previous')}>
-					Previous
+			<nav className="gallery-navigation" aria-label="Gallery Navigation">
+				<button
+					className="gallery-navigation-button gallery-navigation-previous pointer unstyled"
+					type="button"
+					aria-label="Previous gallery image"
+					onClick={() => getImage('previous')}
+				>
+					<Icon id={'angle-left'} />
 				</button>
 
-				<button type="button" onClick={() => getImage('next')}>
-					Next
+				<button
+					className="gallery-navigation-button gallery-navigation-next pointer unstyled"
+					type="button"
+					aria-label="Next gallery image"
+					onClick={() => getImage('next')}
+				>
+					<Icon id={'angle-right'} />
 				</button>
 			</nav>
 
-			<div role="presentation">
-				<Image alt={image.alt} hasLazy={true} image={image.image} />
+			<div className="gallery-image" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+				<Image alt={image.alt} image={image.image} />
 			</div>
 		</>
 	);
@@ -147,19 +193,23 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 
 const GalleryThumbnail = (props: GalleryThumbnailProps) => {
 	const { image, onClick } = props;
+	const { get } = gallery;
 	const buttonRef = useRef<HTMLButtonElement>(null);
-	const [orientation, setOrientation] = useState<'tall' | 'wide' | 'square' | null>(null);
+	const [orientation, setOrientation] = useState<GalleryOrientationType>(null);
 
 	// Determine if thumbnail image is tall, wide, or square once it's loaded
 	useEffect(() => {
 		const img = buttonRef.current?.querySelector('img');
 		if (!img) return;
 
+		// Function to handle onLoad actions
 		const handleLoad = () => {
 			const ratio = img.naturalWidth / img.naturalHeight;
 			setOrientation(ratio > 1.2 ? 'wide' : ratio < 0.8 ? 'tall' : 'square');
 		};
 
+		// If image is complete, check dimensions
+		// Otherwise, trigger event listener
 		if (img.complete) {
 			handleLoad();
 		} else {
@@ -176,7 +226,7 @@ const GalleryThumbnail = (props: GalleryThumbnailProps) => {
 			aria-label={`View ${image.alt}`}
 			onClick={onClick}
 		>
-			<Image alt={image.alt} hasLazy={true} image={image.image} wrapperClasses={['polaroid']} />
+			<Image alt={image.alt} hasLazy={true} image={get.thumbnail(image.image)} wrapperClasses={['polaroid']} />
 		</button>
 	);
 };

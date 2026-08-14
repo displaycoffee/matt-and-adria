@@ -1,41 +1,8 @@
 /* Packages */
 import { CSSProperties } from 'react';
 
-// Selector for elements that can receive focus, used to trap Tab within an open slideout
-const focusableSelector =
-	'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-// Track the element that opened each slideout, so focus can be restored to it on close
-const openerElements = new WeakMap<HTMLElement, HTMLElement>();
-
-// Track each slideout's Tab-trap handler, so it can be removed again on close
-const trapHandlers = new WeakMap<HTMLElement, (e: KeyboardEvent) => void>();
-
-// Exclude elements matched by focusableSelector that are hidden (e.g. a collapsed dropdown's content)
-// and therefore not actually reachable via Tab, even though they match the selector
-const isVisible = (el: HTMLElement) => {
-	const style = getComputedStyle(el);
-	return style.visibility !== 'hidden' && style.display !== 'none';
-};
-
-// Keep Tab / Shift + Tab cycling within the slideout content while it's open
-const trapFocus = (content: HTMLElement, e: KeyboardEvent) => {
-	if (e.key !== 'Tab') return;
-
-	const focusable = Array.from(content.querySelectorAll<HTMLElement>(focusableSelector)).filter(isVisible);
-	if (focusable.length === 0) return;
-
-	const first = focusable[0];
-	const last = focusable[focusable.length - 1];
-
-	if (e.shiftKey && document.activeElement === first) {
-		e.preventDefault();
-		last.focus();
-	} else if (!e.shiftKey && document.activeElement === last) {
-		e.preventDefault();
-		first.focus();
-	}
-};
+/* Scripts */
+import { utils } from '../../../_config/scripts/utils';
 
 export const slideout = {
 	config: {
@@ -105,38 +72,24 @@ export const slideout = {
 
 				// Update elements depending on state
 				if (state === 'add') {
+					// Add classes and styles and remove inert attribute
 					element.classList.add(classes.active);
 					Object.assign(content.style, get.styles(direction, width, true));
 					content.inert = false;
-
-					// Remember what had focus so it can be restored on close, then move focus into the content
-					const opener = document.activeElement as HTMLElement | null;
-					if (opener) openerElements.set(element, opener);
-					content.querySelector<HTMLElement>('.slideout-close')?.focus();
-
-					// Trap Tab/Shift+Tab within the content while it's open
-					const handleTrap = (e: KeyboardEvent) => trapFocus(content, e);
-					trapHandlers.set(content, handleTrap);
-					content.addEventListener('keydown', handleTrap);
+					utils.focusTrap.activate(content, '.slideout-close');
 				} else {
+					// Remove classes and styles and addd inert attribute
 					element.classList.remove(classes.active);
 					Object.assign(content.style, get.styles(direction, width));
 					content.inert = true;
-
-					// Remove the Tab trap and restore focus to whatever opened the content
-					const handleTrap = trapHandlers.get(content);
-					if (handleTrap) {
-						content.removeEventListener('keydown', handleTrap);
-						trapHandlers.delete(content);
-					}
-					openerElements.get(element)?.focus();
-					openerElements.delete(element);
+					utils.focusTrap.deactivate(content);
 				}
 			}
 		},
 	},
 	toggle: (e: EventsType, id: string | boolean) => {
-		e.preventDefault();
+		// Note: e.g. a touchend fired mid-scroll can be non-cancelable, so guard against that
+		if (e.cancelable) e.preventDefault();
 		const { config, set } = slideout;
 		const classes = config.classes;
 		const activeSelector = `.${classes.slideout}.${classes.active}`;
@@ -149,17 +102,17 @@ export const slideout = {
 
 		// Perform actions for current slideout
 		if (id) {
-			const element = document.querySelector(`#${id}`) as HTMLElement;
-			const elementState = !element.classList.contains(classes.active) ? 'add' : 'remove';
-			set.slideout(element, elementState);
+			const element = document.querySelector<HTMLElement>(`#${id}`);
+			if (element) {
+				const elementState = !element.classList.contains(classes.active) ? 'add' : 'remove';
+				set.slideout(element, elementState);
+			}
 		}
 
 		// Reset body classes
-		// Note: using a slight timeout to ensure slideout actions have processed
-		setTimeout(() => {
-			const slideoutActiveElements = document.querySelectorAll(activeSelector);
-			const bodyState = slideoutActiveElements.length !== 0 ? 'add' : 'remove';
-			set.body(bodyState);
-		}, 100);
+		// Note: classList changes above are synchronous, so the active count is already up to date here
+		const slideoutActiveElements = document.querySelectorAll(activeSelector);
+		const bodyState = slideoutActiveElements.length !== 0 ? 'add' : 'remove';
+		set.body(bodyState);
 	},
 };

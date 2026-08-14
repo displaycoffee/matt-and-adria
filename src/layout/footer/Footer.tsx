@@ -6,10 +6,11 @@ import { useAppContext } from '../../context/scripts/context-hooks';
 import { useRespond } from '../../_config/scripts/hooks';
 
 /* Components */
+import { LinkExternal, LinkScroll } from '../../components/blocks/Blocks';
 import { Image } from '../../components/image/Image';
 
 export const Footer = () => {
-	const { theme, utils } = useAppContext();
+	const { theme } = useAppContext();
 	const date = new Date().getFullYear();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
 
@@ -26,29 +27,21 @@ export const Footer = () => {
 			<div className="footer-container container-width">
 				<div className={`row row-auto row-nowrap row-align-items-center row-spacing-${isDesktop ? '20' : '10'}`}>
 					<div className="column footer-flower footer-flower-left">
-						<Image alt={'Flower Left'} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-left.png'} />
+						<Image alt={''} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-left.png'} />
 					</div>
 
 					<div className="column footer-content">
 						<div className="footer-copyright">
 							&copy; {date}{' '}
-							<button
-								className="pointer unstyled a"
-								type="button"
-								aria-label="Scroll to top button"
-								onClick={(e) => utils.scrollTo(e, '#index')}
-							>
+							<LinkScroll target="#index" aria-label="Scroll to top button">
 								MattAndAdria.com
-							</button>
-							<span className="footer-bullet">&bull;</span>Design by{' '}
-							<a href="//display.coffee" target="_blank" rel="noreferrer">
-								displaycoffee
-							</a>
+							</LinkScroll>
+							<span className="footer-bullet">&bull;</span>Design by <LinkExternal href="//display.coffee">displaycoffee</LinkExternal>
 						</div>
 					</div>
 
 					<div className="column footer-flower footer-flower-right">
-						<Image alt={'Flower Right'} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-right.png'} />
+						<Image alt={''} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-right.png'} />
 					</div>
 				</div>
 			</div>

@@ -1,16 +1,13 @@
-/* Packages */
-import { lazy } from 'react';
-
 /* Scripts */
 import { NavigationType } from './navigation-types';
 import { utils } from '../../../_config/scripts/utils';
 
 /* Components */
-const Credits = lazy(() => import('../../../pages/home/content/Credits').then((m) => ({ default: m.Credits })));
-const DateAndTime = lazy(() => import('../../../pages/home/content/DateAndTime').then((m) => ({ default: m.DateAndTime })));
-const Location = lazy(() => import('../../../pages/home/content/Location').then((m) => ({ default: m.Location })));
-const NearbyAirports = lazy(() => import('../../../pages/home/content/NearbyAirports').then((m) => ({ default: m.NearbyAirports })));
-const Photos = lazy(() => import('../../../pages/home/content/Photos').then((m) => ({ default: m.Photos })));
+import { Credits } from '../../../pages/home/content/Credits';
+import { DateAndTime } from '../../../pages/home/content/DateAndTime';
+import { Location } from '../../../pages/home/content/Location';
+import { NearbyAirports } from '../../../pages/home/content/NearbyAirports';
+import { Photos } from '../../../pages/home/content/Photos';
 
 export const navigation: NavigationType[] = [
 	{

@@ -1,52 +1,34 @@
 /* Styles */
 import './styles/home.scss';
 
+/* Packages */
+import { Fragment } from 'react';
+
+/* Scripts */
+import { navigationUtils } from '../../components/navigation/scripts/navigation-utils';
+
 /* Components */
-import { Dropdown } from '../../components/dropdown/Dropdown';
+import { Welcome } from './content/Welcome';
+
+/* Get navigation menu */
+const navigationList = navigationUtils.get.list();
 
 export const Home = () => {
 	return (
-		<div className="home margin-trim">
-			<h2>Home</h2>
+		<div className="home">
+			<Welcome contentOnly={true} id={'welcome'} label={'Welcome'} />
 
-			<p>this is an index page.</p>
+			{navigationList.length != 0
+				? navigationList.map((nav) => {
+						const navProps = nav?.props ?? {};
 
-			<Dropdown buttonLabel={'Label'}>
-				<ul>
-					<li>Item 1</li>
-					<li>Item 2</li>
-					<li>Item 3</li>
-					<li>Item 4</li>
-				</ul>
-			</Dropdown>
-
-			<ul>
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</ul>
-
-			<ul className="unstyled">
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</ul>
-
-			<ol>
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</ol>
-
-			<ol className="unstyled">
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</ol>
+						return (
+							<Fragment key={nav.id}>
+								<nav.element {...navProps} />
+							</Fragment>
+						);
+					})
+				: null}
 		</div>
 	);
 };

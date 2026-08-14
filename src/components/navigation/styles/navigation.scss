@@ -10,38 +10,17 @@
 
 	.navigation {
 		.navigation-list {
-			@include mixins.flex-layout((align-items: center));
+			@include mixins.flex-layout((align-items: center, justify-content: center));
 			@include mixins.gap(theme.$spacing-x4);
-			.navigation-list-item {
-				&:has(.dropdown) {
-					position: relative;
-					@include mixins.flex-layout((flex-flow: row nowrap, align-items: center));
-					@include mixins.gap(theme.$spacing-x1);
-					.dropdown {
-						position: static;
-						.dropdown-button {
-							padding: 0;
-							line-height: 1.5;
-							height: auto;
-							border: 0;
-							background-color: transparent;
-						}
-						.dropdown-content {
-							right: auto;
-							min-width: 200px;
-							margin-top: theme.$spacing-x2;
-						}
-					}
-				}
-				.navigation-link-active {
-					font-weight: theme.$font-weight-01;
-				}
-			}
-			.navigation-list-submenu {
+		}
+	}
+	@include mixins.respond-min(theme.$bp-02) {
+		.navigation {
+			.navigation-list {
 				.navigation-list-item {
-					margin: 0 0 theme.$spacing-x1 0;
-					&:last-child {
-						margin-bottom: 0;
+					color: theme.$color-01;
+					.a {
+						color: inherit;
 					}
 				}
 			}

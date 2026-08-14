@@ -1,5 +1,5 @@
 /* Scripts */
-import { NavigationRoutesType, NavigationType } from './navigation-types';
+import { NavigationType } from './navigation-types';
 import { navigation } from './navigation';
 
 export const navigationUtils = {
@@ -16,7 +16,7 @@ export const navigationUtils = {
 				if (nav?.children && nav.children.length !== 0) {
 					nav.children.forEach((child) => {
 						if (child.showInNav) {
-							child.url = child.isRoute && !child.url.includes(nav.url) ? `${nav.url}${child.url}` : child.url;
+							child.url = nav.url && child.isRoute && child.url && !child.url.includes(nav.url) ? `${nav.url}${child.url}` : child.url;
 							navChildren.push(child);
 						}
 					});
@@ -43,7 +43,7 @@ export const navigationUtils = {
 					// Create child properties
 					nav.children.forEach((child) => {
 						if (child.showInNav) {
-							child.url = child.isRoute && !child.url.includes(nav.url) ? `${nav.url}${child.url}` : child.url;
+							child.url = nav.url && child.isRoute && child.url && !child.url.includes(nav.url) ? `${nav.url}${child.url}` : child.url;
 							navigationClone.push(child);
 						}
 					});
@@ -52,23 +52,6 @@ export const navigationUtils = {
 
 			// Return final navigation
 			return navigationClone.length !== 0 ? navigationUtils.sort(navigationClone) : [];
-		},
-	},
-	routes: {
-		build: (nav: NavigationType) => {
-			// Build route config
-			const config: NavigationRoutesType = {
-				id: nav.id,
-				element: nav.element,
-				path: nav.url,
-			};
-
-			// Add props if there are any
-			if (nav?.props) {
-				config.props = nav.props;
-			}
-
-			return config;
 		},
 	},
 	sort: (list: NavigationType[]) => {

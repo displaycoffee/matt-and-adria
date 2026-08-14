@@ -2,67 +2,32 @@
 import './styles/navigation.scss';
 
 /* Packages */
-import { Fragment, Suspense, useEffect } from 'react';
-import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Fragment } from 'react';
 
 /* Scripts */
-import { useViewTransition } from '../../_config/scripts/hooks';
+import { useRespond } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { NavigationComponentProps, NavigationListItemProps, NavigationRoutesProps } from './scripts/navigation-types';
+import { NavigationComponentProps, NavigationListItemProps } from './scripts/navigation-types';
 import { navigationUtils } from './scripts/navigation-utils';
-import { navigationRoutes } from './scripts/navigation-routes';
 
 /* Components */
-import { Dropdown } from '../dropdown/Dropdown';
+import { LinkExternal, LinkScroll } from '../blocks/Blocks';
 
 /* Get navigation menu */
 const navigationList = navigationUtils.get.list();
 
 export const Navigation = (props: NavigationComponentProps) => {
-	const { disableTransition, label } = props;
-	const { pathname } = useLocation();
-	const { utils } = useAppContext();
-	const navigationLinkClass = 'navigation-link';
-
-	// Scroll to top when navigation link is clicked on
-	useEffect(() => {
-		utils.scrollTo();
-	}, [pathname, utils]);
+	const { label } = props;
 
 	return navigationList.length != 0 ? (
 		<nav className="navigation" aria-label={label}>
 			<ul className="navigation-list unstyled">
-				{navigationList.map((nav) => {
+				{navigationList.map((nav, index) => {
+					const isLast = index === navigationList.length - 1;
+
 					return (
 						<Fragment key={nav.id}>
-							{nav?.children && nav.children.length !== 0 ? (
-								<NavigationListItem
-									disableTransition={disableTransition ?? false}
-									navigationLinkClass={navigationLinkClass}
-									nav={nav}
-								>
-									<Dropdown buttonLabel={`${nav.label} Menu`} closeOnClick={true} showLabel={false}>
-										<ul className="navigation-list-submenu unstyled">
-											{nav.children.map((child) => {
-												return (
-													<NavigationListItem
-														disableTransition={disableTransition ?? false}
-														nav={child}
-														navigationLinkClass={navigationLinkClass}
-														key={child.id}
-													/>
-												);
-											})}
-										</ul>
-									</Dropdown>
-								</NavigationListItem>
-							) : (
-								<NavigationListItem
-									disableTransition={disableTransition ?? false}
-									navigationLinkClass={navigationLinkClass}
-									nav={nav}
-								/>
-							)}
+							<NavigationListItem nav={nav} isLast={isLast} />
 						</Fragment>
 					);
 				})}
@@ -72,58 +37,24 @@ export const Navigation = (props: NavigationComponentProps) => {
 };
 
 export const NavigationListItem = (props: NavigationListItemProps) => {
-	const { children, disableTransition, nav, navigationLinkClass } = props;
-	const handleTransition = useViewTransition();
-	const navigationActiveClass = `${navigationLinkClass} ${navigationLinkClass}-active`;
+	const { nav, isLast } = props;
+	const { theme } = useAppContext();
+	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const navProps = nav?.props ?? {};
 
 	return (
-		<li className="navigation-list-item">
-			{nav.isRoute ? (
-				<NavLink
-					to={nav.url}
-					onClick={disableTransition ? undefined : (e) => handleTransition(e, nav.url)}
-					className={({ isActive }) => (isActive ? navigationActiveClass : navigationLinkClass)}
-				>
-					{nav.label}
-				</NavLink>
-			) : (
-				<a href={nav.url} target="_blank" rel="noreferrer">
-					{nav.label}
-				</a>
-			)}
+		<>
+			<li className="navigation-list-item navigation-list-item-link">
+				{nav.isScroll && navProps?.id ? (
+					<LinkScroll target={`#${navProps.id}`} aria-label={`Scroll to '${nav.label}' button`}>
+						{nav.label}
+					</LinkScroll>
+				) : (
+					<LinkExternal href={nav.url ?? ''}>{nav.label}</LinkExternal>
+				)}
+			</li>
 
-			{children}
-		</li>
+			{!isDesktop ? null : isLast ? null : <li className="navigation-list-item navigation-list-item-bullet">&bull;</li>}
+		</>
 	);
-};
-
-export const NavigationRoutes = () => {
-	return navigationRoutes.length != 0 ? (
-		<Suspense fallback={null}>
-			<Routes>
-				{navigationRoutes.map((nav: NavigationRoutesProps) => {
-					const navProps = nav?.props ?? {};
-
-					return (
-						<Fragment key={nav.id}>
-							{nav?.children && nav.children.length !== 0 ? (
-								<>
-									<Route path={`${nav.path}/*`} element={<nav.element {...navProps} />} />
-
-									{nav.children.map((child: NavigationRoutesProps) => {
-										const childProps = child?.props ?? {};
-										return <Route path={child.path} element={<child.element {...childProps} />} key={child.id} />;
-									})}
-								</>
-							) : (
-								<Route path={nav.path} element={<nav.element {...navProps} />} />
-							)}
-						</Fragment>
-					);
-				})}
-
-				<Route path="*" element={<Navigate to="/" />} />
-			</Routes>
-		</Suspense>
-	) : null;
 };

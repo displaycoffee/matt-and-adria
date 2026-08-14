@@ -40,8 +40,6 @@
 		}
 	}
 	.container {
-		max-width: theme.$container-base;
-		margin: 0 auto;
 		padding: 0 theme.$spacing-x4;
 		& > * {
 			margin: 0 0 theme.$spacing-x8 0;
@@ -49,6 +47,15 @@
 				margin-bottom: 0;
 			}
 		}
+	}
+	.container-width {
+		max-width: theme.$container-base;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.container-offset {
+		margin-left: -#{theme.$spacing-x4};
+		margin-right: -#{theme.$spacing-x4};
 	}
 	.main {
 		min-height: 50vh;

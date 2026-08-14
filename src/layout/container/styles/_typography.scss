@@ -36,7 +36,7 @@
 		@include mixins.transition(color 0.3s ease-in-out);
 		&:active, &:hover {
 			color: theme.$color-04;
-			text-decoration: underline;
+			@include mixins.text-decoration(1px, 5px, inherit);
 		}
 	}
 	mark {
@@ -70,28 +70,28 @@
 			font-style: theme.$font-style,
 			text-transform: theme.$font-transform
 		));
-		color: theme.$color-04;
-		a {
-			color: inherit;
-			&:hover {
-				color: theme.$color-05;
-			}
-		}
+		color: theme.$color-06;
+		line-height: 1.2;
 	}
 	h1, .h1 {
-		font-size: functions.em(34px, rem);
+		font-size: functions.em(80px, rem);
 	}
 	h2, .h2 {
-		font-size: functions.em(30px, rem);
+		font-size: functions.em(70px, rem);
 	}
 	h3, .h3 {
-		font-size: functions.em(26px, rem);
+		font-size: functions.em(60px, rem);
 	}
 	h4, .h4 {
-		font-size: functions.em(22px, rem);
+		font-size: functions.em(50px, rem);
 	}
 	h5, h6, .h5, .h6 {
-		font-size: functions.em(20px, rem);
+		font-size: functions.em(40px, rem);
+	}
+	.h-text {
+		font-family: theme.$font-family-01;
+		font-weight: theme.$font-weight-01;
+		text-transform: none;
 	}
 
 //// CONTENT BLOCKS

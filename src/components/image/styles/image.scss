@@ -72,3 +72,13 @@
 	.image-wrapper-float-right, .margin-trim > .image-wrapper-float-right {
 		margin-left: theme.$spacing-x4;
 	}
+	.image-wrapper-polaroid {
+		padding: theme.$spacing-x2 theme.$spacing-x2 theme.$spacing-x6 theme.$spacing-x2;
+		background-color: theme.$color-01;
+		border: 1px solid theme.$color-13;
+		box-shadow: 2px 2px 3px theme.$color-14;
+		img {
+			@include mixins.sizing(100%, 100%);
+			@include mixins.object-fit(center, cover);
+		}
+	}

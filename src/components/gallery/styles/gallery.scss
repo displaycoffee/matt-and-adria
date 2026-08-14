@@ -1,0 +1,111 @@
+// Use utils and theme variables
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/theme/_theme';
+
+//// GALLERY
+//// --------------------------------------------------------------------------
+
+	// Colors
+
+	$gallery-color-01: theme.$color-09; // overlay
+	$gallery-color-02: theme.$color-10; // border
+	$gallery-color-03: theme.$color-03; // button background
+	$gallery-color-04: theme.$color-10; // button icon
+	
+	// Configuration
+	
+	$gallery-spacing: theme.$spacing-x4; // overall spacing value
+	$gallery-easing-in: cubic-bezier(0.65, 0, 0.80, 0); // slow start, fast finish - used when closing so the fade gets a head start before the slide takes off
+	$gallery-easing-out: cubic-bezier(0.25, 1, 0.35, 1); // fast start, slow finish - used when opening
+	$gallery-transition-closed: opacity 0.6s ease-in-out, transform 1s $gallery-easing-in, visibility 1s ease-in-out, z-index 0s ease-in-out 1s; // transition properties for closing - z-index drop is delayed until the fade / slide finish, so the overlay doesn't fall behind the page mid-animation
+	$gallery-transition-open: opacity 0.6s ease-in-out, transform 1s $gallery-easing-out, visibility 1s ease-in-out; // transition properties for opening
+	$gallery-button-size: 40px; // size for buttons inside overlay
+	$gallery-column-size: 200px; // column size for gallery thumbnails
+	$gallery-row-size: 200px; // row size for gallery thumbnails
+
+	// Style block
+
+	.gallery-active-body {
+		overflow: hidden;
+	}
+	.gallery-overlay {
+		@include mixins.transition($gallery-transition-closed);
+		background-color: $gallery-color-01;
+		@include mixins.position($type: fixed, $top: 0, $bottom: 0, $left: 0, $right: 0, $z: -1);
+		opacity: 0;
+		visibility: hidden;
+		&.gallery-active {
+			@include mixins.transition($gallery-transition-open);
+			z-index: 9998;
+			opacity: 1;
+			visibility: visible;
+		}
+		&, .gallery-close, .gallery-navigation .gallery-navigation-button {
+			@include mixins.flex-layout((flex-flow: column nowrap, justify-content: center, align-items: center));
+		}
+		.gallery-close, .gallery-navigation .gallery-navigation-button, .gallery-image .image-wrapper img {
+			border: 1px solid $gallery-color-02;
+		}
+		.gallery-close, .gallery-navigation .gallery-navigation-button {
+			@include mixins.sizing($gallery-button-size, $gallery-button-size);
+			position: absolute;
+			background-color: $gallery-color-03;
+			.icon-wrapper {
+				color: $gallery-color-04;
+			}
+		}
+		.gallery-close {
+			@include mixins.position($top: $gallery-spacing, $right: $gallery-spacing);
+			.icon-wrapper {
+				@include mixins.sizing(35%, 35%);
+				line-height: 35%;
+			}
+		}
+		.gallery-image {
+			max-width: 100%;
+			max-height: 100%;
+			padding: calc($gallery-spacing * 2) + $gallery-button-size;
+			.image-wrapper {
+				@include mixins.sizing(100%, 100%);
+				img {
+					max-height: 100%;
+					margin: auto;
+				}
+			}
+		}
+		.gallery-navigation {
+			.gallery-navigation-button {
+				@include mixins.position($top: 0, $bottom: 0);
+				margin: auto 0;
+				.icon-wrapper {
+					@include mixins.sizing(75%, 75%);
+					line-height: 75%;
+				}
+			}
+			.gallery-navigation-previous {
+				left: $gallery-spacing;
+			}
+			.gallery-navigation-next {
+				right: $gallery-spacing;
+			}
+		}
+	}
+	.gallery {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax($gallery-column-size, 1fr));
+		grid-auto-rows: $gallery-row-size;
+		grid-auto-flow: dense;
+		gap: calc($gallery-spacing / 2);
+		.gallery-thumbnail {
+			.image-wrapper {
+				@include mixins.sizing(100%, 100%);
+			}
+		}
+		.gallery-thumbnail-square, .gallery-thumbnail-wide {
+			grid-row: span 1;
+		}
+		.gallery-thumbnail-tall {
+			grid-row: span 2;
+		}
+	}

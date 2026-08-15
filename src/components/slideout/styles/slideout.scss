@@ -81,11 +81,11 @@
 			}
 		}
 		.slideout-content {
+			@include mixins.transition($slideout-transition-closed);
 			max-width: 100%;
 			background-color: $slideout-color-02;
 			z-index: 9999;
 			padding: $slideout-spacing;
-			@include mixins.transition($slideout-transition-closed);
 			.slideout-border {
 				@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: 0, $left: 0, $z: 1);
 				border: 1px solid theme.$color-08;

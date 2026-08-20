@@ -3,7 +3,55 @@
 @use '../../../_config/styles/utils/_mixins';
 @use '../../../_config/styles/theme/_theme';
 
-//// SECTION
+//// BLOCKS - LIST
+//// --------------------------------------------------------------------------
+
+	// Configuration
+	
+	$blocks-list-spacing: theme.$spacing-x4; // spacing for list elements
+
+	// Style block
+
+	.list-ordered, .list-unordered, .list-unstyled {
+		list-style: none;
+		padding: 0;
+	}
+	.list-ordered, .list-unordered {
+		margin: 0 0 theme.$spacing-x4 0;
+		& > li {
+			position: relative;
+			margin: 0 0 calc($blocks-list-spacing / 8) 0;
+			padding: 0 0 0 $blocks-list-spacing;
+			&:before {
+				display: block;
+				@include mixins.position($type: absolute, $left: 0);
+			}
+			&:last-child, ul, ol {
+				margin-bottom: 0;
+			}
+		}
+	}
+	.list-ordered {
+		counter-reset: section;
+		& > li:before {
+			top: 0;
+			counter-increment: section;
+			content: counter(section)'.';
+		}
+	}
+	.list-unordered {
+		& > li:before {
+			top: 2px;
+			content: '\002022';
+			font-size: functions.em(20px, rem);
+			line-height: 1;
+		}
+	}
+	.list-unstyled {
+		margin: 0;
+	}	
+
+//// BLOCKS - SECTION
 //// --------------------------------------------------------------------------
 
 	// Configuration
@@ -27,12 +75,6 @@
 			margin-bottom: 0;
 			padding-bottom: 0;
 			border-bottom-width: 0;
-		}
-		.section-button {
-			.icon-wrapper {
-				@include mixins.position($type: relative, $top: 2px);
-				margin: 0 theme.$spacing-x1 0 0;
-			}
 		}
 		@media (prefers-reduced-motion: reduce) {
 			opacity: 1;

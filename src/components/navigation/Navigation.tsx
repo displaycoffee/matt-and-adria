@@ -11,7 +11,8 @@ import { NavigationComponentProps, NavigationListItemProps } from './scripts/nav
 import { navigationUtils } from './scripts/navigation-utils';
 
 /* Components */
-import { LinkExternal, LinkScroll } from '../blocks/Blocks';
+import { LinkExternal, List } from '../blocks/Blocks';
+import { ButtonScroll } from '../forms/Forms';
 
 /* Get navigation menu */
 const navigationList = navigationUtils.get.list();
@@ -21,7 +22,7 @@ export const Navigation = (props: NavigationComponentProps) => {
 
 	return navigationList.length != 0 ? (
 		<nav className="navigation" aria-label={label}>
-			<ul className="navigation-list unstyled">
+			<List className="navigation-list" variant="ul-unstyled">
 				{navigationList.map((nav, index) => {
 					const isLast = index === navigationList.length - 1;
 
@@ -31,7 +32,7 @@ export const Navigation = (props: NavigationComponentProps) => {
 						</Fragment>
 					);
 				})}
-			</ul>
+			</List>
 		</nav>
 	) : null;
 };
@@ -46,9 +47,7 @@ export const NavigationListItem = (props: NavigationListItemProps) => {
 		<>
 			<li className="navigation-list-item navigation-list-item-link">
 				{nav.isScroll && navProps?.id ? (
-					<LinkScroll target={`#${navProps.id}`} aria-label={`Scroll to '${nav.label}' button`}>
-						{nav.label}
-					</LinkScroll>
+					<ButtonScroll target={`#section-${navProps.id}`} label={nav.label} aria-label={`Scroll to '${nav.label}' button`} />
 				) : (
 					<LinkExternal href={nav.url ?? ''}>{nav.label}</LinkExternal>
 				)}

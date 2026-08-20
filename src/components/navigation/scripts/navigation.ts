@@ -50,8 +50,7 @@ export const navigation: NavigationType[] = [
 /* Create handle for navigation */
 navigation.forEach((nav) => {
 	nav.props = {
-		contentOnly: nav.label == 'Welcome' ? true : false,
-		id: `section-${utils.handleize(nav.label)}`,
-		label: nav.label,
+		id: utils.handleize(nav.label),
+		title: nav.label,
 	};
 });

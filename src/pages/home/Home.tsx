@@ -16,7 +16,7 @@ const navigationList = navigationUtils.get.list();
 export const Home = () => {
 	return (
 		<div className="home">
-			<Welcome contentOnly={true} id={'welcome'} label={'Welcome'} />
+			<Welcome id={'welcome'} />
 
 			{navigationList.length != 0
 				? navigationList.map((nav) => {

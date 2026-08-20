@@ -41,10 +41,10 @@
 		visibility: hidden;
 	}
 	.slideout-button {
-		@include mixins.flex-layout((align-items: center));
+		@include mixins.flex-display(flex);
 		@include mixins.gap(theme.$spacing-x2);
 		margin: 0 auto;
-		color: theme.$color-01;
+		color: theme.$color-03;
 	}
 	.slideout {
 		&.slideout-active {

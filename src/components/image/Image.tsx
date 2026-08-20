@@ -6,8 +6,7 @@ import { ImageProps, ImageAttributesType, WrapperAttributesType } from './script
 import { image as imageUtils } from './scripts/image';
 
 export const Image = (props: ImageProps) => {
-	const { alt, hasBg, hasLazy, image, imageClass, wrapperClasses } = props;
-	const hasWrapper = props?.hasWrapper ?? true;
+	const { alt, hasBg, hasLazy, hasWrapper = true, image, imageClass, wrapperClasses } = props;
 	const wrapperPrefix = 'image-wrapper';
 
 	// Set up initial attributes

@@ -11,10 +11,6 @@
 	*, *:after,	*:before {
 		box-sizing: border-box;
 	}
-	:focus-visible {
-		outline: 1px solid theme.$color-04;
-		outline-offset: 2px;
-	}
 	@media (prefers-reduced-motion: reduce) {
 		*, *:before, *:after {
 			animation-duration: 0.01ms !important;
@@ -58,44 +54,6 @@
 	.margin-trim > *:last-child {
 		margin-bottom: 0;
 	}
-	ul, ol {
-		list-style: none;
-		padding: 0;
-	}
-	ul.unstyled, ol.unstyled {
-		margin: 0;
-	}
-	ul:not(.unstyled), ol:not(.unstyled) {
-		margin: 0 0 $base-elements-spacing 0;
-		& > li {
-			position: relative;
-			margin: 0 0 calc(theme.$spacing-x1 / 2) 0;
-			padding: 0 0 0 theme.$spacing-x4;
-			&:before {
-				display: block;
-				@include mixins.position($type: absolute, $left: 0);
-			}
-			&:last-child, ul, ol {
-				margin-bottom: 0;
-			}
-		}
-	}
-	ul:not(.unstyled) > li:before {
-		top: 2px;
-		content: '\002022';
-		font-size: functions.em(20px, rem);
-		line-height: 1;
-	}
-	ol:not(.unstyled) {
-		counter-reset: section;
-		& > li {
-			&:before {
-				top: 0;
-				counter-increment: section;
-				content: counter(section)'.';
-			}
-		}
-	}
 
 //// HELPERS
 //// --------------------------------------------------------------------------
@@ -114,6 +72,9 @@
 
 	.sr-only {
 		@include mixins.sr-only;
+	}
+	.sr-only-important {
+		@include mixins.sr-only(true);
 	}
 	.pointer {
 		cursor: pointer;

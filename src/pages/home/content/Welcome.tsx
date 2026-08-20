@@ -5,10 +5,10 @@ import { HomeProps } from '../scripts/home-types';
 import { Section } from '../../../components/blocks/Blocks';
 
 export const Welcome = (props: HomeProps) => {
-	const { contentOnly, id, label } = props;
+	const { id } = props;
 
 	return (
-		<Section id={id} label={label} contentOnly={contentOnly}>
+		<Section id={id} hasScroll={false}>
 			<p>
 				Thanks for visiting our wedding website! If you attended on <strong>September 7, 2013</strong>, we're glad you made it for this
 				awesome event in our lives. Though the wedding is over, the memories (and this website) remain. If you weren't able to attend, rest

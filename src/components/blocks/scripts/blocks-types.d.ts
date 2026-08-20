@@ -1,27 +1,30 @@
 /* Packages */
-import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import { AnchorHTMLAttributes, OlHTMLAttributes, ReactNode } from 'react';
 
 /* Type definitions */
 type LinkExternal = {
 	children: ReactNode;
+	className?: string;
 	href: string;
-} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children' | 'href' | 'rel' | 'target'>;
+} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children' | 'className' | 'href' | 'rel' | 'target'>;
 
-type LinkScroll = {
+type List = {
 	children: ReactNode;
-	target: string;
-} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onClick' | 'type'>;
+	className?: string;
+	variant?: 'ol' | 'ol-unstyled' | 'ul' | 'ul-unstyled';
+} & Omit<OlHTMLAttributes<HTMLOListElement>, 'children' | 'className' | 'variant'>;
 
 type Section = {
 	children: ReactNode;
-	contentOnly?: boolean;
-	id: string;
-	label: string;
+	className?: string;
+	hasScroll?: boolean;
+	id?: string;
+	title?: string;
 };
 
 /* Export prop types */
 export type LinkExternalProps = LinkExternal;
 
-export type LinkScrollProps = LinkScroll;
+export type ListProps = List;
 
 export type SectionProps = Section;

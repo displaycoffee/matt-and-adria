@@ -5,10 +5,10 @@ import { HomeProps } from '../scripts/home-types';
 import { LinkExternal, Section } from '../../../components/blocks/Blocks';
 
 export const NearbyAirports = (props: HomeProps) => {
-	const { id, label } = props;
+	const { id, title } = props;
 
 	return (
-		<Section id={id} label={label}>
+		<Section id={id} title={title}>
 			<p>
 				If you are flying into Colorado, we recommend the{' '}
 				<LinkExternal href="//coloradosprings.gov/flycos">Colorado Springs Airport</LinkExternal>. You can stay in Colorado Springs and the

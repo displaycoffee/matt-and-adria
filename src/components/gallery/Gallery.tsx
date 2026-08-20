@@ -19,6 +19,7 @@ import {
 import { gallery } from './scripts/gallery';
 
 /* Components */
+import { Button } from '../forms/Forms';
 import { Icon } from '../icons/Icons';
 import { Image } from '../image/Image';
 
@@ -158,28 +159,28 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 				{image.alt}
 			</h2>
 
-			<button className="gallery-close pointer unstyled" type="button" aria-label="Close gallery image" onClick={(e) => toggle(e, false)}>
+			<Button className="gallery-close" hideLabel={true} label="Close gallery image" onClick={(e) => toggle(e, false)}>
 				<Icon id={'close-thin'} />
-			</button>
+			</Button>
 
 			<nav className="gallery-navigation" aria-label="Gallery Navigation">
-				<button
-					className="gallery-navigation-button gallery-navigation-previous pointer unstyled"
-					type="button"
-					aria-label="Previous gallery image"
+				<Button
+					className="gallery-navigation-button gallery-navigation-previous"
+					hideLabel={true}
+					label="Previous gallery image"
 					onClick={() => getImage('previous')}
 				>
 					<Icon id={'angle-left'} />
-				</button>
+				</Button>
 
-				<button
-					className="gallery-navigation-button gallery-navigation-next pointer unstyled"
-					type="button"
-					aria-label="Next gallery image"
+				<Button
+					className="gallery-navigation-button gallery-navigation-next"
+					hideLabel={true}
+					label="Next gallery image"
 					onClick={() => getImage('next')}
 				>
 					<Icon id={'angle-right'} />
-				</button>
+				</Button>
 			</nav>
 
 			<div className="gallery-image" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
@@ -219,14 +220,15 @@ const GalleryThumbnail = (props: GalleryThumbnailProps) => {
 	}, []);
 
 	return (
-		<button
-			ref={buttonRef}
-			className={`gallery-thumbnail${orientation ? ` gallery-thumbnail-${orientation}` : ''} pointer unstyled`}
-			type="button"
-			aria-label={`View ${image.alt}`}
+		<Button
+			className={`gallery-thumbnail${orientation ? ` gallery-thumbnail-${orientation}` : ''}`}
+			hideLabel={true}
+			label={`View ${image.alt}`}
+			variant="unstyled"
 			onClick={onClick}
+			ref={buttonRef}
 		>
 			<Image alt={image.alt} hasLazy={true} image={get.thumbnail(image.image)} wrapperClasses={['polaroid']} />
-		</button>
+		</Button>
 	);
 };

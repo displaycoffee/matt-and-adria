@@ -2,15 +2,15 @@
 import { HomeProps } from '../scripts/home-types';
 
 /* Components */
-import { LinkExternal, Section } from '../../../components/blocks/Blocks';
+import { LinkExternal, List, Section } from '../../../components/blocks/Blocks';
 import { Icon } from '../../../components/icons/Icons';
 import { Image } from '../../../components/image/Image';
 
 export const Location = (props: HomeProps) => {
-	const { id, label } = props;
+	const { id, title } = props;
 
 	return (
-		<Section id={id} label={label}>
+		<Section id={id} title={title}>
 			<div className="row row-section row-wrap row-auto row-spacing-20">
 				<div className="column column-photo">
 					<Image alt={'Lodge at Elk Valley'} hasLazy={true} image={'/assets/images/theme/lodge.jpg'} wrapperClasses={['polaroid']} />
@@ -35,7 +35,7 @@ export const Location = (props: HomeProps) => {
 						</div>
 					</div>
 
-					<ul>
+					<List>
 						<li>
 							From{' '}
 							<LinkExternal href="//maps.google.com/maps?saddr=divide,+co&daddr=602+County+Road+511,+Divide,+CO&hl=en&sll=38.997934,-105.550567&sspn=7.536479,16.907959&geocode=FYc0UgIdK2y7-SmnxCgd-KwUhzFO91i76tXAiQ%3BFfLDUgIdFVy7-SkBW7-20awUhzHzjFEEZed8EQ&oq=602+County+Road+511&mra=ls&t=m&z=14">
@@ -64,7 +64,7 @@ export const Location = (props: HomeProps) => {
 							</LinkExternal>
 							, it takes about 1 hour and 47 minutes.
 						</li>
-					</ul>
+					</List>
 				</div>
 			</div>
 		</Section>

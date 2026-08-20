@@ -7,10 +7,10 @@ import { Section } from '../../../components/blocks/Blocks';
 import { Gallery } from '../../../components/gallery/Gallery';
 
 export const Photos = (props: HomeProps) => {
-	const { id, label } = props;
+	const { id, title } = props;
 
 	return (
-		<Section id={id} label={label}>
+		<Section id={id} title={title}>
 			<p>
 				<strong>Note:</strong> To protect the privacy of others, not all wedding photos are listed here. Rest assured, we have plenty of
 				pictures of drunk and happy folk.

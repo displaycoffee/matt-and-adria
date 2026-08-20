@@ -5,58 +5,69 @@ import './styles/blocks.scss';
 import { useEffect, useRef } from 'react';
 
 /* Scripts */
-import { LinkExternalProps, LinkScrollProps, SectionProps } from './scripts/blocks-types';
+import { useFormattedId } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
+import { LinkExternalProps, ListProps, SectionProps } from './scripts/blocks-types';
+import { blocks } from './scripts/blocks';
 
 /* Components */
+import { ButtonScroll } from '../forms/Forms';
 import { Icon } from '../icons/Icons';
 
 export const LinkExternal = (props: LinkExternalProps) => {
-	const { children, href, ...rest } = props;
+	const { children, className, href, ...rest } = props;
 
 	return (
-		<a href={href} target="_blank" rel="noreferrer" {...rest}>
+		<a className={className} href={href} target="_blank" rel="noreferrer" {...rest}>
 			{children}
 			<span className="sr-only"> (opens in a new tab)</span>
 		</a>
 	);
 };
 
-export const LinkScroll = (props: LinkScrollProps) => {
-	const { children, target, ...rest } = props;
-	const { utils } = useAppContext();
+export const List = (props: ListProps) => {
+	const { children, className: propClassName, reversed, start, type: listType, variant = 'ul', ...rest } = props;
+	const isOrdered = variant.includes('ol');
+	const isUnstyled = variant.includes('unstyled');
+	const Tag = isOrdered ? 'ol' : 'ul';
+	const classes = `list-${isUnstyled ? 'unstyled' : isOrdered ? 'ordered' : 'unordered'}`;
+	const className = propClassName ? `${propClassName} ${classes}` : classes;
+	const olAttributes = isOrdered ? { reversed, start, type: listType } : {};
 
 	return (
-		<button className="pointer unstyled a" type="button" onClick={(e) => utils.scrollTo(e, target)} {...rest}>
+		<Tag className={className} {...rest} {...olAttributes}>
 			{children}
-		</button>
+		</Tag>
 	);
 };
 
 export const Section = (props: SectionProps) => {
-	const { children, id, label } = props;
+	const { children, className: propClassName, hasScroll = true, id, title } = props;
 	const { utils } = useAppContext();
-	const contentOnly = props?.contentOnly ?? false;
+	const fallbackId = useFormattedId();
+	const sectionId = `section-${id ? id : title ? utils.handleize(title) : fallbackId}`;
+	const classes = `section ${sectionId} margin-trim`;
+	const className = propClassName ? `${propClassName} ${classes}` : classes;
 	const sectionRef = useRef<HTMLElement>(null);
 
 	// Reveal section with a fade / scroll transition once it comes into view
 	useEffect(() => {
-		utils.reveal(sectionRef.current, 'section-visible');
-	}, [utils]);
+		blocks.reveal(sectionRef.current, 'section-visible');
+	}, []);
 
 	return (
-		<section ref={sectionRef} id={id} className="section margin-trim">
-			{contentOnly ? null : <h3>{label}</h3>}
+		<section id={sectionId} className={className} tabIndex={-1} ref={sectionRef}>
+			{title ? <h3 className="section-title">{title}</h3> : null}
 
 			<div className="section-content margin-trim">{children}</div>
 
-			{contentOnly ? null : (
+			{hasScroll ? (
 				<div className="section-button">
-					<LinkScroll target="#index" aria-label="Back to top button">
-						<Icon id={'angle-up'} /> Back to top
-					</LinkScroll>
+					<ButtonScroll target="#index" label="Back to top">
+						<Icon id={'angle-up'} />
+					</ButtonScroll>
 				</div>
-			)}
+			) : null}
 		</section>
 	);
 };

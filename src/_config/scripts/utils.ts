@@ -1,63 +1,70 @@
-// Selector for elements that can receive focus, used by focusTrap to trap Tab within an open dialog-like container
-const focusableSelector =
-	'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+/* Track the element that opened each trapped container, so focus can be restored to it on close */
+const trapOpenerElements = new WeakMap<HTMLElement, HTMLElement>();
 
-// Track the element that opened each trapped container, so focus can be restored to it on close
-const focusTrapOpenerElements = new WeakMap<HTMLElement, HTMLElement>();
-
-// Track each container's Tab-trap handler, so it can be removed again on close
-const focusTrapHandlers = new WeakMap<HTMLElement, (e: KeyboardEvent) => void>();
-
-// Exclude elements matched by focusableSelector that are hidden (e.g. a collapsed dropdown's content)
-// and therefore not actually reachable via Tab, even though they match the selector
-const isFocusable = (el: HTMLElement) => {
-	const style = getComputedStyle(el);
-	return style.visibility !== 'hidden' && style.display !== 'none';
-};
-
-// Keep Tab / Shift + Tab cycling within the container while it's open
-const trapFocus = (container: HTMLElement, e: KeyboardEvent) => {
-	if (e.key !== 'Tab') return;
-
-	const focusable = Array.from(container.querySelectorAll<HTMLElement>(focusableSelector)).filter(isFocusable);
-	if (focusable.length === 0) return;
-
-	const first = focusable[0];
-	const last = focusable[focusable.length - 1];
-
-	if (e.shiftKey && document.activeElement === first) {
-		e.preventDefault();
-		last.focus();
-	} else if (!e.shiftKey && document.activeElement === last) {
-		e.preventDefault();
-		first.focus();
-	}
-};
+/* Track each container's Tab-trap handler, so it can be removed again on close */
+const trapHandlers = new WeakMap<HTMLElement, (e: KeyboardEvent) => void>();
 
 export const utils: UtilsType = {
 	focusTrap: {
-		// Remember what had focus, move focus into the container (or a specific element within it), and trap Tab/Shift+Tab
 		activate: (container: HTMLElement, focusSelector?: string) => {
+			// Remember what had focus, move focus into the container (or a specific element within it), and trap Tab/Shift+Tab
 			const opener = document.activeElement as HTMLElement | null;
-			if (opener) focusTrapOpenerElements.set(container, opener);
+			if (opener) trapOpenerElements.set(container, opener);
 
+			// Focus on taget selector or container
 			const target = (focusSelector ? container.querySelector<HTMLElement>(focusSelector) : null) ?? container;
 			target.focus();
 
-			const handleTrap = (e: KeyboardEvent) => trapFocus(container, e);
-			focusTrapHandlers.set(container, handleTrap);
+			// Selector for elements that can receive focus, used to trap Tab within the container
+			const notDisabled = ':not([disabled])';
+			const notTabIndex = ':not([tabindex="-1"])';
+			const focusableSelector = `a[href], button${notDisabled}, input${notDisabled}, select${notDisabled}, textarea${notDisabled}, [tabindex]${notTabIndex}`;
+
+			// Exclude elements matched by focusableSelector that are hidden (e.g. a collapsed dropdown's content)
+			// and therefore not actually reachable via Tab, even though they match the selector
+			const isFocusable = (element: HTMLElement) => {
+				const style = getComputedStyle(element);
+				return style.visibility !== 'hidden' && style.display !== 'none';
+			};
+
+			// Keep Tab / Shift + Tab cycling within the container while it's open
+			const handleTrap = (e: KeyboardEvent) => {
+				// If not the tab key, exit
+				if (e.key !== 'Tab') return;
+
+				// If no focusable elements, exit
+				const focusable = Array.from(container.querySelectorAll<HTMLElement>(focusableSelector)).filter(isFocusable);
+				if (focusable.length === 0) return;
+
+				// Get first and last focusable elements
+				const first = focusable[0];
+				const last = focusable[focusable.length - 1];
+
+				// Focus on first or last elements
+				if (e.shiftKey && document.activeElement === first) {
+					e.preventDefault();
+					last.focus();
+				} else if (!e.shiftKey && document.activeElement === last) {
+					e.preventDefault();
+					first.focus();
+				}
+			};
+
+			// Save the handler so it can be removed on deactivate, then start trapping Tab
+			trapHandlers.set(container, handleTrap);
 			container.addEventListener('keydown', handleTrap);
 		},
-		// Remove the Tab trap and restore focus to whatever opened the container
 		deactivate: (container: HTMLElement) => {
-			const handleTrap = focusTrapHandlers.get(container);
+			// Remove the Tab trap and restore focus to whatever opened the container
+			const handleTrap = trapHandlers.get(container);
 			if (handleTrap) {
 				container.removeEventListener('keydown', handleTrap);
-				focusTrapHandlers.delete(container);
+				trapHandlers.delete(container);
 			}
 
-			focusTrapOpenerElements.get(container)?.focus();
-			focusTrapOpenerElements.delete(container);
+			// Restore focus to whatever opened the container, then forget it
+			trapOpenerElements.get(container)?.focus();
+			trapOpenerElements.delete(container);
 		},
 	},
 	getLast: (value: string | string[], delimeter?: string) => {
@@ -95,27 +102,6 @@ export const utils: UtilsType = {
 			stickyObserver.observe(element);
 		}
 	},
-	reveal: (element: HTMLElement | null, revealClass: string) => {
-		if (element) {
-			// Create options and callback for observer
-			// Note: threshold is edge-triggered (fires as soon as the element appears, before its bottom
-			// edge is 10% into the viewport) rather than area-ratio-based, so it works consistently for
-			// sections much taller than the viewport, not just ones that can fit fully on screen
-			// Note 2: rootMargin values need to be in pixels or precentage values
-			const revealOptions = { threshold: 0, rootMargin: '0px 0px -10% 0px' };
-			const revealCallback = (e: IntersectionObserverEntry, observer: IntersectionObserver) => {
-				if (!e.isIntersecting) return;
-
-				// Add class once revealed, no need to keep observing
-				e.target.classList.add(revealClass);
-				observer.unobserve(e.target);
-			};
-
-			// Observe to add class once element scrolls into view
-			const revealObserver = new IntersectionObserver(([e], observer) => revealCallback(e, observer), revealOptions);
-			revealObserver.observe(element);
-		}
-	},
 	scrollTo: (e?: EventsType, selector?: string, offset?: number) => {
 		// Scroll to element on page
 		if (e) {
@@ -130,6 +116,12 @@ export const utils: UtilsType = {
 			},
 		};
 		window.scroll({ top: anchor.position(), left: 0, behavior: 'smooth' });
+
+		// Move focus to the target so keyboard/screen-reader users know where they landed
+		if (anchor.selector) {
+			const anchorElement = document.querySelector<HTMLElement>(anchor.selector);
+			anchorElement?.focus({ preventScroll: true });
+		}
 	},
 	setAttributes: (element: HTMLElement, attributes: ObjectStringType) => {
 		// Set multiple attributes on an element

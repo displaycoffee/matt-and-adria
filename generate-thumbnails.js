@@ -7,7 +7,7 @@ const photosDir = path.resolve('public/assets/images/photos');
 
 // Thumbnail configuration
 const thumbSuffix = '-thumb';
-const thumbWidth = 380;
+const thumbWidth = 475;
 const thumbQuality = 75;
 
 if (!fs.existsSync(photosDir)) {

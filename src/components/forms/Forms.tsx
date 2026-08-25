@@ -10,8 +10,7 @@ export const Button = (props: ButtonProps) => {
 	const { children, className: propClassName, hideLabel = false, label, type = 'button', variant = 'primary', ...rest } = props;
 	const buttonClass = variant != 'unstyled' && variant != 'link' ? 'button ' : '';
 	const variantClass = variant == 'link' ? `button-${variant} button-unstyled a` : `button-${variant}`;
-	const disabledClass = rest?.disabled ? ' button-disabled' : '';
-	const className = forms.build.className(`${buttonClass}${variantClass}${disabledClass} pointer`, propClassName);
+	const className = forms.build.className(`${buttonClass}${variantClass}`, propClassName, rest?.disabled, true);
 
 	return (
 		<button className={className} type={type} aria-label={hideLabel ? label : undefined} {...rest}>

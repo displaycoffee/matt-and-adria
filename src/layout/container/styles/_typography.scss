@@ -38,6 +38,14 @@
 			color: theme.$color-04;
 			@include mixins.text-decoration(1px, 5px, inherit);
 		}
+		&:has(.button-label) {
+			&:active, &:hover {
+				text-decoration: none;
+				.button-label {
+					@include mixins.text-decoration(1px, 5px, inherit);
+				}
+			}
+		}
 	}
 	mark {
 		background: theme.$color-12;

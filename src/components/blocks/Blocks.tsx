@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
 /* Scripts */
 import { useFormattedId } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { LinkExternalProps, ListProps, SectionProps } from './scripts/blocks-types';
+import type { LinkExternalProps, ListProps, SectionProps } from './scripts/blocks-types';
 import { blocks } from './scripts/blocks';
 
 /* Components */

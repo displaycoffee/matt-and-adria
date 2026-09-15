@@ -1,5 +1,5 @@
 /* Scripts */
-import { HomeProps } from '../scripts/home-types';
+import type { HomeProps } from '../scripts/home-types';
 import { photos } from '../scripts/photos';
 
 /* Components */

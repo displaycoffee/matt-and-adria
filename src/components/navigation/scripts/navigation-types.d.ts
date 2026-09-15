@@ -1,7 +1,10 @@
+import type { ComponentType } from 'react';
+
 /* Type definitions */
 type Navigation = {
 	children?: Navigation[];
-	element?: JSX.Element;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- nav components have differing prop shapes
+	element?: ComponentType<any>;
 	id: number;
 	isRoute?: boolean;
 	isScroll?: boolean;

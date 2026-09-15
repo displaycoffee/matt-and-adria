@@ -1,5 +1,5 @@
 /* Packages */
-import { CSSProperties } from 'react';
+import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 
 /* Type definitions */
 type Gallery = GalleryImage[];

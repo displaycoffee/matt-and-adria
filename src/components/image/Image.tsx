@@ -2,7 +2,7 @@
 import './styles/image.scss';
 
 /* Scripts */
-import { ImageProps, ImageAttributesType, WrapperAttributesType } from './scripts/image-types';
+import type { ImageProps, ImageAttributesType, WrapperAttributesType } from './scripts/image-types';
 import { image as imageUtils } from './scripts/image';
 
 export const Image = (props: ImageProps) => {
@@ -14,8 +14,8 @@ export const Image = (props: ImageProps) => {
 		className: wrapperPrefix,
 	};
 	const imageAttributes: ImageAttributesType = {
-		onError: (e: EventsType) => imageUtils.onError(e),
-		onLoad: (e: EventsType) => imageUtils.onLoad(e),
+		onError: imageUtils.onError,
+		onLoad: imageUtils.onLoad,
 		src: image,
 	};
 

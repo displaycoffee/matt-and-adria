@@ -1,5 +1,5 @@
 /* Scripts */
-import { NavigationType } from './navigation-types';
+import type { NavigationType } from './navigation-types';
 import { utils } from '../../../_config/scripts/utils';
 
 /* Components */

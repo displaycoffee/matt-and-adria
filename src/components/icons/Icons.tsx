@@ -5,7 +5,7 @@
 import './styles/icons.scss';
 
 /* Scripts */
-import { IconsProps } from './scripts/icons-types';
+import type { IconsProps } from './scripts/icons-types';
 
 export const Icon = (props: IconsProps) => {
 	const { id, size } = props;

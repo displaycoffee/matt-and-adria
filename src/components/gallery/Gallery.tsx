@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 /* Scripts */
-import { useFormattedId } from '../../_config/scripts/hooks';
+import { useFormattedId } from '../../_core/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 import type {
 	GalleryOverlayProps,

@@ -3,7 +3,7 @@ import './styles/footer.scss';
 
 /* Scripts */
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { useRespond } from '../../_config/scripts/hooks';
+import { useRespond } from '../../_core/scripts/hooks';
 
 /* Components */
 import { LinkExternal } from '../../components/blocks/Blocks';

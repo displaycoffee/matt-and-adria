@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite';
 import { viteUtils } from './vite.utils.js';
 
+const modules = 'node_modules/';
+const reactChunks = [`${modules}react/`, `${modules}react-dom/`, `${modules}react-router-dom/`];
+
 export default defineConfig({
 	root: 'src',
 	publicDir: '../public',
@@ -22,9 +25,7 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: (id) => {
-					if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/react-router-dom/')) {
-						return 'vendor';
-					}
+					if (reactChunks.includes(id)) return 'vendor';
 				},
 				assetFileNames: (file) => {
 					return viteUtils.assetFileNames(file);

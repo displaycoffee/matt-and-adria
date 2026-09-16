@@ -5,7 +5,7 @@ import './styles/slideout.scss';
 import { useEffect, useRef, useState } from 'react';
 
 /* Scripts */
-import { useFormattedId } from '../../_config/scripts/hooks';
+import { useFormattedId } from '../../_core/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 import type { SlideoutOverlayProps, SlideoutProps, SlideoutTouchType, SlideoutTouchRefType, SlideoutOverlayRefType } from './scripts/slideout-types';
 import { slideout } from './scripts/slideout';

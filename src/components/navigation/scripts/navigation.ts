@@ -1,6 +1,6 @@
 /* Scripts */
 import type { NavigationType } from './navigation-types';
-import { utils } from '../../../_config/scripts/utils';
+import { utils } from '../../../_core/scripts/utils';
 
 /* Components */
 import { Credits } from '../../../pages/home/content/Credits';

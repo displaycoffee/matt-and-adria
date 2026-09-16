@@ -1,3 +1,4 @@
+/* Packages */
 import type { SyntheticEvent } from 'react';
 
 export const image = {

@@ -25,7 +25,7 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: (id) => {
-					if (reactChunks.includes(id)) return 'vendor';
+					if (reactChunks.some((chunk) => id.includes(chunk))) return 'vendor';
 				},
 				assetFileNames: (file) => {
 					return viteUtils.assetFileNames(file);

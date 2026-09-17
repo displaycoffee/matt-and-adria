@@ -1,7 +1,8 @@
 {
 	"name": "matt-and-adria",
-	"version": "1.1.0",
+	"displayName": "Matt and Adria",
 	"description": "Wedding website for Matt and Adria.",
+	"version": "1.1.0",
 	"main": "bundle.js",
 	"type": "module",
 	"keywords": [],
@@ -9,13 +10,16 @@
 	"license": "ISC",
 	"homepage": "https://mattandadria.com",
 	"scripts": {
-		"build": "node generate-thumbnails.js && vite build && node optimize-html.js && npx prettier --write dist/index.html --ignore-path /dev/null",
-		"dev": "node generate-thumbnails.js && vite --host",
+		"generate:dev": "node scripts/src-generate.js && npx prettier --write src/index.html",
+		"generate:dist": "node scripts/dist-generate.js && npx prettier --write dist/index.html --ignore-path /dev/null",
+		"generate:public": "node scripts/public-generate.js && npx prettier --write public/manifest.json",
+		"generate:thumbnails": "node scripts/thumbnails-generate.js",
+		"generate:thumbnails:clean": "node scripts/thumbnails-generate.js --clean",
+		"build": "npm run generate:thumbnails && vite build && npm run generate:dist && npm run generate:public",
+		"dev": "npm run generate:public && npm run generate:dev && vite --host",
 		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
 		"lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
-		"preview": "vite preview",
-		"thumbnails": "node generate-thumbnails.js",
-		"thumbnails:clean": "node generate-thumbnails.js --clean"
+		"preview": "vite preview"
 	},
 	"devDependencies": {
 		"@tanstack/react-query-devtools": "^5.102.8",

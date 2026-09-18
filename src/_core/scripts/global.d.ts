@@ -57,7 +57,7 @@ type Variables = {
 };
 
 declare global {
-	/* Declare global types */
+	// Declare global types
 	type EventsType = Events;
 
 	type ObjectStringType = ObjectString;
@@ -70,7 +70,7 @@ declare global {
 
 	type VariablesType = Variables;
 
-	/* Declare global prop types */
+	// Declare global prop types
 	type ObjectPrimitiveProps = ObjectPrimitive;
 }
 

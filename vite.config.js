@@ -1,10 +1,9 @@
-/* Packages */ 
+/* Packages */
 import { defineConfig } from 'vite';
 
-/* Scripts */ 
+/* Scripts */
 import { viteUtils } from './vite.utils.js';
 
-/* Variables */
 const modules = 'node_modules/';
 const reactChunks = [`${modules}react/`, `${modules}react-dom/`, `${modules}react-router-dom/`];
 

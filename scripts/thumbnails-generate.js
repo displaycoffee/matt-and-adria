@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 
-/* Variables */
 const photosDir = path.resolve('public/assets/images/photos');
 const thumb = {
 	suffix: '-thumb',

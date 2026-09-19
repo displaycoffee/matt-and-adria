@@ -5,9 +5,9 @@ import './styles/navigation.scss';
 import { Fragment } from 'react';
 
 /* Scripts */
+import type { NavigationComponentProps, NavigationListItemProps } from './scripts/navigation-types';
 import { useRespond } from '../../_core/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
-import type { NavigationComponentProps, NavigationListItemProps } from './scripts/navigation-types';
 import { navigationUtils } from './scripts/navigation-utils';
 
 /* Components */

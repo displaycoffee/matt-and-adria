@@ -6,8 +6,6 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 /* Scripts */
-import { useFormattedId } from '../../_core/scripts/hooks';
-import { useAppContext } from '../../context/scripts/context-hooks';
 import type {
 	GalleryOverlayProps,
 	GalleryProps,
@@ -16,6 +14,8 @@ import type {
 	GalleryTouchType,
 	GalleryTouchRefType,
 } from './scripts/gallery-types';
+import { useFormattedId } from '../../_core/scripts/hooks';
+import { useAppContext } from '../../context/scripts/context-hooks';
 import { gallery } from './scripts/gallery';
 
 /* Components */
@@ -159,24 +159,24 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 				{image.alt}
 			</h2>
 
-			<Button className="gallery-close" hideLabel={true} label="Close gallery image" onClick={(e) => toggle(e, false)}>
+			<Button className={'gallery-close'} hideLabel={true} label={'Close gallery image'} onClick={(e) => toggle(e, false)}>
 				<Icon id={'close-thin'} />
 			</Button>
 
 			<nav className="gallery-navigation" aria-label="Gallery Navigation">
 				<Button
-					className="gallery-navigation-button gallery-navigation-previous"
+					className={'gallery-navigation-button gallery-navigation-previous'}
 					hideLabel={true}
-					label="Previous gallery image"
+					label={'Previous gallery image'}
 					onClick={() => getImage('previous')}
 				>
 					<Icon id={'angle-left'} />
 				</Button>
 
 				<Button
-					className="gallery-navigation-button gallery-navigation-next"
+					className={'gallery-navigation-button gallery-navigation-next'}
 					hideLabel={true}
-					label="Next gallery image"
+					label={'Next gallery image'}
 					onClick={() => getImage('next')}
 				>
 					<Icon id={'angle-right'} />
@@ -224,7 +224,7 @@ const GalleryThumbnail = (props: GalleryThumbnailProps) => {
 			className={`gallery-thumbnail${orientation ? ` gallery-thumbnail-${orientation}` : ''}`}
 			hideLabel={true}
 			label={`View ${image.alt}`}
-			variant="unstyled"
+			variant={'unstyled'}
 			onClick={onClick}
 			ref={buttonRef}
 		>

@@ -33,8 +33,9 @@ export const Footer = () => {
 
 					<div className="column footer-content">
 						<div className="footer-copyright">
-							&copy; {date} <ButtonScroll target="#index" label={'MattAndAdria.com'} aria-label="Scroll to top button" />
-							<span className="footer-bullet">&bull;</span>Design by <LinkExternal href="//display.coffee">displaycoffee</LinkExternal>
+							&copy; {date} <ButtonScroll target={'#index'} label={'MattAndAdria.com'} aria-label={'Scroll to top button'} />
+							<span className="footer-bullet">&bull;</span>Design by{' '}
+							<LinkExternal href={'//display.coffee'}>displaycoffee</LinkExternal>
 						</div>
 					</div>
 

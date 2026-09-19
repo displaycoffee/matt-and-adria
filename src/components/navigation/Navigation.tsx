@@ -22,7 +22,7 @@ export const Navigation = (props: NavigationComponentProps) => {
 
 	return navigationList.length != 0 ? (
 		<nav className="navigation" aria-label={label}>
-			<List className="navigation-list" variant="ul-unstyled">
+			<List className={'navigation-list'} variant={'ul-unstyled'}>
 				{navigationList.map((nav, index) => {
 					const isLast = index === navigationList.length - 1;
 

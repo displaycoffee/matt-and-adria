@@ -5,9 +5,9 @@ import './styles/slideout.scss';
 import { useEffect, useRef, useState } from 'react';
 
 /* Scripts */
+import type { SlideoutOverlayProps, SlideoutProps, SlideoutTouchType, SlideoutTouchRefType, SlideoutOverlayRefType } from './scripts/slideout-types';
 import { useFormattedId } from '../../_core/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
-import type { SlideoutOverlayProps, SlideoutProps, SlideoutTouchType, SlideoutTouchRefType, SlideoutOverlayRefType } from './scripts/slideout-types';
 import { slideout } from './scripts/slideout';
 
 /* Components */
@@ -31,12 +31,12 @@ export const Slideout = (props: SlideoutProps) => {
 	// Create shared slideout button
 	const slideoutButton = (
 		<Button
-			className="slideout-button"
+			className={'slideout-button'}
 			label={options.label}
 			onClick={(e) => toggle(e, id)}
+			variant={'unstyled'}
 			aria-expanded={isActive}
 			aria-label={`Open ${options.label}`}
-			variant="unstyled"
 		>
 			<Icon id={'heart'} size={'large'} />
 		</Button>
@@ -94,6 +94,7 @@ export const Slideout = (props: SlideoutProps) => {
 			classObserver.observe(element, { attributes: true, attributeFilter: ['class'] });
 		};
 
+		// Track existing element
 		const existingElement = document.getElementById(id);
 		if (existingElement) {
 			trackElement(existingElement);
@@ -143,11 +144,11 @@ export const Slideout = (props: SlideoutProps) => {
 					</h2>
 
 					<Button
-						className="slideout-close"
+						className={'slideout-close'}
 						hideLabel={true}
-						label="Slideout Close Button"
+						label={'Slideout Close Button'}
 						onClick={(e) => toggle(e, false)}
-						variant="unstyled"
+						variant={'unstyled'}
 					>
 						<Icon id={'close-thin'} />
 					</Button>

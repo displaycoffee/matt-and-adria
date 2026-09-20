@@ -1,6 +1,3 @@
-/* Note: SVG file is loaded in src/index.html and then compiled into the final dist.index.html.
-   Make sure it's in index.html to use the component or customize as needed. */
-
 /* Styles */
 import './styles/icons.scss';
 
@@ -8,7 +5,7 @@ import './styles/icons.scss';
 import type { IconsProps } from './scripts/icons-types';
 
 export const Icon = (props: IconsProps) => {
-	const { id, size } = props;
+	const { icon: IconComponent, size } = props;
 	const iconClass = 'icon-wrapper';
 
 	// Create icon classes
@@ -17,9 +14,7 @@ export const Icon = (props: IconsProps) => {
 
 	return (
 		<div className={iconClasses.join(' ')}>
-			<svg className={`icon icon-${id}`} aria-hidden="true" focusable="false">
-				<use xlinkHref={`#icon-${id}`} />
-			</svg>
+			<IconComponent className="icon" aria-hidden="true" focusable="false" />
 		</div>
 	);
 };

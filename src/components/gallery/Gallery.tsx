@@ -4,6 +4,9 @@ import './styles/gallery.scss';
 /* Packages */
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import IconChevronLeft from '~icons/lucide/chevron-left';
+import IconChevronRight from '~icons/lucide/chevron-right';
+import IconX from '~icons/lucide/x';
 
 /* Scripts */
 import type {
@@ -160,7 +163,7 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 			</h2>
 
 			<Button className={'gallery-close'} hideLabel={true} label={'Close gallery image'} onClick={(e) => toggle(e, false)}>
-				<Icon id={'close-thin'} />
+				<Icon icon={IconX} />
 			</Button>
 
 			<nav className="gallery-navigation" aria-label="Gallery Navigation">
@@ -170,7 +173,7 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 					label={'Previous gallery image'}
 					onClick={() => getImage('previous')}
 				>
-					<Icon id={'angle-left'} />
+					<Icon icon={IconChevronLeft} />
 				</Button>
 
 				<Button
@@ -179,7 +182,7 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 					label={'Next gallery image'}
 					onClick={() => getImage('next')}
 				>
-					<Icon id={'angle-right'} />
+					<Icon icon={IconChevronRight} />
 				</Button>
 			</nav>
 

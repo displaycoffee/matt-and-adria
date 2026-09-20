@@ -1,3 +1,6 @@
+/* Packages */
+import IconCompass from '~icons/lucide/compass';
+
 /* Scripts */
 import type { HomeProps } from '../scripts/home-types';
 
@@ -29,7 +32,7 @@ export const Location = (props: HomeProps) => {
 
 					<div className="row row-address row-nowrap row-auto row-spacing-10">
 						<div className="column">
-							<Icon id={'compass'} />
+							<Icon icon={IconCompass} />
 							<strong>Address:</strong>
 						</div>
 						<div className="column">

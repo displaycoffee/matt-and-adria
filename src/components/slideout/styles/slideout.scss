@@ -45,6 +45,9 @@
 		@include mixins.gap(theme.$spacing-x2);
 		margin: 0 auto;
 		color: theme.$color-03;
+		.icon-wrapper .icon path {
+			fill: currentColor;
+		}
 	}
 	.slideout {
 		&.slideout-active {

@@ -1,24 +1,10 @@
 {
-	"short_name": "Burmecia",
-	"name": "Burmecia - A React/TypeScript Boilerplate",
+	"short_name": "Matt and Adria",
+	"name": "Wedding website for Matt and Adria.",
 	"icons": [
-		{
-			"src": "/favicon.svg",
-			"type": "image/svg+xml",
-			"sizes": "any"
-		},
-		{
-			"src": "/favicon-192x192.png",
-			"type": "image/png",
-			"sizes": "192x192",
-			"purpose": "any"
-		},
-		{
-			"src": "/favicon-512x512.png",
-			"type": "image/png",
-			"sizes": "512x512",
-			"purpose": "maskable"
-		}
+		{ "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+		{ "src": "/favicon-192x192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+		{ "src": "/favicon-512x512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
 	],
 	"start_url": ".",
 	"display": "standalone",

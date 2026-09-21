@@ -10,7 +10,7 @@ import { variables } from '../_core/scripts/variables';
 /* Create context */
 export const Context = createContext({} as ContextValuesType);
 
-/* Create Context.Provider wrapper */
+/* Create Context wrapper */
 export const ContextProvider = ({ children }: ContextProps) => {
 	const values: ContextValuesType = {
 		theme,
@@ -18,5 +18,5 @@ export const ContextProvider = ({ children }: ContextProps) => {
 		variables,
 	};
 
-	return <Context.Provider value={values}>{children}</Context.Provider>;
+	return <Context value={values}>{children}</Context>;
 };

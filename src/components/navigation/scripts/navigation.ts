@@ -1,56 +1,21 @@
 /* Scripts */
-import type { NavigationType } from './navigation-types';
-import { utils } from '../../../_core/scripts/utils';
+import type { NavigationMapType } from './navigation-types';
+import { navigationUtils } from './navigation-utils';
 
-/* Components */
-import { Credits } from '../../../pages/home/content/Credits';
-import { DateAndTime } from '../../../pages/home/content/DateAndTime';
-import { Location } from '../../../pages/home/content/Location';
-import { NearbyAirports } from '../../../pages/home/content/NearbyAirports';
-import { Photos } from '../../../pages/home/content/Photos';
+const { create } = navigationUtils;
 
-export const navigation: NavigationType[] = [
-	{
-		id: 0,
-		element: DateAndTime,
-		isScroll: true,
-		label: 'Date and Time',
-		showInNav: true,
-	},
-	{
-		id: 1,
-		element: Location,
-		isScroll: true,
-		label: 'Location',
-		showInNav: true,
-	},
-	{
-		id: 2,
-		element: NearbyAirports,
-		isScroll: true,
-		label: 'Nearby Airports',
-		showInNav: true,
-	},
-	{
-		id: 3,
-		element: Photos,
-		isScroll: true,
-		label: 'Photos',
-		showInNav: true,
-	},
-	{
-		id: 4,
-		element: Credits,
-		isScroll: true,
-		label: 'Credits',
-		showInNav: true,
-	},
-];
-
-/* Create handle for navigation */
-navigation.forEach((nav) => {
-	nav.props = {
-		id: utils.handleize(nav.label),
-		title: nav.label,
-	};
-});
+export const navigationHeader: NavigationMapType = {
+	...create({ key: 'index', label: 'Home', url: '/' }),
+	...create({ key: 'page-one', label: 'Page One' }),
+	...create({
+		key: 'page-two',
+		label: 'Page Two',
+		includeInSiteMap: false,
+		children: {
+			...create({ key: 'child-page-one', label: 'Child Page One' }),
+			...create({ key: 'child-page-two', label: 'Child Page Two' }),
+		},
+	}),
+	...create({ key: 'page-three', label: 'Page Three' }),
+	...create({ key: 'page-four', label: 'Page Four' }),
+};

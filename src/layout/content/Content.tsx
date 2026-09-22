@@ -1,13 +1,13 @@
 /* Styles */
 import './styles/content.scss';
 
-/* Components */
-import { Home } from '../../pages/home/Home';
+/* Packages */
+import { Outlet } from '@tanstack/react-router';
 
 export const Content = () => {
 	return (
 		<div className="content">
-			<Home />
+			<Outlet />
 		</div>
 	);
 };

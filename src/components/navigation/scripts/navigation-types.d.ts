@@ -1,33 +1,64 @@
 /* Packages */
-import type { ComponentType } from 'react';
+import type { ReactNode } from 'react';
 
 /* Type definitions */
-type Navigation = {
-	children?: Navigation[];
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- nav components have differing prop shapes
-	element?: ComponentType<any>;
-	id: number;
-	isRoute?: boolean;
-	isScroll?: boolean;
+type NavigationComponent = {
+	data: NavigationMap;
+	disableTransition?: boolean;
 	label: string;
-	props?: ObjectPrimitiveType;
+};
+
+type NavigationItemComponent = {
+	children?: ReactNode;
+	disableTransition: boolean;
+	nav: NavigationFlatItem;
+	navigationLinkClass: string;
+};
+
+type NavigationFlatItem = {
+	children?: NavigationFlatItem[];
+	id: string;
+	includeInSiteMap: boolean;
+	isRoute: boolean;
+	label: string;
+	showInNav: boolean;
+	url: string;
+};
+
+type NavigationMapItem = {
+	children?: NavigationMap;
+	id: string;
+	includeInSiteMap: boolean;
+	isRoute: boolean;
+	label: string;
+	showInNav: boolean;
+	url: string;
+};
+
+type NavigationMap = {
+	[key: string]: NavigationMapItem;
+};
+
+type NavigationMapItemOptions = {
+	children?: NavigationMap;
+	includeInSiteMap?: boolean;
+	isRoute?: boolean;
+	key: string;
+	label: string;
 	showInNav?: boolean;
 	url?: string;
 };
 
-type NavigationComponent = {
-	label: string;
-};
-
-type NavigationListItem = {
-	isLast: boolean;
-	nav: Navigation;
-};
-
 /* Export types */
-export type NavigationType = Navigation;
+export type NavigationFlatItemType = NavigationFlatItem;
+
+export type NavigationMapItemType = NavigationMapItem;
+
+export type NavigationMapType = NavigationMap;
+
+export type NavigationMapItemOptionsType = NavigationMapItemOptions;
 
 /* Export prop types */
 export type NavigationComponentProps = NavigationComponent;
 
-export type NavigationListItemProps = NavigationListItem;
+export type NavigationItemComponentProps = NavigationItemComponent;

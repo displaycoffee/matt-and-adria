@@ -1,8 +1,13 @@
 /* Packages */
 import type { RefObject } from 'react';
 import { useEffect, useLayoutEffect } from 'react';
+import { useLocation } from '@tanstack/react-router';
 
 export const useAvailableMinHeight = (ref: RefObject<HTMLElement | null>) => {
+	// main persists across routes, so a stale min-height can hold it at the old size and mask
+	// the resize from ResizeObserver. Re-run on pathname change to force a fresh measurement.
+	const location = useLocation();
+
 	// Reserves exactly the viewport space around this element — regardless of what surrounds it,
 	// or how many pieces (header, nav, footer, none of the above) — so content mounting in later
 	// doesn't shift whatever comes after it. Sets min-height directly, no CSS-side setup needed.
@@ -38,20 +43,30 @@ export const useAvailableMinHeight = (ref: RefObject<HTMLElement | null>) => {
 			observer.disconnect();
 			window.removeEventListener('resize', updateMinHeight);
 		};
-	}, [ref]);
+	}, [ref, location.pathname]);
 };
 
 /* Variables for useBodyClass */
 const bodyPrefix = 'page-';
 const bodySelector = document.querySelector('body');
+let previousPage = '';
 
 export const useBodyClass = (defaultPrefix: string) => {
+	const location = useLocation();
+
 	useEffect(() => {
 		if (!bodySelector) return;
 
+		// Remove any previous body class
+		bodySelector.classList.remove(`${bodyPrefix}${previousPage || defaultPrefix}`);
+
+		// Update previous location path
+		// Replace any body prefix, remove first slash, and replace any other slash with hyphen
+		previousPage = location.pathname.replace(bodyPrefix, '').replace('/', '').replace(/\//g, '-');
+
 		// Add new body class
-		bodySelector.classList.add(`${bodyPrefix}${defaultPrefix}`);
-	}, [defaultPrefix]);
+		bodySelector.classList.add(`${bodyPrefix}${previousPage || defaultPrefix}`);
+	}, [location, defaultPrefix]);
 
 	return null;
 };

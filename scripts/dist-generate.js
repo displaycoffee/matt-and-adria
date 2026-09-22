@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 const htmlPath = path.resolve('dist/index.html');
-const bundle = 'bundle.vendor'; // The name of the bundle you want to inject font blocks after.
+const bundle = 'bundle.tanstack'; // The name of the bundle you want to inject font blocks after.
 
 if (fs.existsSync(htmlPath)) {
 	let html = fs.readFileSync(htmlPath, 'utf8');

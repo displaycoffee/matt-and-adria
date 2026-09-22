@@ -1,63 +1,58 @@
 /* Scripts */
-import type { NavigationType } from './navigation-types';
-import { navigation } from './navigation';
+import type { NavigationFlatItemType, NavigationMapType, NavigationMapItemType, NavigationMapItemOptionsType } from './navigation-types';
 
 export const navigationUtils = {
-	get: {
-		list: () => {
-			// Create navigation clone
-			const navigationClone = [] as NavigationType[];
+	create: (data: NavigationMapItemOptionsType) => {
+		const { children, key, label, includeInSiteMap = true, isRoute = true, showInNav = true, url } = data;
 
-			navigation.forEach((nav) => {
-				// Create child array navigation
-				const navChildren = [] as NavigationType[];
+		// Build initial navigation item data
+		const navigationItem: NavigationMapItemType = {
+			id: key,
+			includeInSiteMap: includeInSiteMap,
+			isRoute: isRoute,
+			label: label,
+			showInNav: showInNav,
+			url: url ? url : `/${key}`,
+		};
 
-				// Check if children are available and build config
-				if (nav?.children && nav.children.length !== 0) {
-					nav.children.forEach((child) => {
-						if (child.showInNav) {
-							child.url = nav.url && child.isRoute && child.url && !child.url.includes(nav.url) ? `${nav.url}${child.url}` : child.url;
-							navChildren.push(child);
-						}
-					});
-				}
+		// Add children if available
+		if (children && Object.keys(children).length !== 0) {
+			const childrenKeys = Object.keys(children);
+			const modified: NavigationMapType = {};
 
-				// If parent navigation is value, push object
-				if (nav.showInNav) {
-					navigationClone.push({
-						...nav,
-						children: navigationUtils.sort(navChildren),
-					});
-				}
+			// Loop through children to apprent parent id, unless a custom url was already given
+			childrenKeys.forEach((child) => {
+				const current = children[child];
+				const isDefaultUrl = current.url === `/${current.id}`;
+
+				modified[child] = {
+					...current,
+					url: isDefaultUrl ? `${navigationItem.url}/${current.id}` : current.url,
+				};
 			});
 
-			// Return final navigation
-			return navigationClone.length !== 0 ? navigationUtils.sort(navigationClone) : [];
-		},
-		children: (listId: number) => {
-			// Create navigation clone
-			const navigationClone = [] as NavigationType[];
+			// Set updated children
+			navigationItem.children = modified;
+		}
 
-			navigation.forEach((nav) => {
-				if (listId == nav.id && nav?.children && nav.children.length !== 0) {
-					// Create child properties
-					nav.children.forEach((child) => {
-						if (child.showInNav) {
-							child.url = nav.url && child.isRoute && child.url && !child.url.includes(nav.url) ? `${nav.url}${child.url}` : child.url;
-							navigationClone.push(child);
-						}
-					});
-				}
-			});
-
-			// Return final navigation
-			return navigationClone.length !== 0 ? navigationUtils.sort(navigationClone) : [];
-		},
+		return { [key]: navigationItem };
 	},
-	sort: (list: NavigationType[]) => {
-		// Function to sort navigation list
-		return [...list].sort((a, b) => {
-			return a.id - b.id;
-		});
+	get: {
+		list: (data: NavigationMapType): NavigationFlatItemType[] => {
+			return Object.keys(data).map((dataKey) => {
+				const { children, ...rest } = data[dataKey];
+
+				// Create modified object
+				const modified: NavigationFlatItemType = { ...rest };
+
+				// If children, add array of children
+				if (children && Object.keys(children).length !== 0) modified.children = navigationUtils.get.list(children);
+
+				return modified;
+			});
+		},
+		listItem: (data: NavigationMapType, key: string): NavigationFlatItemType | undefined => {
+			return navigationUtils.get.list(data).find((item) => item.id === key);
+		},
 	},
 };

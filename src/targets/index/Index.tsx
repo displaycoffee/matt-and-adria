@@ -1,18 +1,20 @@
+/* Packages */
+import { createRouter, RouterProvider } from '@tanstack/react-router';
+
 /* Scripts */
 import { index } from './scripts';
+import { variables } from '../../_core/scripts/variables';
+import { routeTree } from '../../routeTree.gen';
 
-/* Components */
-import { ContextProvider } from '../../context/Context';
-import { Container } from '../../layout/container/Container';
+/* Create router */
+const router = createRouter({ routeTree, basepath: variables.paths.basename });
 
-/* Index component */
-const Index = () => {
-	return (
-		<ContextProvider>
-			<Container />
-		</ContextProvider>
-	);
-};
+/* Register router type for full type safety across the app */
+declare module '@tanstack/react-router' {
+	interface Register {
+		router: typeof router;
+	}
+}
 
 /* Create main target entry point */
-index.renderTarget('#index', <Index />);
+index.renderTarget('#index', <RouterProvider router={router} />);

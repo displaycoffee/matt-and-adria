@@ -6,6 +6,7 @@ import { viteUtils } from './vite.utils.js';
 
 const modules = 'node_modules/';
 const reactChunks = [`${modules}react/`, `${modules}react-dom/`, `${modules}react-router-dom/`];
+const tanstackChunks = [`${modules}@tanstack/react-router/`];
 
 export default defineConfig({
 	root: 'src',
@@ -28,6 +29,7 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: (id) => {
+					if (tanstackChunks.some((chunk) => id.includes(chunk))) return 'tanstack';
 					if (reactChunks.some((chunk) => id.includes(chunk))) return 'vendor';
 				},
 				assetFileNames: (file) => {

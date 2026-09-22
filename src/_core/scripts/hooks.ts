@@ -1,5 +1,8 @@
 /* Packages */
+import type { MouseEvent } from 'react';
 import { useEffect, useId, useState } from 'react';
+import { flushSync } from 'react-dom';
+import { useLocation, useNavigate } from '@tanstack/react-router';
 
 export const useFormattedId = () => {
 	// Updates the format of useId hook
@@ -19,4 +22,37 @@ export const useRespond = (bp: number) => {
 	}, [bp]);
 
 	return match;
+};
+
+export const useViewTransition = () => {
+	// Custom hook to use View Transitions API
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	return (e: MouseEvent<HTMLElement>, target: string | (() => void)) => {
+		const isUrl = typeof target === 'string';
+
+		if (!document.startViewTransition || e.ctrlKey || e.metaKey || e.shiftKey || (isUrl && target === location.pathname)) {
+			return false;
+		} else {
+			e.preventDefault();
+
+			const contentEl = document.querySelector('.content') as HTMLElement;
+			if (contentEl) contentEl.style.viewTransitionName = 'page-content';
+
+			void document
+				.startViewTransition(() => {
+					flushSync(() => {
+						if (isUrl) {
+							void navigate({ href: target });
+						} else {
+							target();
+						}
+					});
+				})
+				.finished.finally(() => {
+					if (contentEl) contentEl.style.viewTransitionName = '';
+				});
+		}
+	};
 };

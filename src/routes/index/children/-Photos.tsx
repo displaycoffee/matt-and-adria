@@ -1,12 +1,12 @@
 /* Scripts */
-import type { HomeProps } from '../scripts/home-types';
+import type { IndexProps } from '../scripts/index-types';
 import { photos } from '../scripts/photos';
 
 /* Components */
 import { Section } from '../../../components/blocks/Blocks';
 import { Gallery } from '../../../components/gallery/Gallery';
 
-export const Photos = (props: HomeProps) => {
+export const Photos = (props: IndexProps) => {
 	const { id, title } = props;
 
 	return (

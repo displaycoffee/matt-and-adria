@@ -1,10 +1,10 @@
 /* Scripts */
-import type { HomeProps } from '../scripts/home-types';
+import type { IndexProps } from '../scripts/index-types';
 
 /* Components */
 import { Section } from '../../../components/blocks/Blocks';
 
-export const Welcome = (props: HomeProps) => {
+export const Welcome = (props: IndexProps) => {
 	const { id } = props;
 
 	return (

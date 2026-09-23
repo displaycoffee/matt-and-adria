@@ -3,13 +3,13 @@ import type { NavigationFlatItemType, NavigationMapType, NavigationMapItemType, 
 
 export const navigationUtils = {
 	create: (data: NavigationMapItemOptionsType) => {
-		const { children, key, label, includeInSiteMap = true, isRoute = true, showInNav = true, url } = data;
+		const { children, key, label, includeInSitemap = true, isSection = true, showInNav = true, url } = data;
 
 		// Build initial navigation item data
 		const navigationItem: NavigationMapItemType = {
 			id: key,
-			includeInSiteMap: includeInSiteMap,
-			isRoute: isRoute,
+			includeInSitemap: includeInSitemap,
+			isSection: isSection,
 			label: label,
 			showInNav: showInNav,
 			url: url ? url : `/${key}`,

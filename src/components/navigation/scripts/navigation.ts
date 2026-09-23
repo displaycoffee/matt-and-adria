@@ -5,17 +5,9 @@ import { navigationUtils } from './navigation-utils';
 const { create } = navigationUtils;
 
 export const navigationHeader: NavigationMapType = {
-	...create({ key: 'index', label: 'Home', url: '/' }),
-	...create({ key: 'page-one', label: 'Page One' }),
-	...create({
-		key: 'page-two',
-		label: 'Page Two',
-		includeInSiteMap: false,
-		children: {
-			...create({ key: 'child-page-one', label: 'Child Page One' }),
-			...create({ key: 'child-page-two', label: 'Child Page Two' }),
-		},
-	}),
-	...create({ key: 'page-three', label: 'Page Three' }),
-	...create({ key: 'page-four', label: 'Page Four' }),
+	...create({ key: 'date-and-time', label: 'Date and Time', includeInSitemap: false }),
+	...create({ key: 'location', label: 'Location', includeInSitemap: false }),
+	...create({ key: 'nearby-airports', label: 'Nearby Airports', includeInSitemap: false }),
+	...create({ key: 'photos', label: 'Photos', includeInSitemap: false }),
+	...create({ key: 'credits', label: 'Credits', includeInSitemap: false }),
 };

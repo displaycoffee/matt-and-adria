@@ -1,5 +1,5 @@
 let sitemap = {
-	dynamicRoutes: ['/page-one', '/page-two/child-page-one', '/page-two/child-page-two', '/page-three', '/page-four'],
+	dynamicRoutes: [],
 	exclude: ['/assets', '/assets/css', '/assets/fonts', '/assets/js', '/assets/images', '/assets/images/photos', '/assets/images/theme'],
 	hostname: 'https://mattandadria.com',
 	readable: true,

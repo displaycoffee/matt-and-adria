@@ -1,10 +1,10 @@
 /* Scripts */
-import type { HomeProps } from '../scripts/home-types';
+import type { IndexProps } from '../scripts/index-types';
 
 /* Components */
 import { LinkExternal, List, Section } from '../../../components/blocks/Blocks';
 
-export const Credits = (props: HomeProps) => {
+export const Credits = (props: IndexProps) => {
 	const { id, title } = props;
 
 	return (

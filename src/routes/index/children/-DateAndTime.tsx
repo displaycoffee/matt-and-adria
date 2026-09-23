@@ -1,10 +1,10 @@
 /* Scripts */
-import type { HomeProps } from '../scripts/home-types';
+import type { IndexProps } from '../scripts/index-types';
 
 /* Components */
 import { List, Section } from '../../../components/blocks/Blocks';
 
-export const DateAndTime = (props: HomeProps) => {
+export const DateAndTime = (props: IndexProps) => {
 	const { id, title } = props;
 
 	return (

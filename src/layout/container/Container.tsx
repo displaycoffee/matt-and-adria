@@ -3,7 +3,6 @@ import './styles/container.scss';
 
 /* Packages */
 import { useRef } from 'react';
-import { Link, useLocation } from '@tanstack/react-router';
 
 /* Scripts */
 import { useRespond } from '../../_core/scripts/hooks';

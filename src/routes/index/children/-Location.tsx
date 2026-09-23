@@ -2,14 +2,14 @@
 import IconCompass from '~icons/lucide/compass';
 
 /* Scripts */
-import type { HomeProps } from '../scripts/home-types';
+import type { IndexProps } from '../scripts/index-types';
 
 /* Components */
 import { LinkExternal, List, Section } from '../../../components/blocks/Blocks';
 import { Icon } from '../../../components/icons/Icons';
 import { Image } from '../../../components/image/Image';
 
-export const Location = (props: HomeProps) => {
+export const Location = (props: IndexProps) => {
 	const { id, title } = props;
 	const prefix = '//maps.google.com/maps?';
 	const maps = {

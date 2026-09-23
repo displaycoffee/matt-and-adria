@@ -3,10 +3,22 @@ import './index/styles/index.scss';
 
 /* Packages */
 import { createLazyFileRoute } from '@tanstack/react-router';
+import { Fragment } from 'react';
+
+/* Scripts */
+import { navigationHeader } from '../components/navigation/scripts/navigation';
+import { navigationUtils } from '../components/navigation/scripts/navigation-utils';
 
 /* Components */
-import { List } from '../components/blocks/Blocks';
-import { Dropdown } from '../components/dropdown/Dropdown';
+import { Credits } from './index/children/-Credits';
+import { DateAndTime } from './index/children/-DateAndTime';
+import { Location } from './index/children/-Location';
+import { NearbyAirports } from './index/children/-NearbyAirports';
+import { Photos } from './index/children/-Photos';
+import { Welcome } from './index/children/-Welcome';
+
+/* Get navigation */
+const navigationList = navigationUtils.get.list(navigationHeader);
 
 export const Route = createLazyFileRoute('/')({
 	component: RouteComponent,
@@ -14,33 +26,30 @@ export const Route = createLazyFileRoute('/')({
 
 function RouteComponent() {
 	return (
-		<div className="home margin-trim">
-			<h2>Home</h2>
+		<div className="home">
+			<Welcome id={'welcome'} />
 
-			<p>This is an index page.</p>
+			{navigationList.length != 0
+				? navigationList.map((nav) => {
+						// Pass down nav props
+						const navProps = {
+							id: nav.id,
+							title: nav.label,
+						};
 
-			<Dropdown buttonLabel={'Label'}>
-				<List>
-					<li>Item 1</li>
-					<li>Item 2</li>
-					<li>Item 3</li>
-					<li>Item 4</li>
-				</List>
-			</Dropdown>
-
-			<List>
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</List>
-
-			<List variant={'ol'}>
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
-				<li>Item 4</li>
-			</List>
+						return (
+							<Fragment key={nav.id}>
+								{{
+									credits: <Credits {...navProps} />,
+									'date-and-time': <DateAndTime {...navProps} />,
+									location: <Location {...navProps} />,
+									'nearby-airports': <NearbyAirports {...navProps} />,
+									photos: <Photos {...navProps} />,
+								}[nav.id] || <p>Section not found.</p>}
+							</Fragment>
+						);
+					})
+				: null}
 		</div>
 	);
 }

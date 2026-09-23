@@ -1,10 +1,10 @@
 /* Scripts */
-import type { HomeProps } from '../scripts/home-types';
+import type { IndexProps } from '../scripts/index-types';
 
 /* Components */
 import { LinkExternal, Section } from '../../../components/blocks/Blocks';
 
-export const NearbyAirports = (props: HomeProps) => {
+export const NearbyAirports = (props: IndexProps) => {
 	const { id, title } = props;
 
 	return (

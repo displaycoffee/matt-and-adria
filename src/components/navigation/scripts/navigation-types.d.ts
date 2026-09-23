@@ -4,13 +4,12 @@ import type { ReactNode } from 'react';
 /* Type definitions */
 type NavigationComponent = {
 	data: NavigationMap;
-	disableTransition?: boolean;
 	label: string;
 };
 
 type NavigationItemComponent = {
 	children?: ReactNode;
-	disableTransition: boolean;
+	isLast: boolean;
 	nav: NavigationFlatItem;
 	navigationLinkClass: string;
 };
@@ -18,8 +17,8 @@ type NavigationItemComponent = {
 type NavigationFlatItem = {
 	children?: NavigationFlatItem[];
 	id: string;
-	includeInSiteMap: boolean;
-	isRoute: boolean;
+	includeInSitemap: boolean;
+	isSection: boolean;
 	label: string;
 	showInNav: boolean;
 	url: string;
@@ -28,8 +27,8 @@ type NavigationFlatItem = {
 type NavigationMapItem = {
 	children?: NavigationMap;
 	id: string;
-	includeInSiteMap: boolean;
-	isRoute: boolean;
+	includeInSitemap: boolean;
+	isSection: boolean;
 	label: string;
 	showInNav: boolean;
 	url: string;
@@ -41,8 +40,8 @@ type NavigationMap = {
 
 type NavigationMapItemOptions = {
 	children?: NavigationMap;
-	includeInSiteMap?: boolean;
-	isRoute?: boolean;
+	includeInSitemap?: boolean;
+	isSection?: boolean;
 	key: string;
 	label: string;
 	showInNav?: boolean;

@@ -11,8 +11,8 @@ export const Route = createRootRoute({
 		<>
 			<ContextProvider>
 				<Container />
+				<TanStackRouterDevtools />
 			</ContextProvider>
-			<TanStackRouterDevtools />
 		</>
 	),
 });

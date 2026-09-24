@@ -53,7 +53,7 @@
 		.gallery-image {
 			max-width: 100%;
 			max-height: 100%;
-			padding: calc($gallery-spacing * 2) + $gallery-button-size;
+			padding: calc($gallery-spacing * 2 + $gallery-button-size);
 			.image-wrapper {
 				@include mixins.sizing(100%, 100%);
 				img {

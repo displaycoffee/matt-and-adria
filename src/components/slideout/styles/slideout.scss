@@ -6,40 +6,17 @@
 //// SLIDEOUT
 //// --------------------------------------------------------------------------
 
-	// Colors
-
-	$slideout-color-01: theme.$color-09; // overlay
-	$slideout-color-02: theme.$color-03; // content background
-
 	// Configuration
 
 	$slideout-spacing: theme.$spacing-x4; // overall spacing value
-	$slideout-easing-in: cubic-bezier(0.65, 0, 0.80, 0); // slow start, fast finish - used when closing so the fade gets a head start before the slide takes off
+	$slideout-easing-in: cubic-bezier(0.65, 0, 0.80, 0); // slow start, fast finish - used when closing
 	$slideout-easing-out: cubic-bezier(0.25, 1, 0.35, 1); // fast start, slow finish - used when opening
-	$slideout-transition-closed: opacity 0.6s ease-in-out, transform 0.6s $slideout-easing-in; // transition properties for closing
-	$slideout-transition-open: opacity 0.6s ease-in-out, transform 0.6s $slideout-easing-out; // transition properties for opening
 	$slideout-header: 60px; // height of header (determines scrollable area)
 
 	// Style block
+	// Note: selectors are .overlay.slideout so they win over overlay.scss, which is injected after this file
+	// The open / close animation is driven by the --overlay-* custom properties documented in overlay.scss
 
-	.slideout-active-body {
-		overflow: hidden;
-		.slideout-overlay {
-			z-index: 9998;
-			opacity: 1;
-			visibility: visible;
-		}
-	}
-	.slideout-overlay, .slideout .slideout-content {
-		@include mixins.position($type: fixed, $top: 0, $bottom: 0, $left: 0, $right: 0);
-	}
-	.slideout-overlay {
-		@include mixins.transition(opacity 0.6s ease-in-out);
-		background-color: $slideout-color-01;
-		z-index: -1;
-		opacity: 0;
-		visibility: hidden;
-	}
 	.slideout-button {
 		@include mixins.flex-display(flex);
 		@include mixins.gap(theme.$spacing-x2);
@@ -49,87 +26,91 @@
 			fill: currentColor;
 		}
 	}
-	.slideout {
-		&.slideout-active {
-			.slideout-content {
-				@include mixins.transition($slideout-transition-open);
-			}
+	.overlay.slideout {
+		--overlay-easing-closed: #{$slideout-easing-in};
+		--overlay-easing-open: #{$slideout-easing-out};
+		--overlay-opacity-closed: 1; // only the backdrop fades; the panel slides in fully opaque
+		&.slideout-horizontal {
+			height: 100%;
+			max-height: 100%;
+			margin: 0;
 		}
 		&.slideout-vertical {
-			.slideout-content {
-				height: 80%;
-				height: calc(100% - calc($slideout-spacing * 2));
-				@include mixins.position($left: 0, $right: 0);
-				margin: $slideout-spacing auto;
-			}
+			height: calc(100% - calc($slideout-spacing * 2));
+			margin: $slideout-spacing auto;
 		}
-		&.slideout-horizontal {
-			.slideout-content {
-				@include mixins.position($top: 0, $bottom: 0);
-			}
+		&.slideout-left {
+			--overlay-transform-closed: translateX(-150%);
+			inset: 0 auto 0 0;
+		}
+		&.slideout-right {
+			--overlay-transform-closed: translateX(150%);
+			inset: 0 0 0 auto;
+		}
+		&.slideout-top {
+			--overlay-transform-closed: translateY(-150%);
+		}
+		&.slideout-bottom {
+			--overlay-transform-closed: translateY(150%);
 		}
 		&.slideout-left, &.slideout-right {
-			.slideout-content .slideout-border {
+			.slideout-border {
 				border-width: 0;
 			}
 		}
 		&.slideout-left {
-			.slideout-content .slideout-border {
+			.slideout-border {
 				border-right-width: 1px;
 			}
 		}
 		&.slideout-right {
-			.slideout-content .slideout-border {
+			.slideout-border {
 				border-left-width: 1px;
 			}
 		}
-		.slideout-content {
-			@include mixins.transition($slideout-transition-closed);
-			max-width: 100%;
-			background-color: $slideout-color-02;
-			z-index: 9999;
-			padding: $slideout-spacing;
-			.slideout-border {
-				@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: 0, $left: 0, $z: 1);
-				border: 1px solid theme.$color-08;
+		.overlay-content {
+			height: 100%;
+		}
+		.slideout-border {
+			@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: 0, $left: 0, $z: 1);
+			border: 1px solid theme.$color-08;
+		}
+		.slideout-header {
+			@include mixins.position($type: relative, $z: 2);
+			padding: 0 $slideout-spacing;
+			margin: -#{$slideout-spacing} -#{$slideout-spacing} $slideout-spacing -#{$slideout-spacing};
+			height: $slideout-header;
+			@include mixins.flex-layout((align-items: center));
+			@include mixins.gap(theme.$spacing-x2);
+			background-color: theme.$color-06;
+			border-bottom: theme.$spacing-x1 solid theme.$color-07;
+			.slideout-title, .slideout-close {
+				margin: 0;
+				line-height: 1;
+				color: theme.$color-01;
 			}
-			.slideout-header {
-				@include mixins.position($type: relative, $z: 2);
-				padding: 0 $slideout-spacing;
-				margin: -#{$slideout-spacing} -#{$slideout-spacing} $slideout-spacing -#{$slideout-spacing};
-				height: $slideout-header;
-				@include mixins.flex-layout((align-items: center));
-				@include mixins.gap(theme.$spacing-x2);
-				background-color: theme.$color-06;
-				border-bottom: theme.$spacing-x1 solid theme.$color-07;
-				.slideout-title, .slideout-close {
-					margin: 0;
-					line-height: 1;
-					color: theme.$color-01;
-				}
-				.slideout-title {
-					font-size: functions.em(20px, rem);
-				}
-				.slideout-close {
-					margin-left: auto;
-				}
+			.slideout-title {
+				font-size: functions.em(20px, rem);
 			}
-			.slideout-scrollbar {
-				@include mixins.position($type: relative, $z: 2);
-				overflow-y: auto;
-				overflow-x: hidden;
-				height: 100%;
-				max-height: 90%;
-				max-height: calc(100% - ($slideout-header + $slideout-spacing));
-				.navigation {
-					.navigation-list {
-						display: block;
-						.navigation-list-item {
-							font-size: functions.em(16px, rem);
-							margin: 0  0 theme.$spacing-x2 0;
-							&:last-child {
-								margin-bottom: 0;
-							}
+			.slideout-close {
+				margin-left: auto;
+			}
+		}
+		.slideout-scrollbar {
+			@include mixins.position($type: relative, $z: 2);
+			overflow-y: auto;
+			overflow-x: hidden;
+			height: 100%;
+			max-height: 90%;
+			max-height: calc(100% - ($slideout-header + $slideout-spacing));
+			.navigation {
+				.navigation-list {
+					display: block;
+					.navigation-list-item {
+						font-size: functions.em(16px, rem);
+						margin: 0  0 theme.$spacing-x2 0;
+						&:last-child {
+							margin-bottom: 0;
 						}
 					}
 				}

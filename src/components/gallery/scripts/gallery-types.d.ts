@@ -1,5 +1,5 @@
 /* Packages */
-import type { CSSProperties, Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
 /* Type definitions */
 type Gallery = GalleryImage[];
@@ -24,14 +24,16 @@ type GalleryOverlay = {
 	id: string;
 	images: GalleryImage[];
 	index: number;
+	isOpen: boolean;
+	onClose: () => void;
 	setIndex: Dispatch<SetStateAction<number>>;
-	styles: CSSProperties;
 	title: string;
 };
 
 type GalleryThumbnail = {
+	id: string;
 	image: GalleryImage;
-	onClick: (e: EventsType) => void;
+	onClick: () => void;
 };
 
 type GalleryTouch = React.TouchEvent;

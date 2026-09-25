@@ -13,7 +13,7 @@ import { navigationHeader } from '../../components/navigation/scripts/navigation
 /* Components */
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary';
 import { Navigation } from '../../components/navigation/Navigation';
-import { Slideout, SlideoutOverlay } from '../../components/slideout/Slideout';
+import { Slideout } from '../../components/slideout/Slideout';
 import { Header } from '../header/Header';
 import { Content } from '../content/Content';
 import { Footer } from '../footer/Footer';
@@ -30,19 +30,12 @@ export const Container = () => {
 	// Slideout options
 	const slideoutOptions = {
 		id: 'menu',
-		isDesktop: isDesktop,
 		label: 'Menu',
-		button: {
-			outside: false,
-			show: true,
-		},
 	};
 
 	return (
 		<div className="container">
 			<ErrorBoundary message={<ContainerError />}>
-				<SlideoutOverlay options={slideoutOptions} />
-
 				<a href="#main-content" className="skip-link sr-only">
 					Skip to main content
 				</a>

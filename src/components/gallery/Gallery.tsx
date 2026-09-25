@@ -3,7 +3,6 @@ import './styles/gallery.scss';
 
 /* Packages */
 import { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 import IconChevronLeft from '~icons/lucide/chevron-left';
 import IconChevronRight from '~icons/lucide/chevron-right';
 import IconX from '~icons/lucide/x';
@@ -18,106 +17,57 @@ import type {
 	GalleryTouchRefType,
 } from './scripts/gallery-types';
 import { useFormattedId } from '../../_core/scripts/hooks';
-import { useAppContext } from '../../context/scripts/context-hooks';
 import { gallery } from './scripts/gallery';
 
 /* Components */
 import { Button } from '../forms/Forms';
 import { Icon } from '../icons/Icons';
 import { Image } from '../image/Image';
+import { Overlay } from '../overlay/Overlay';
 
 export const Gallery = (props: GalleryProps) => {
 	const { images, options } = props;
-	const { config, get, toggle } = gallery;
+	const { config } = gallery;
 	const [index, setIndex] = useState(0);
+	const [isOpen, setIsOpen] = useState(false);
 	const fallbackId = useFormattedId();
 	const id = `gallery-${options?.id ?? fallbackId}`;
 	const title = `${id}-title`;
 
 	// Get default attributes for gallery
 	const direction = options?.direction ?? config.values.direction;
-	const styles = get.styles(direction);
 
-	// Toggle gallery on image click
-	const handleToggle = (e: EventsType, imageIndex: number) => {
-		toggle(e, id);
+	// Open gallery on image click
+	const handleOpen = (imageIndex: number) => {
 		setIndex(imageIndex);
+		setIsOpen(true);
 	};
 
 	return images && images.length !== 0 ? (
 		<>
-			<div className={config.classes.gallery}>
+			<div className="gallery">
 				{images.map((image, imageIndex) => {
-					return <GalleryThumbnail key={image.image} image={image} onClick={(e) => handleToggle(e, imageIndex)} />;
+					return <GalleryThumbnail key={image.image} id={id} image={image} onClick={() => handleOpen(imageIndex)} />;
 				})}
 			</div>
 
-			<GalleryOverlay direction={direction} id={id} title={title} images={images} index={index} setIndex={setIndex} styles={styles} />
+			<GalleryOverlay
+				direction={direction}
+				id={id}
+				title={title}
+				images={images}
+				index={index}
+				setIndex={setIndex}
+				isOpen={isOpen}
+				onClose={() => setIsOpen(false)}
+			/>
 		</>
 	) : null;
 };
 
 export const GalleryOverlay = (props: GalleryOverlayProps) => {
-	const { direction, id, title, images, index, setIndex, styles } = props;
+	const { direction, id, title, images, index, isOpen, onClose, setIndex } = props;
 	const image = images[index];
-	const { utils } = useAppContext();
-	const { config, toggle } = gallery;
-
-	// Overlay functionality
-	const [overlay] = useState(() => {
-		const element = document.createElement('div');
-
-		// Set attributes
-		utils.setAttributes(element, {
-			id: id,
-			class: 'gallery-overlay pointer',
-			role: 'dialog',
-			'aria-modal': 'true',
-			'aria-labelledby': title,
-			'data-direction': direction,
-		});
-		element.setAttribute('inert', '');
-
-		// Set styles
-		Object.assign(element.style, styles);
-
-		// Add onclick
-		element.onclick = (e) => {
-			if (e.target === element) toggle(e, false);
-		};
-
-		return element;
-	});
-
-	// Append overlay element to body on mount, remove on unmount
-	useEffect(() => {
-		const galleryTarget = document.querySelector('body');
-		if (!galleryTarget) return;
-
-		// Append to body
-		galleryTarget.appendChild(overlay);
-
-		return () => {
-			overlay.remove();
-		};
-	}, [overlay]);
-
-	// Close active gallery(s) when escape is pressed
-	// Note: set.gallery already restores focus to whatever opened the overlay
-	useEffect(() => {
-		const activeSelector = `.${config.classes.overlay}.${config.classes.active}`;
-
-		// Function for keydown events
-		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key !== 'Escape') return;
-			if (document.querySelectorAll(activeSelector).length === 0) return;
-			toggle(e, false);
-		};
-
-		// Add and remove event listeners
-		document.addEventListener('keydown', handleKeyDown);
-		return () => document.removeEventListener('keydown', handleKeyDown);
-	}, [config, toggle]);
 
 	// Functionality for gallery navigation
 	const getImage = (direction: string) => {
@@ -155,48 +105,61 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 		getImage(deltaX < 0 ? 'next' : 'previous');
 	};
 
-	// Overlay component
-	const overlayComponent = (
-		<>
-			<h2 id={title} className="sr-only">
-				{image.alt}
-			</h2>
+	// Note: the dialog covers the whole screen, so the native backdrop is never clicked; clicks on .gallery-content (around the image) close it instead
+	return (
+		<Overlay
+			id={id}
+			className={`gallery-overlay gallery-${direction}`}
+			isOpen={isOpen}
+			onClose={onClose}
+			closeOnBackdrop={false}
+			aria-labelledby={title}
+		>
+			<div
+				className="gallery-content pointer"
+				onClick={(e) => {
+					if (e.target === e.currentTarget) onClose();
+				}}
+				role="presentation"
+			>
+				<h2 id={title} className="sr-only">
+					{image.alt}
+				</h2>
 
-			<Button className={'gallery-close'} hideLabel={true} label={'Close gallery image'} onClick={(e) => toggle(e, false)}>
-				<Icon icon={IconX} />
-			</Button>
-
-			<nav className="gallery-navigation" aria-label="Gallery Navigation">
-				<Button
-					className={'gallery-navigation-button gallery-navigation-previous'}
-					hideLabel={true}
-					label={'Previous gallery image'}
-					onClick={() => getImage('previous')}
-				>
-					<Icon icon={IconChevronLeft} />
+				<Button className={'gallery-close'} hideLabel={true} label={'Close gallery image'} onClick={onClose} data-autofocus>
+					<Icon icon={IconX} />
 				</Button>
 
-				<Button
-					className={'gallery-navigation-button gallery-navigation-next'}
-					hideLabel={true}
-					label={'Next gallery image'}
-					onClick={() => getImage('next')}
-				>
-					<Icon icon={IconChevronRight} />
-				</Button>
-			</nav>
+				<nav className="gallery-navigation" aria-label="Gallery Navigation">
+					<Button
+						className={'gallery-navigation-button gallery-navigation-previous'}
+						hideLabel={true}
+						label={'Previous gallery image'}
+						onClick={() => getImage('previous')}
+					>
+						<Icon icon={IconChevronLeft} />
+					</Button>
 
-			<div className="gallery-image" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-				<Image alt={image.alt} image={image.image} />
+					<Button
+						className={'gallery-navigation-button gallery-navigation-next'}
+						hideLabel={true}
+						label={'Next gallery image'}
+						onClick={() => getImage('next')}
+					>
+						<Icon icon={IconChevronRight} />
+					</Button>
+				</nav>
+
+				<div className="gallery-image" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+					<Image alt={image.alt} image={image.image} />
+				</div>
 			</div>
-		</>
+		</Overlay>
 	);
-
-	return createPortal(overlayComponent, overlay);
 };
 
 const GalleryThumbnail = (props: GalleryThumbnailProps) => {
-	const { image, onClick } = props;
+	const { id, image, onClick } = props;
 	const { get } = gallery;
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const [orientation, setOrientation] = useState<GalleryOrientationType>(null);
@@ -229,6 +192,8 @@ const GalleryThumbnail = (props: GalleryThumbnailProps) => {
 			label={`View ${image.alt}`}
 			variant={'unstyled'}
 			onClick={onClick}
+			aria-controls={id}
+			aria-haspopup={'dialog'}
 			ref={buttonRef}
 		>
 			<Image alt={image.alt} hasLazy={true} image={get.thumbnail(image.image)} wrapperClasses={['polaroid']} />

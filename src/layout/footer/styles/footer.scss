@@ -76,7 +76,7 @@
 			}
 		}
 	}
-	@include mixins.respond-min(theme.$bp-02) {
+	@include mixins.respond(theme.$bp-02) {
 		.footer {
 			.footer-background {
 				.footer-background-top {
@@ -99,7 +99,7 @@
 			}
 		}
 	}
-	@include mixins.respond-min(theme.$bp-03) {
+	@include mixins.respond(theme.$bp-03) {
 		.footer {
 			.footer-container {
 				.footer-content .footer-copyright .footer-bullet {
@@ -109,7 +109,7 @@
 			}
 		}
 	}
-	@include mixins.respond-min(theme.$bp-04) {
+	@include mixins.respond(theme.$bp-04) {
 		.footer {
 			.footer-container {
 				padding: 0;

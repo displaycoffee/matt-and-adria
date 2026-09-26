@@ -30,7 +30,7 @@
 			}
 		}
 	}
-	@include mixins.respond-min(theme.$bp-02) {
+	@include mixins.respond(theme.$bp-02) {
 		.page-home {
 			#section-location {
 				.section-content {

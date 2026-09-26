@@ -14,7 +14,7 @@
 			@include mixins.gap(theme.$spacing-x4);
 		}
 	}
-	@include mixins.respond-min(theme.$bp-02) {
+	@include mixins.respond(theme.$bp-02) {
 		.navigation {
 			.navigation-list {
 				.navigation-list-item {

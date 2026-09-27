@@ -1,7 +1,7 @@
 {
 	"name": "matt-and-adria",
 	"displayName": "Matt and Adria",
-	"description": "Wedding website for Matt and Adria.",
+	"description": "A 2013 Wedding Event Spectacular",
 	"version": "1.1.0",
 	"main": "bundle.js",
 	"type": "module",

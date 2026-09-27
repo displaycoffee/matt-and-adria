@@ -2,8 +2,7 @@
 import './styles/navigation.scss';
 
 /* Packages */
-import { Fragment, useEffect } from 'react';
-import { useLocation } from '@tanstack/react-router';
+import { Fragment } from 'react';
 
 /* Scripts */
 import type { NavigationComponentProps, NavigationItemComponentProps } from './scripts/navigation-types';
@@ -17,15 +16,8 @@ import { ButtonScroll } from '../forms/Forms';
 
 export const Navigation = (props: NavigationComponentProps) => {
 	const { data, label } = props;
-	const { pathname } = useLocation();
-	const { utils } = useAppContext();
 	const navigationList = navigationUtils.get.list(data);
 	const navigationLinkClass = 'navigation-link';
-
-	// Scroll to top when navigation link is clicked on
-	useEffect(() => {
-		utils.scrollTo();
-	}, [pathname, utils]);
 
 	return navigationList.length != 0 ? (
 		<nav className="navigation" aria-label={label}>

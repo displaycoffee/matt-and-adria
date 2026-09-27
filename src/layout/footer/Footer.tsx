@@ -13,7 +13,7 @@ import { Image } from '../../components/image/Image';
 export const Footer = () => {
 	const { theme } = useAppContext();
 	const date = new Date().getFullYear();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 
 	return (
 		<footer className="footer container-offset">

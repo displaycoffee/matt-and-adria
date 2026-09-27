@@ -47,7 +47,7 @@ export const Navigation = (props: NavigationComponentProps) => {
 export const NavigationListItem = (props: NavigationItemComponentProps) => {
 	const { children, isLast, nav, navigationLinkClass } = props;
 	const { theme } = useAppContext();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 
 	return (
 		<>

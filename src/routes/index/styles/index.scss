@@ -30,7 +30,7 @@
 			}
 		}
 	}
-	@include mixins.respond(theme.$bp-02) {
+	@include mixins.respond(theme.$breakpoint-md) {
 		.page-home {
 			#section-location {
 				.section-content {

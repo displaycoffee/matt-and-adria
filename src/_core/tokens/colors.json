@@ -39,6 +39,7 @@
 		"link-underline": { "$value": "#4762cb" },
 		"link-underline-hover": { "$value": "#333333" },
 		"overlay": { "$value": "color-mix(in srgb, {color.black} 75%, transparent)" },
+		"required": { "$value": "#f85149" },
 		"scrollbar-bg": { "$value": "#fdfdfd" },
 		"scrollbar-foreground": { "$value": "#4762cb" },
 		"success-bg": { "$value": "#b6ebcb" },

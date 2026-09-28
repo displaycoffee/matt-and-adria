@@ -1,8 +1,8 @@
 /* Type definitions */
-type Index = {
+type Sections = {
 	id?: string;
 	title?: string;
 };
 
 /* Export prop types */
-export type IndexProps = Index;
+export type SectionsProps = Sections;

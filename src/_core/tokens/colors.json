@@ -31,6 +31,7 @@
 		"button-tertiary-body-hover": { "$value": false },
 		"error-bg": { "$value": "#fee3e1" },
 		"error-border": { "$value": "#cf0902" },
+		"focus": { "$value": "#1da1e5" },
 		"header": { "$value": "#1da1e5" },
 		"highlight": { "$value": "#f7f79e" },
 		"highlight-body": { "$value": "#333333" },

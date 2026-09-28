@@ -37,6 +37,7 @@
 		"button-tertiary-body-hover": false,
 		"error-bg": "#fee3e1",
 		"error-border": "#cf0902",
+		"focus": "#1da1e5",
 		"header": "#1da1e5",
 		"highlight": "#f7f79e",
 		"highlight-body": "#333333",

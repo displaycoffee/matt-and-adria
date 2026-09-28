@@ -36,7 +36,7 @@ export const Container = () => {
 	return (
 		<div className="container">
 			<ErrorBoundary message={<ContainerError />}>
-				<a href="#main-content" className="skip-link sr-only">
+				<a href="#main-content" className="skip-link sr-only no-decoration">
 					Skip to main content
 				</a>
 

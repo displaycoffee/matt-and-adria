@@ -21,6 +21,9 @@
 					color: theme.$color-white;
 					a, .a {
 						color: inherit;
+						&:focus-visible {
+							outline-color: theme.$color-white;
+						}
 						&:not(:has(.button-label)) {
 							&:active, &:hover {
 								@include mixins.text-decoration-color(theme.$color-white);

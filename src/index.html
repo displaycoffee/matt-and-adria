@@ -5,28 +5,22 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Wedding website for Matt and Adria." />
+		<meta name="description" content="A 2013 Wedding Event Spectacular" />
 		<meta property="og:title" content="Matt and Adria" />
 		<meta property="og:site_name" content="Matt and Adria" />
 		<meta property="og:url" content="https://mattandadria.com" />
 		<meta property="og:locale" content="en_US" />
-		<meta property="og:description" content="Wedding website for Matt and Adria." />
+		<meta property="og:description" content="A 2013 Wedding Event Spectacular" />
 		<meta property="og:type" content="website" />
 		<meta name="theme-color" content="#fdfdfd" media="(prefers-color-scheme: light)" />
-		<meta name="theme-color" content="#4a3d33" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#fdfdfd" media="(prefers-color-scheme: dark)" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<link href="/favicon.svg" rel="icon" sizes="32x32" type="image/svg+xml" />
 		<link href="/favicon-92x92.png" rel="icon" sizes="92x92" type="image/png" />
 		<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" type="image/png" />
 		<link rel="manifest" href="/manifest.json" />
 		<link rel="preload" href="/assets/fonts/open-sans-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-		<link rel="preload" href="/assets/fonts/open-sans-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-		<link rel="preload" href="/assets/fonts/open-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-		<link rel="preload" href="/assets/fonts/open-sans-bold-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-		<link rel="preload" href="/assets/fonts/montserrat-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-		<link rel="preload" href="/assets/fonts/montserrat-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-		<link rel="preload" href="/assets/fonts/montserrat-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-		<link rel="preload" href="/assets/fonts/montserrat-bold-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+		<link rel="preload" href="/assets/fonts/sweetly-broken.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 		<script type="module" src="./targets/index/Index.tsx"></script>
 		<style id="preloaded-styles">
 			@font-face {
@@ -35,22 +29,15 @@
 				size-adjust: 105%;
 			}
 			@font-face {
-				font-family: 'Fallback Bold';
-				src: local('Arial Black');
-				size-adjust: 98%;
+				font-family: 'Fallback Header';
+				src: local('Arial');
+				size-adjust: 50%;
 			}
 			@font-face {
 				font-family: 'Open Sans';
 				src: url('/assets/fonts/open-sans-regular.woff2') format('woff2');
-				font-weight: normal;
+				font-weight: 400;
 				font-style: normal;
-				font-display: swap;
-			}
-			@font-face {
-				font-family: 'Open Sans';
-				src: url('/assets/fonts/open-sans-italic.woff2') format('woff2');
-				font-weight: normal;
-				font-style: italic;
 				font-display: swap;
 			}
 			@font-face {
@@ -68,31 +55,17 @@
 				font-display: swap;
 			}
 			@font-face {
-				font-family: 'Montserrat';
-				src: url('/assets/fonts/montserrat-regular.woff2') format('woff2');
-				font-weight: normal;
-				font-style: normal;
-				font-display: swap;
-			}
-			@font-face {
-				font-family: 'Montserrat';
-				src: url('/assets/fonts/montserrat-italic.woff2') format('woff2');
-				font-weight: normal;
+				font-family: 'Open Sans';
+				src: url('/assets/fonts/open-sans-italic.woff2') format('woff2');
+				font-weight: 400;
 				font-style: italic;
 				font-display: swap;
 			}
 			@font-face {
-				font-family: 'Montserrat';
-				src: url('/assets/fonts/montserrat-bold.woff2') format('woff2');
-				font-weight: 700;
+				font-family: 'Sweetly Broken';
+				src: url('/assets/fonts/sweetly-broken.woff2') format('woff2');
+				font-weight: 400;
 				font-style: normal;
-				font-display: swap;
-			}
-			@font-face {
-				font-family: 'Montserrat';
-				src: url('/assets/fonts/montserrat-bold-italic.woff2') format('woff2');
-				font-weight: 700;
-				font-style: italic;
 				font-display: swap;
 			}
 			.hide-mobile {
@@ -114,6 +87,5 @@
 
 	<body class="scrollbar">
 		<div id="index" tabindex="-1"></div>
-		<div id="portal"></div>
 	</body>
 </html>

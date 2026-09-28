@@ -1,6 +1,6 @@
 {
 	"short_name": "Matt and Adria",
-	"name": "Wedding website for Matt and Adria.",
+	"name": "A 2013 Wedding Event Spectacular",
 	"icons": [
 		{ "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
 		{ "src": "/favicon-192x192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },

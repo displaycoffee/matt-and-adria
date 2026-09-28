@@ -62,7 +62,7 @@
 	.section {
 		margin: 0 0 theme.$spacing-x8 0;
 		padding: 0 0 theme.$spacing-x8 0;
-		border-bottom: 1px dashed theme.$color-06;
+		border-bottom: 1px dashed theme.$color-blue-x1;
 		opacity: 0;
 		@include mixins.transform(translateY(30px));
 		@include mixins.transition($section-transition);

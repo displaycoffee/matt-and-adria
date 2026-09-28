@@ -1,10 +1,10 @@
 {
 	"icon": {
 		"$type": "dimension",
-		"sm": { "$value": "14px" },
-		"md": { "$value": "16px" },
-		"lg": { "$value": "18px" },
-		"xl": { "$value": "20px" },
-		"2xl": { "$value": "24px" }
+		"sm": { "$value": "12px" },
+		"md": { "$value": "14px" },
+		"lg": { "$value": "16px" },
+		"xl": { "$value": "18px" },
+		"2xl": { "$value": "20px" }
 	}
 }

@@ -21,7 +21,7 @@
 		@include mixins.flex-display(flex);
 		@include mixins.gap(theme.$spacing-x2);
 		margin: 0 auto;
-		color: theme.$color-03;
+		color: theme.$color-bg;
 		.icon-wrapper .icon path {
 			fill: currentColor;
 		}
@@ -73,7 +73,7 @@
 		}
 		.slideout-border {
 			@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: 0, $left: 0, $z: 1);
-			border: 1px solid theme.$color-08;
+			border: 1px solid theme.$color-light-gray;
 		}
 		.slideout-header {
 			@include mixins.position($type: relative, $z: 2);
@@ -82,12 +82,12 @@
 			height: $slideout-header;
 			@include mixins.flex-layout((align-items: center));
 			@include mixins.gap(theme.$spacing-x2);
-			background-color: theme.$color-06;
-			border-bottom: theme.$spacing-x1 solid theme.$color-07;
+			background-color: theme.$color-blue-x1;
+			border-bottom: theme.$spacing-x1 solid theme.$color-blue-x2;
 			.slideout-title, .slideout-close {
 				margin: 0;
 				line-height: 1;
-				color: theme.$color-01;
+				color: theme.$color-white;
 			}
 			.slideout-title {
 				font-size: functions.em(20px, rem);

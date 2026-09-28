@@ -1,7 +1,7 @@
 {
 	"container": {
 		"$type": "dimension",
-		"width": { "$value": "1600px" }
+		"width": { "$value": "1200px" }
 	},
 	"spacing": {
 		"$type": "dimension",

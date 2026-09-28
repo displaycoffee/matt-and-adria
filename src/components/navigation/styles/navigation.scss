@@ -18,9 +18,21 @@
 		.navigation {
 			.navigation-list {
 				.navigation-list-item {
-					color: theme.$color-01;
-					.a {
+					color: theme.$color-white;
+					a, .a {
 						color: inherit;
+						&:not(:has(.button-label)) {
+							&:active, &:hover {
+								@include mixins.text-decoration-color(theme.$color-white);
+							}
+						}
+						&:has(.button-label) {
+							&:active, &:hover {
+								.button-label {
+									@include mixins.text-decoration-color(theme.$color-white);
+								}
+							}
+						}
 					}
 				}
 			}

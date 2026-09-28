@@ -28,7 +28,7 @@ export const Footer = () => {
 			<div className="footer-container container-width">
 				<div className={`row row-auto row-nowrap row-align-items-center row-spacing-${isDesktop ? '20' : '10'}`}>
 					<div className="column footer-flower footer-flower-left">
-						<Image alt={''} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-left.png'} />
+						<Image alt={''} hasLazy={true} hasWrapper={false} height={497} image={'/assets/images/theme/flower-left.png'} width={505} />
 					</div>
 
 					<div className="column footer-content">
@@ -40,7 +40,7 @@ export const Footer = () => {
 					</div>
 
 					<div className="column footer-flower footer-flower-right">
-						<Image alt={''} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-right.png'} />
+						<Image alt={''} hasLazy={true} hasWrapper={false} height={497} image={'/assets/images/theme/flower-right.png'} width={505} />
 					</div>
 				</div>
 			</div>

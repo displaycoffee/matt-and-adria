@@ -6,7 +6,7 @@ import type { ImageProps, ImageAttributesType, WrapperAttributesType } from './s
 import { image as imageUtils } from './scripts/image';
 
 export const Image = (props: ImageProps) => {
-	const { alt, hasBg, hasLazy, hasWrapper = true, image, imageClass, wrapperClasses } = props;
+	const { alt, hasBg, hasLazy, hasWrapper = true, height, image, imageClass, width, wrapperClasses } = props;
 	const wrapperPrefix = 'image-wrapper';
 
 	// Set up initial attributes
@@ -15,7 +15,6 @@ export const Image = (props: ImageProps) => {
 	};
 	const imageAttributes: ImageAttributesType = {
 		onError: imageUtils.onError,
-		onLoad: imageUtils.onLoad,
 		src: image,
 	};
 
@@ -42,6 +41,15 @@ export const Image = (props: ImageProps) => {
 
 	// Adjust image attributes
 	if (hasLazy) imageAttributes.loading = 'lazy';
+
+	// Use known dimensions so space is reserved before load, otherwise set them from the loaded image
+	if (width && height) {
+		imageAttributes.width = width;
+		imageAttributes.height = height;
+	} else {
+		imageAttributes.onLoad = imageUtils.onLoad;
+	}
+
 	if (imageClass) imageAttributes.className = imageClass;
 	if (hasWrapper && hasBg) {
 		if (!imageAttributes.className) {

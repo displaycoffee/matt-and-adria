@@ -1,7 +1,7 @@
-// Use utils and theme variables
-@use '../../../_config/styles/utils/_functions';
-@use '../../../_config/styles/utils/_mixins';
-@use '../../../_config/styles/theme/_theme';
+// Local Sass modules
+@use '@displaycoffee/styles/functions';
+@use '@displaycoffee/styles/mixins';
+@use '../../../_core/styles/_theme';
 
 //// BLOCKS - LIST
 //// --------------------------------------------------------------------------
@@ -13,7 +13,6 @@
 	// Style block
 
 	.list-ordered, .list-unordered, .list-unstyled {
-		list-style: none;
 		padding: 0;
 	}
 	.list-ordered, .list-unordered {
@@ -41,9 +40,9 @@
 	}
 	.list-unordered {
 		& > li:before {
-			top: 2px;
+			top: 0;
 			content: '\002022';
-			font-size: functions.em(20px, rem);
+			font-size: 22px;
 			line-height: 1;
 		}
 	}
@@ -63,7 +62,7 @@
 	.section {
 		margin: 0 0 theme.$spacing-x8 0;
 		padding: 0 0 theme.$spacing-x8 0;
-		border-bottom: 1px dashed theme.$color-06;
+		border-bottom: 1px dashed theme.$color-blue-x1;
 		opacity: 0;
 		@include mixins.transform(translateY(30px));
 		@include mixins.transition($section-transition);

@@ -1,34 +1,14 @@
-// Use utils and theme variables
-@use '../../../_config/styles/utils/_functions';
-@use '../../../_config/styles/utils/_mixins';
-@use '../../../_config/styles/theme/_theme';
-
-//// RESETS
-//// --------------------------------------------------------------------------
-
-	// Style block
-
-	*, *:after,	*:before {
-		box-sizing: border-box;
-	}
-	@media (prefers-reduced-motion: reduce) {
-		*, *:before, *:after {
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
-			transition-duration: 0.01ms !important;
-			scroll-behavior: auto !important;
-		}
-		::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
-			animation-duration: 0.01ms !important;
-		}
-	}
+// Local Sass modules
+@use '@displaycoffee/styles/functions';
+@use '@displaycoffee/styles/mixins';
+@use '../../../_core/styles/_theme';
 
 //// ELEMENTS
 //// --------------------------------------------------------------------------
 
 	// Colors
 
-	$base-elements-color-01: theme.$color-03; // body background
+	$base-elements-color-01: theme.$color-bg; // body background
 
 	// Configuration
 
@@ -39,7 +19,7 @@
 	// Style block
 
 	html, body {
-		min-height: 100%;
+		min-height: 100vh;
 	}
 	body {
 		background-color: $base-elements-color-01;
@@ -60,8 +40,8 @@
 
 	// Colors
 
-	$base-helpers-color-01: theme.$color-07; // scrollbar background
-	$base-helpers-color-02: theme.$color-06; // scrollbar foreground
+	$base-helpers-color-01: theme.$color-scrollbar-bg; // scrollbar background
+	$base-helpers-color-02: theme.$color-scrollbar-foreground; // scrollbar foreground
 
 	// Configuration
 
@@ -86,7 +66,7 @@
 		@include mixins.scrollbar('&', $base-helpers-scrollbar-width, $base-helpers-scrollbar-height, $base-helpers-color-01, $base-helpers-color-02);
 	}
 	.blue-bar {
-		background-color: theme.$color-06;
+		background-color: theme.$color-blue-x1;
 		padding: theme.$spacing-x2 theme.$spacing-x4;
-		border-bottom: theme.$spacing-x1 solid theme.$color-07;
+		border-bottom: theme.$spacing-x1 solid theme.$color-blue-x2;
 	}

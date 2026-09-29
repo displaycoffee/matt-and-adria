@@ -2,7 +2,7 @@
 import './styles/forms.scss';
 
 /* Scripts */
-import { ButtonProps, ButtonScrollProps } from './scripts/forms-types';
+import type { ButtonProps, ButtonScrollProps } from './scripts/forms-types';
 import { forms } from './scripts/forms';
 import { useAppContext } from '../../context/scripts/context-hooks';
 
@@ -24,5 +24,5 @@ export const ButtonScroll = (props: ButtonScrollProps) => {
 	const { offset = 0, target, ...rest } = props;
 	const { utils } = useAppContext();
 
-	return <Button variant="link" onClick={(e) => utils.scrollTo(e, target, offset)} {...rest} />;
+	return <Button variant={'link'} onClick={(e) => utils.scrollTo(e, target, offset)} {...rest} />;
 };

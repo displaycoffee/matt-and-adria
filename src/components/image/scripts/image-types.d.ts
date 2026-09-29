@@ -1,12 +1,17 @@
+/* Packages */
+import type { HTMLAttributes, ImgHTMLAttributes } from 'react';
+
 /* Type definitions */
 type Image = {
 	alt?: string;
 	hasBg?: boolean;
 	hasLazy?: boolean;
 	hasWrapper?: boolean;
+	height?: number;
 	image: string;
 	imageClass?: string;
 	title?: string;
+	width?: number;
 	wrapperClasses?: string[];
 };
 

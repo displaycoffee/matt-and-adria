@@ -1,7 +1,7 @@
-// Use utils and theme variables
-@use '../../../_config/styles/utils/_functions';
-@use '../../../_config/styles/utils/_mixins';
-@use '../../../_config/styles/theme/_theme';
+// Local Sass modules
+@use '@displaycoffee/styles/functions';
+@use '@displaycoffee/styles/mixins';
+@use '../../../_core/styles/_theme';
 
 //// NAVIGATION
 //// --------------------------------------------------------------------------
@@ -14,13 +14,28 @@
 			@include mixins.gap(theme.$spacing-x4);
 		}
 	}
-	@include mixins.respond-min(theme.$bp-02) {
+	@include mixins.respond(theme.$breakpoint-md) {
 		.navigation {
 			.navigation-list {
 				.navigation-list-item {
-					color: theme.$color-01;
-					.a {
+					color: theme.$color-white;
+					a, .a {
 						color: inherit;
+						&:focus-visible {
+							outline-color: theme.$color-white;
+						}
+						&:not(:has(.button-label)) {
+							&:active, &:hover {
+								@include mixins.text-decoration-color(theme.$color-white);
+							}
+						}
+						&:has(.button-label) {
+							&:active, &:hover {
+								.button-label {
+									@include mixins.text-decoration-color(theme.$color-white);
+								}
+							}
+						}
 					}
 				}
 			}

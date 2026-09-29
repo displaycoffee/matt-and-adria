@@ -3,7 +3,7 @@ import './styles/footer.scss';
 
 /* Scripts */
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { useRespond } from '../../_config/scripts/hooks';
+import { useRespond } from '../../_core/scripts/hooks';
 
 /* Components */
 import { LinkExternal } from '../../components/blocks/Blocks';
@@ -13,7 +13,7 @@ import { Image } from '../../components/image/Image';
 export const Footer = () => {
 	const { theme } = useAppContext();
 	const date = new Date().getFullYear();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 
 	return (
 		<footer className="footer container-offset">
@@ -28,18 +28,19 @@ export const Footer = () => {
 			<div className="footer-container container-width">
 				<div className={`row row-auto row-nowrap row-align-items-center row-spacing-${isDesktop ? '20' : '10'}`}>
 					<div className="column footer-flower footer-flower-left">
-						<Image alt={''} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-left.png'} />
+						<Image alt={''} hasLazy={true} hasWrapper={false} height={497} image={'/assets/images/theme/flower-left.png'} width={505} />
 					</div>
 
 					<div className="column footer-content">
 						<div className="footer-copyright">
-							&copy; {date} <ButtonScroll target="#index" label={'MattAndAdria.com'} aria-label="Scroll to top button" />
-							<span className="footer-bullet">&bull;</span>Design by <LinkExternal href="//display.coffee">displaycoffee</LinkExternal>
+							&copy; {date} <ButtonScroll target={'#index'} label={'MattAndAdria.com'} aria-label={'Scroll to top button'} />
+							<span className="footer-bullet">&bull;</span>Design by{' '}
+							<LinkExternal href={'//display.coffee'}>displaycoffee</LinkExternal>
 						</div>
 					</div>
 
 					<div className="column footer-flower footer-flower-right">
-						<Image alt={''} hasLazy={true} hasWrapper={false} image={'/assets/images/theme/flower-right.png'} />
+						<Image alt={''} hasLazy={true} hasWrapper={false} height={497} image={'/assets/images/theme/flower-right.png'} width={505} />
 					</div>
 				</div>
 			</div>

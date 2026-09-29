@@ -5,30 +5,29 @@ import './styles/navigation.scss';
 import { Fragment } from 'react';
 
 /* Scripts */
-import { useRespond } from '../../_config/scripts/hooks';
-import { useAppContext } from '../../context/scripts/context-hooks';
-import { NavigationComponentProps, NavigationListItemProps } from './scripts/navigation-types';
+import type { NavigationComponentProps, NavigationItemComponentProps } from './scripts/navigation-types';
 import { navigationUtils } from './scripts/navigation-utils';
+import { useRespond } from '../../_core/scripts/hooks';
+import { useAppContext } from '../../context/scripts/context-hooks';
 
 /* Components */
 import { LinkExternal, List } from '../blocks/Blocks';
 import { ButtonScroll } from '../forms/Forms';
 
-/* Get navigation menu */
-const navigationList = navigationUtils.get.list();
-
 export const Navigation = (props: NavigationComponentProps) => {
-	const { label } = props;
+	const { data, label } = props;
+	const navigationList = navigationUtils.get.list(data);
+	const navigationLinkClass = 'navigation-link';
 
 	return navigationList.length != 0 ? (
 		<nav className="navigation" aria-label={label}>
-			<List className="navigation-list" variant="ul-unstyled">
+			<List className={'navigation-list'} variant={'ul-unstyled'}>
 				{navigationList.map((nav, index) => {
 					const isLast = index === navigationList.length - 1;
 
 					return (
 						<Fragment key={nav.id}>
-							<NavigationListItem nav={nav} isLast={isLast} />
+							<NavigationListItem isLast={isLast} navigationLinkClass={navigationLinkClass} nav={nav} />
 						</Fragment>
 					);
 				})}
@@ -37,20 +36,25 @@ export const Navigation = (props: NavigationComponentProps) => {
 	) : null;
 };
 
-export const NavigationListItem = (props: NavigationListItemProps) => {
-	const { nav, isLast } = props;
+export const NavigationListItem = (props: NavigationItemComponentProps) => {
+	const { children, isLast, nav, navigationLinkClass } = props;
 	const { theme } = useAppContext();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
-	const navProps = nav?.props ?? {};
+	const isDesktop = useRespond(theme.breakpoints.md);
 
 	return (
 		<>
-			<li className="navigation-list-item navigation-list-item-link">
-				{nav.isScroll && navProps?.id ? (
-					<ButtonScroll target={`#section-${navProps.id}`} label={nav.label} aria-label={`Scroll to '${nav.label}' button`} />
+			<li className="navigation-list-item">
+				{nav.isSection ? (
+					<ButtonScroll
+						className={navigationLinkClass}
+						target={`#section-${nav.id}`}
+						label={nav.label}
+						aria-label={`Scroll to '${nav.label}' button`}
+					/>
 				) : (
-					<LinkExternal href={nav.url ?? ''}>{nav.label}</LinkExternal>
+					<LinkExternal href={nav.url}>{nav.label}</LinkExternal>
 				)}
+				{children}
 			</li>
 
 			{!isDesktop ? null : isLast ? null : <li className="navigation-list-item navigation-list-item-bullet">&bull;</li>}

@@ -1,7 +1,7 @@
-// Use utils and theme variables
-@use '../../../_config/styles/utils/_functions';
-@use '../../../_config/styles/utils/_mixins';
-@use '../../../_config/styles/theme/_theme';
+// Local Sass modules
+@use '@displaycoffee/styles/functions';
+@use '@displaycoffee/styles/mixins';
+@use '../../../_core/styles/_theme';
 
 //// BASE STYLES
 //// --------------------------------------------------------------------------
@@ -9,10 +9,10 @@
 
 	// Imports
 
-	@use './_normalize';
+	@use '../../../_core/styles/_root';
+	@use './_reset';
 	@use './_typography';
 	@use './_base';
-	@use './_images';
 	@use './_layout';
 
 //// CONTAINER
@@ -20,7 +20,7 @@
 
 	// Configuration 
 
-	$container-main-bp: theme.$bp-02; // breakpoint
+	$container-main-bp: theme.$breakpoint-md; // breakpoint
 	$container-main-spacing: theme.$spacing-x8; // spacing for layout
 	$container-main-sidebar-width: 300px; // width of sidebar
 
@@ -36,8 +36,8 @@
 			overflow: visible;
 			clip: unset;
 			white-space: unset;
-			border: 1px solid theme.$color-04;
-			background-color: theme.$color-03;
+			border: 1px solid theme.$color-focus;
+			background-color: theme.$color-bg;
 		}
 	}
 	.container {
@@ -50,7 +50,7 @@
 		}
 	}
 	.container-width {
-		max-width: theme.$container-base;
+		max-width: theme.$container-width;
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -59,7 +59,6 @@
 		margin-right: -#{theme.$spacing-x4};
 	}
 	.main {
-		min-height: 50vh;
 		.main-layout {
 			@include mixins.gap($container-main-spacing);
 			.content, .sidebar {
@@ -68,7 +67,7 @@
 			}
 		}
 	}
-	@include mixins.respond-min($container-main-bp) {
+	@include mixins.respond($container-main-bp) {
 		.main {
 			.main-layout {
 				.content {

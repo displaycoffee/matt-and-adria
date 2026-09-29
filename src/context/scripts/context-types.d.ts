@@ -1,3 +1,6 @@
+/* Packages */
+import type { ReactNode } from 'react';
+
 /* Type definitions */
 type ContextValues = {
 	theme: ThemeType;

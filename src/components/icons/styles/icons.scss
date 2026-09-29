@@ -1,7 +1,7 @@
-// Use utils and theme variables
-@use '../../../_config/styles/utils/_functions';
-@use '../../../_config/styles/utils/_mixins';
-@use '../../../_config/styles/theme/_theme';
+// Local Sass modules
+@use '@displaycoffee/styles/functions';
+@use '@displaycoffee/styles/mixins';
+@use '../../../_core/styles/_theme';
 
 //// ICONS
 //// --------------------------------------------------------------------------
@@ -11,26 +11,23 @@
 	.icon-wrapper {
 		@include mixins.flex-layout((display: inline-flex, flex-flow: column nowrap));
 		@include mixins.flex(0 0 auto);
-		@include mixins.icon-sizing(theme.$icon-size);
+		@include mixins.icon-sizing(theme.$icon-md);
 		.icon {
 			display: block;
 			margin: auto;
-			@include mixins.sizing(auto, auto);
-			max-width: 100%;
-			max-height: 100%;
+			@include mixins.sizing(100%, 100%);
 			line-height: 1;
-			fill: currentColor;
 		}
 	}
-	.icon-wrapper-small {
-		@include mixins.icon-sizing(theme.$icon-size - 2);
+	.icon-wrapper-sm {
+		@include mixins.icon-sizing(theme.$icon-sm);
 	}
-	.icon-wrapper-large {
-		@include mixins.icon-sizing(theme.$icon-size + 2);
+	.icon-wrapper-lg {
+		@include mixins.icon-sizing(theme.$icon-lg);
 	}
-	.icon-wrapper-x-large {
-		@include mixins.icon-sizing(theme.$icon-size + 4);
+	.icon-wrapper-xl {
+		@include mixins.icon-sizing(theme.$icon-xl);
 	}
-	.icon-wrapper-xx-large {
-		@include mixins.icon-sizing(theme.$icon-size + 8);
+	.icon-wrapper-2xl {
+		@include mixins.icon-sizing(theme.$icon-2xl);
 	}

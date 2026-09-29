@@ -2,11 +2,11 @@
 import './styles/image.scss';
 
 /* Scripts */
-import { ImageProps, ImageAttributesType, WrapperAttributesType } from './scripts/image-types';
+import type { ImageProps, ImageAttributesType, WrapperAttributesType } from './scripts/image-types';
 import { image as imageUtils } from './scripts/image';
 
 export const Image = (props: ImageProps) => {
-	const { alt, hasBg, hasLazy, hasWrapper = true, image, imageClass, wrapperClasses } = props;
+	const { alt, hasBg, hasLazy, hasWrapper = true, height, image, imageClass, width, wrapperClasses } = props;
 	const wrapperPrefix = 'image-wrapper';
 
 	// Set up initial attributes
@@ -14,8 +14,7 @@ export const Image = (props: ImageProps) => {
 		className: wrapperPrefix,
 	};
 	const imageAttributes: ImageAttributesType = {
-		onError: (e: EventsType) => imageUtils.onError(e),
-		onLoad: (e: EventsType) => imageUtils.onLoad(e),
+		onError: imageUtils.onError,
 		src: image,
 	};
 
@@ -41,12 +40,17 @@ export const Image = (props: ImageProps) => {
 	const altText = alt || '';
 
 	// Adjust image attributes
-	if (hasLazy) {
-		imageAttributes.loading = 'lazy';
+	if (hasLazy) imageAttributes.loading = 'lazy';
+
+	// Use known dimensions so space is reserved before load, otherwise set them from the loaded image
+	if (width && height) {
+		imageAttributes.width = width;
+		imageAttributes.height = height;
+	} else {
+		imageAttributes.onLoad = imageUtils.onLoad;
 	}
-	if (imageClass) {
-		imageAttributes.className = imageClass;
-	}
+
+	if (imageClass) imageAttributes.className = imageClass;
 	if (hasWrapper && hasBg) {
 		if (!imageAttributes.className) {
 			imageAttributes.className = 'image-hidden';

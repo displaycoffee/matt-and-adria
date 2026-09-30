@@ -73,7 +73,14 @@ export const Location = (props: SectionsProps) => {
 		<Section id={id} title={title}>
 			<div className="row row-section row-wrap row-auto row-spacing-20">
 				<div className="column column-photo">
-					<Image alt={'Lodge at Elk Valley'} hasLazy={true} image={'/assets/images/theme/lodge.jpg'} wrapperClasses={['polaroid']} />
+					<Image
+						alt={'Lodge at Elk Valley'}
+						hasLazy={true}
+						width={300}
+						height={200}
+						image={'/assets/images/theme/lodge.jpg'}
+						wrapperClasses={['polaroid']}
+					/>
 				</div>
 
 				<div className="column column-content margin-trim">

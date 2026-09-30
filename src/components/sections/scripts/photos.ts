@@ -1,4 +1,4 @@
-const path = '/assets/images/photos/';
+const path = '//assets.display.coffee/matt-and-adria/photos/';
 
 export const photos = [
 	{ alt: 'Steampunk heels', image: `${path}photo-001.jpg` },

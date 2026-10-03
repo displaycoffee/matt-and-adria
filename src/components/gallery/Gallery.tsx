@@ -16,7 +16,7 @@ import type {
 	GalleryTouchType,
 	GalleryTouchRefType,
 } from './scripts/gallery-types';
-import { useFormattedId } from '../../_core/scripts/hooks';
+import { useFormattedId } from '@displaycoffee/scripts/hooks';
 import { gallery } from './scripts/gallery';
 
 /* Components */

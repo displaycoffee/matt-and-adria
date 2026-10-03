@@ -22,7 +22,8 @@ export default defineConfig({
 	},
 	build: {
 		outDir: '../dist',
-		emptyOutDir: false,
+		emptyOutDir: true,
+		cssTarget: viteUtils.cssTarget,
 		modulePreload: {
 			polyfill: false,
 		},

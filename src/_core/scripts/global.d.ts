@@ -1,5 +1,6 @@
 /* Packages */
 import type { SyntheticEvent } from 'react';
+import type { UtilsType as UtilsSharedType, UtilsBrowserType as UtilsSharedBrowserType } from '@displaycoffee/scripts/utils-types';
 import type themeJson from '../tokens/theme.json';
 
 /* Type definitions */
@@ -33,14 +34,9 @@ type Theme = {
 	colors: (typeof themeJson)['color'];
 };
 
-type Utils = {
-	getLast: (value: string | string[], delimeter?: string) => string | number;
-	getPage: () => string;
-	handleize: (value: string) => string;
-	isSticky: (element: HTMLElement | null, stickyClass: string) => void;
-	scrollTo: (e?: Events, selector?: string, offset?: number) => void;
-	setAttributes: (element: HTMLElement, attributes: ObjectString) => void;
-};
+type Utils = UtilsSharedType;
+
+type UtilsBrowser = UtilsSharedBrowserType;
 
 type Variables = {
 	paths: {
@@ -64,6 +60,8 @@ declare global {
 	type ThemeType = Theme;
 
 	type UtilsType = Utils;
+
+	type UtilsBrowserType = UtilsBrowser;
 
 	type VariablesType = Variables;
 

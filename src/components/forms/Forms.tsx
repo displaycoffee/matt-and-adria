@@ -22,7 +22,7 @@ export const Button = (props: ButtonProps) => {
 
 export const ButtonScroll = (props: ButtonScrollProps) => {
 	const { offset = 0, target, ...rest } = props;
-	const { utils } = useAppContext();
+	const { utilsBrowser } = useAppContext();
 
-	return <Button variant={'link'} onClick={(e) => utils.scrollTo(e, target, offset)} {...rest} />;
+	return <Button variant={'link'} onClick={(e) => utilsBrowser.scrollTo(e, target, offset)} {...rest} />;
 };

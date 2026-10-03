@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 type ContextValues = {
 	theme: ThemeType;
 	utils: UtilsType;
+	utilsBrowser: UtilsBrowserType;
 	variables: VariablesType;
 };
 

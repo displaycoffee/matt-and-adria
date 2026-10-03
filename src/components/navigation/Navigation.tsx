@@ -7,7 +7,7 @@ import { Fragment } from 'react';
 /* Scripts */
 import type { NavigationComponentProps, NavigationItemComponentProps } from './scripts/navigation-types';
 import { navigationUtils } from './scripts/navigation-utils';
-import { useRespond } from '../../_core/scripts/hooks';
+import { useRespond } from '@displaycoffee/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 
 /* Components */

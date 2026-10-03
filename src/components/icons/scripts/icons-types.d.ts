@@ -1,9 +1,6 @@
-/* Packages */
-import type { ComponentType, SVGProps } from 'react';
-
 /* Type definitions */
 type Icons = {
-	icon: ComponentType<SVGProps<SVGSVGElement>>;
+	name: IconNameType;
 	size?: string;
 };
 

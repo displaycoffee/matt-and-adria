@@ -3,7 +3,6 @@ import './styles/blocks.scss';
 
 /* Packages */
 import { useEffect, useRef } from 'react';
-import IconChevronUp from '~icons/lucide/chevron-up';
 
 /* Scripts */
 import type { LinkExternalProps, ListProps, SectionProps } from './scripts/blocks-types';
@@ -65,7 +64,7 @@ export const Section = (props: SectionProps) => {
 			{hasScroll ? (
 				<div className="section-button">
 					<ButtonScroll target={target} label={'Back to top'}>
-						<Icon icon={IconChevronUp} />
+						<Icon name={'chevron-up'} />
 					</ButtonScroll>
 				</div>
 			) : null}

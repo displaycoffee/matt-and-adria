@@ -3,9 +3,11 @@ import './styles/icons.scss';
 
 /* Scripts */
 import type { IconsProps } from './scripts/icons-types';
+import { icons } from '../../_core/data/icons';
 
 export const Icon = (props: IconsProps) => {
-	const { icon: IconComponent, size } = props;
+	const { name, size } = props;
+	const IconComponent = icons[name];
 	const iconClass = 'icon-wrapper';
 
 	// Create icon classes

@@ -1,9 +1,6 @@
 /* Styles */
 import './styles/sections.scss';
 
-/* Packages */
-import IconCompass from '~icons/lucide/compass';
-
 /* Scripts */
 import type { SectionsProps } from './scripts/sections-types';
 import { photos } from './scripts/photos';
@@ -88,7 +85,7 @@ export const Location = (props: SectionsProps) => {
 
 					<div className="row row-address row-nowrap row-auto row-spacing-10">
 						<div className="column">
-							<Icon icon={IconCompass} />
+							<Icon name={'compass'} />
 							<strong>Address:</strong>
 						</div>
 						<div className="column">

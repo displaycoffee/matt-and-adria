@@ -3,9 +3,6 @@ import './styles/gallery.scss';
 
 /* Packages */
 import { useEffect, useRef, useState } from 'react';
-import IconChevronLeft from '~icons/lucide/chevron-left';
-import IconChevronRight from '~icons/lucide/chevron-right';
-import IconX from '~icons/lucide/x';
 
 /* Scripts */
 import type {
@@ -127,7 +124,7 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 				</h2>
 
 				<Button className={'gallery-close'} hideLabel={true} label={'Close gallery image'} onClick={onClose} data-autofocus>
-					<Icon icon={IconX} />
+					<Icon name={'x'} />
 				</Button>
 
 				<nav className="gallery-navigation" aria-label="Gallery Navigation">
@@ -137,7 +134,7 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 						label={'Previous gallery image'}
 						onClick={() => getImage('previous')}
 					>
-						<Icon icon={IconChevronLeft} />
+						<Icon name={'chevron-left'} />
 					</Button>
 
 					<Button
@@ -146,7 +143,7 @@ export const GalleryOverlay = (props: GalleryOverlayProps) => {
 						label={'Next gallery image'}
 						onClick={() => getImage('next')}
 					>
-						<Icon icon={IconChevronRight} />
+						<Icon name={'chevron-right'} />
 					</Button>
 				</nav>
 

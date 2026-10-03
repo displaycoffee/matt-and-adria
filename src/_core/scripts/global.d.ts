@@ -2,9 +2,12 @@
 import type { SyntheticEvent } from 'react';
 import type { UtilsType as UtilsSharedType, UtilsBrowserType as UtilsSharedBrowserType } from '@displaycoffee/scripts/utils-types';
 import type themeJson from '../tokens/theme.json';
+import type { icons } from '../data/icons';
 
 /* Type definitions */
 type Events = SyntheticEvent | Event;
+
+type IconName = keyof typeof icons;
 
 type ObjectString = {
 	[key: string]: string;
@@ -48,6 +51,8 @@ type Variables = {
 declare global {
 	// Declare global types
 	type EventsType = Events;
+
+	type IconNameType = IconName;
 
 	type ObjectStringType = ObjectString;
 

@@ -6,8 +6,8 @@ import { useRef } from 'react';
 
 /* Scripts */
 import { useRespond } from '@displaycoffee/scripts/hooks';
+import { useAvailableMinHeight, useBodyClass } from '@displaycoffee/scripts/hooks-tanstack';
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { useAvailableMinHeight, useBodyClass } from './scripts/container-hooks';
 import { navigationHeader } from '../../components/navigation/scripts/navigation';
 
 /* Components */
@@ -25,7 +25,7 @@ export const Container = () => {
 	useAvailableMinHeight(mainRef);
 
 	// Set body class using custom hook
-	useBodyClass('home');
+	useBodyClass('index');
 
 	// Slideout options
 	const slideoutOptions = {

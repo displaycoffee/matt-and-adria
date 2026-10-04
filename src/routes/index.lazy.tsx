@@ -18,7 +18,7 @@ export const Route = createLazyFileRoute('/')({
 
 function RouteComponent() {
 	return (
-		<div className="home">
+		<div className="index">
 			<Welcome id={'welcome'} />
 
 			{navigationList.length != 0

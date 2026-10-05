@@ -50,6 +50,7 @@ export const Image = (props: ImageProps) => {
 		imageAttributes.onLoad = imageUtils.onLoad;
 	}
 
+	// Add image class
 	if (imageClass) imageAttributes.className = imageClass;
 	if (hasWrapper && hasBg) {
 		if (!imageAttributes.className) {

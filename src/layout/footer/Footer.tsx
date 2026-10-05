@@ -2,13 +2,13 @@
 import './styles/footer.scss';
 
 /* Scripts */
-import { useAppContext } from '../../context/scripts/context-hooks';
+import { useAppContext } from '@/context/scripts/context-hooks';
 import { useRespond } from '@displaycoffee/scripts/hooks';
 
 /* Components */
-import { LinkExternal } from '../../components/blocks/Blocks';
-import { ButtonScroll } from '../../components/forms/Forms';
-import { Image } from '../../components/image/Image';
+import { LinkExternal } from '@/components/blocks/Blocks';
+import { ButtonScroll } from '@/components/forms/Forms';
+import { Image } from '@/components/image/Image';
 
 export const Footer = () => {
 	const { theme } = useAppContext();

@@ -3,11 +3,11 @@ import { createLazyFileRoute } from '@tanstack/react-router';
 import { Fragment } from 'react';
 
 /* Scripts */
-import { navigationHeader } from '../components/navigation/scripts/navigation';
-import { navigationUtils } from '../components/navigation/scripts/navigation-utils';
+import { navigationHeader } from '@/components/navigation/scripts/navigation';
+import { navigationUtils } from '@/components/navigation/scripts/navigation-utils';
 
 /* Components */
-import { Credits, DateAndTime, Location, NearbyAirports, Photos, Welcome } from '../components/sections/Sections';
+import { Credits, DateAndTime, Location, NearbyAirports, Photos, Welcome } from '@/components/sections/Sections';
 
 /* Get navigation */
 const navigationList = navigationUtils.get.list(navigationHeader);

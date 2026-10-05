@@ -17,10 +17,10 @@ import { useFormattedId } from '@displaycoffee/scripts/hooks';
 import { gallery } from './scripts/gallery';
 
 /* Components */
-import { Button } from '../forms/Forms';
-import { Icon } from '../icons/Icons';
-import { Image } from '../image/Image';
-import { Overlay } from '../overlay/Overlay';
+import { Button } from '@/components/forms/Forms';
+import { Icon } from '@/components/icons/Icons';
+import { Image } from '@/components/image/Image';
+import { Overlay } from '@/components/overlay/Overlay';
 
 export const Gallery = (props: GalleryProps) => {
 	const { images, options } = props;

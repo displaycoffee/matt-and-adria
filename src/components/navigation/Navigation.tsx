@@ -8,11 +8,11 @@ import { Fragment } from 'react';
 import type { NavigationComponentProps, NavigationItemComponentProps } from './scripts/navigation-types';
 import { navigationUtils } from './scripts/navigation-utils';
 import { useRespond } from '@displaycoffee/scripts/hooks';
-import { useAppContext } from '../../context/scripts/context-hooks';
+import { useAppContext } from '@/context/scripts/context-hooks';
 
 /* Components */
-import { LinkExternal, List } from '../blocks/Blocks';
-import { ButtonScroll } from '../forms/Forms';
+import { LinkExternal, List } from '@/components/blocks/Blocks';
+import { ButtonScroll } from '@/components/forms/Forms';
 
 export const Navigation = (props: NavigationComponentProps) => {
 	const { data, label } = props;

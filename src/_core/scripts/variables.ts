@@ -1,5 +1,5 @@
 /* Scripts */
-import { site } from '../data/site';
+import { site } from '@/_core/data/site';
 
 /* This config contains variables to use through application */
 const directory = '/matt-and-adria';

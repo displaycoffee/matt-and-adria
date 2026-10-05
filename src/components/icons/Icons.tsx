@@ -3,7 +3,7 @@ import './styles/icons.scss';
 
 /* Scripts */
 import type { IconsProps } from './scripts/icons-types';
-import { icons } from '../../_core/data/icons';
+import { icons } from '@/_core/data/icons';
 
 export const Icon = (props: IconsProps) => {
 	const { name, size } = props;

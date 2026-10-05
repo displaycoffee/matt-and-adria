@@ -6,10 +6,10 @@ import type { SectionsProps } from './scripts/sections-types';
 import { photos } from './scripts/photos';
 
 /* Components */
-import { LinkExternal, List, Section } from '../../components/blocks/Blocks';
-import { Icon } from '../icons/Icons';
-import { Image } from '../image/Image';
-import { Gallery } from '../gallery/Gallery';
+import { LinkExternal, List, Section } from '@/components/blocks/Blocks';
+import { Icon } from '@/components/icons/Icons';
+import { Image } from '@/components/image/Image';
+import { Gallery } from '@/components/gallery/Gallery';
 
 export const Credits = (props: SectionsProps) => {
 	const { id, title } = props;

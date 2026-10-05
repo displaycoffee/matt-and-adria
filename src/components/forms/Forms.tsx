@@ -4,7 +4,7 @@ import './styles/forms.scss';
 /* Scripts */
 import type { ButtonProps, ButtonScrollProps } from './scripts/forms-types';
 import { forms } from './scripts/forms';
-import { useAppContext } from '../../context/scripts/context-hooks';
+import { useAppContext } from '@/context/scripts/context-hooks';
 
 export const Button = (props: ButtonProps) => {
 	const { children, className: propClassName, hideLabel = false, label, type = 'button', variant = 'primary', ...rest } = props;

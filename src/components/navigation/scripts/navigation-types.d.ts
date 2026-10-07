@@ -3,25 +3,30 @@ import type { ReactNode } from 'react';
 
 /* Type definitions */
 type NavigationComponent = {
-	data: NavigationMap;
+	data: NavigationMap | NavigationItem[];
 	label: string;
 };
 
 type NavigationItemComponent = {
 	children?: ReactNode;
 	isLast: boolean;
-	nav: NavigationFlatItem;
+	nav: NavigationItem;
 	navigationLinkClass: string;
 };
 
-type NavigationFlatItem = {
-	children?: NavigationFlatItem[];
+/* What Navigation renders, whether the items come from a NavigationMap (navigation.ts) or a list from another source */
+type NavigationItem = {
+	children?: NavigationItem[];
 	id: string;
-	includeInSitemap: boolean;
 	isSection: boolean;
 	label: string;
-	showInNav: boolean;
 	url: string;
+};
+
+type NavigationFlatItem = NavigationItem & {
+	children?: NavigationFlatItem[];
+	includeInSitemap: boolean;
+	showInNav: boolean;
 };
 
 type NavigationMapItem = {
@@ -49,6 +54,8 @@ type NavigationMapItemOptions = {
 };
 
 /* Export types */
+export type NavigationItemType = NavigationItem;
+
 export type NavigationFlatItemType = NavigationFlatItem;
 
 export type NavigationMapItemType = NavigationMapItem;

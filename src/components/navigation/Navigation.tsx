@@ -16,7 +16,7 @@ import { ButtonScroll } from '@/components/forms/Forms';
 
 export const Navigation = (props: NavigationComponentProps) => {
 	const { data, label } = props;
-	const navigationList = navigationUtils.get.list(data);
+	const navigationList = Array.isArray(data) ? data : navigationUtils.get.list(data);
 	const navigationLinkClass = 'navigation-link';
 
 	return navigationList.length != 0 ? (

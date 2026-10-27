@@ -15,13 +15,13 @@ import { LinkExternal, List } from '@/components/blocks/Blocks';
 import { ButtonScroll } from '@/components/forms/Forms';
 
 export const Navigation = (props: NavigationComponentProps) => {
-	const { data, label } = props;
+	const { data, direction = 'horizontal', label } = props;
 	const navigationList = Array.isArray(data) ? data : navigationUtils.get.list(data);
 	const navigationLinkClass = 'navigation-link';
 
 	return navigationList.length != 0 ? (
 		<nav className="navigation" aria-label={label}>
-			<List className={'navigation-list'} variant={'ul-unstyled'}>
+			<List className={`navigation-list navigation-list-${direction}`} variant={'ul-unstyled'}>
 				{navigationList.map((nav, index) => {
 					const isLast = index === navigationList.length - 1;
 

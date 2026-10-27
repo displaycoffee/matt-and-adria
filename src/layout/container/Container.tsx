@@ -47,7 +47,7 @@ export const Container = () => {
 						<Navigation data={navigationHeader} label={'Header Navigation'} />
 					) : (
 						<Slideout options={slideoutOptions}>
-							<Navigation data={navigationHeader} label={'Mobile Navigation'} />
+							<Navigation data={navigationHeader} direction={'vertical'} label={'Mobile Navigation'} />
 						</Slideout>
 					)}
 				</div>

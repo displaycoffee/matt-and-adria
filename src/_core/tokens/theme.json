@@ -47,7 +47,7 @@
 		"link": "#1da1e5",
 		"link-hover": "#4a3d34",
 		"link-underline": false,
-		"link-underline-hover": "#4a3d34",
+		"link-underline-hover": "inherit",
 		"overlay": "color-mix(in srgb, #fdfdfd 50%, transparent)",
 		"polaroid": "#ededed",
 		"polaroid-shadow": "#efefef",

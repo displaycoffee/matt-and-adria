@@ -41,7 +41,7 @@
 		"link": { "$value": "#1da1e5" },
 		"link-hover": { "$value": "#4a3d34" },
 		"link-underline": { "$value": false },
-		"link-underline-hover": { "$value": "#4a3d34" },
+		"link-underline-hover": { "$value": "inherit" },
 		"overlay": { "$value": "color-mix(in srgb, {color.bg} 50%, transparent)" },
 		"polaroid": { "$value": "#ededed" },
 		"polaroid-shadow": { "$value": "#efefef" },

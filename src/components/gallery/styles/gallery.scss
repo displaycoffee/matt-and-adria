@@ -28,8 +28,7 @@
 		--overlay-duration-transform: 1s;
 		--overlay-easing-closed: #{$gallery-easing-in};
 		--overlay-easing-open: #{$gallery-easing-out};
-		width: 100%;
-		height: 100%;
+		@include mixins.sizing(100%, 100%);
 		background-color: $gallery-color-01; // the dialog itself is the dark layer, so it slides in with the image
 		&::backdrop {
 			background-color: transparent;
@@ -63,6 +62,7 @@
 			@include mixins.position($top: $gallery-spacing, $right: $gallery-spacing);
 		}
 		.gallery-image {
+			cursor: default;
 			max-width: 100%;
 			max-height: 100%;
 			padding: calc($gallery-spacing * 2 + $gallery-button-size);
